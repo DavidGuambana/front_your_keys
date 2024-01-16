@@ -35,8 +35,8 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/component/card',
-    title: 'Card',
+    path: '/component/autos',
+    title: 'Autos',
     icon: 'bi bi-card-text',
     class: '',
     extralink: false,

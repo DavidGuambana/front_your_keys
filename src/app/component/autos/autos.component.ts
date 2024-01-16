@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-autos',
-  templateUrl: './autos.component.html'
+  templateUrl: 'autos.component.html',
+  standalone: true,
 })
-export class AutosComponent {
-
-}
+export class AutosComponent {}
