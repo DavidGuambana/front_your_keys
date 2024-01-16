@@ -10,9 +10,9 @@ import { NgbdAlertBasicComponent } from './alert/alert.component';
 import { NgbdDropdownBasicComponent } from './dropdown-collapse/dropdown-collapse.component';
 import { NgbdnavBasicComponent } from './nav/nav.component';
 import { NgbdButtonsComponent } from './buttons/buttons.component';
-import { CardsComponent } from './card/card.component';
 import { TableComponent } from "./table/table.component";
 import { EmpleadosComponent } from './empleados/empleados.component';
+import { AutosComponent } from './autos/autos.component';
 
 
 @NgModule({
@@ -27,11 +27,12 @@ import { EmpleadosComponent } from './empleados/empleados.component';
     NgbdDropdownBasicComponent,
     NgbdnavBasicComponent,
     NgbdButtonsComponent,
-    CardsComponent,
     TableComponent,
+    AutosComponent
   ],
   declarations: [
-    EmpleadosComponent
+    EmpleadosComponent,
+    
   ],
 })
 export class ComponentsModule { }
