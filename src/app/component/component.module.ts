@@ -13,6 +13,7 @@ import { NgbdButtonsComponent } from './buttons/buttons.component';
 import { TableComponent } from "./table/table.component";
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { AutosComponent } from './autos/autos.component';
+import { FormComponent } from './autos/form.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AutosComponent } from './autos/autos.component';
   ],
   declarations: [
     EmpleadosComponent,
+    FormComponent,
     
   ],
 })
