@@ -32,5 +32,5 @@ export class EmpleadoService {
 
   eliminar(id_rol: number): Observable<Empleado>{
     return this.http.delete<Empleado>('${this.urlEndPoint}/${id_empleado}')
-  }
+  }
 }

@@ -6,7 +6,6 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',

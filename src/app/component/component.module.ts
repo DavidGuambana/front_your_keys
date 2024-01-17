@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsRoutes } from './component.routing';
 import { NgbdpaginationBasicComponent } from './pagination/pagination.component';
@@ -16,7 +15,6 @@ import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
 import { FormComponent as formAuto} from './autos/form.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -31,13 +29,14 @@ import { FormComponent as formAuto} from './autos/form.component';
     NgbdButtonsComponent,
     TableComponent,
     AutosComponent,
-    EmpleadosComponent,
+    
     
   ],
   declarations: [
     formCiente,
     formAuto,
     ClientesComponent,
+    EmpleadosComponent,
   ],
 })
 export class ComponentsModule { }
