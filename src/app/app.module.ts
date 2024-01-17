@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  //UNANSE A LA LLAMADA PUES 
   CommonModule, LocationStrategy,
   PathLocationStrategy
 } from '@angular/common';
