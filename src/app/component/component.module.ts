@@ -15,7 +15,7 @@ import { AutosComponent } from './autos/autos.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
-
+import { FormComponent as formAuto} from './autos/form.component';
 
 @NgModule({
   imports: [
@@ -36,6 +36,7 @@ import { FormComponent as formCiente } from './clientes/form.component';
   ],
   declarations: [
     formCiente,
+    formAuto,
     ClientesComponent,
   ],
 })
