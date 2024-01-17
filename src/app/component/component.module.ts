@@ -28,7 +28,7 @@ import { FormComponent as formAuto} from './autos/form.component';
     NgbdnavBasicComponent,
     NgbdButtonsComponent,
     TableComponent,
-    AutosComponent,
+    
     
     
   ],
@@ -37,6 +37,7 @@ import { FormComponent as formAuto} from './autos/form.component';
     formAuto,
     ClientesComponent,
     EmpleadosComponent,
+    AutosComponent,
   ],
 })
 export class ComponentsModule { }
