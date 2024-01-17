@@ -1,10 +1,53 @@
-.container {
-    position: relative;
-    width: 850px;
-    height: 500px;
-    background-color: #FFF;
-    box-shadow: 25px 30px 55px #5557;
-    border-radius: 13px;
-    overflow: hidden;
-
+body, html {
+  height: 100%;
+  margin: 0;
+  filter: blur(5px);
 }
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35%;
+  height: 500px;
+  background-color: #FFF;
+  box-shadow: 25px 30px 55px #5557;
+  border-radius: 13px;
+  overflow: hidden;
+  margin-top: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 21px;
+}
+
+.container form button {
+  width: 50%;
+  margin-top: 25px;
+  padding: 10px;
+  background-color: #4285F4; /* Cambia el color al color de acento de tu plantilla */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.container form button:hover {
+  background-color: #3367D6; /* Cambia el color al tono más oscuro para el estado de hover */
+}
+
+.container h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #4285F4; /* Cambia el color al color de acento de tu plantilla */
+}
+
+/* Puedes agregar estilos adicionales según sea necesario */
