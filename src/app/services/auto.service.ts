@@ -8,7 +8,7 @@ import { Auto } from '../models/auto';
 })
 export class AutoService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/auto';
+  private urlEndPoint:string = 'http://localhost:8080/api/autos';
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

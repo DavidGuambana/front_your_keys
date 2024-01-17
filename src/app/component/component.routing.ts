@@ -11,6 +11,7 @@ import { TableComponent } from './table/table.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
+import { FormComponent as formAuto} from './autos/form.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -24,6 +25,10 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'autos',
 				component: AutosComponent
+			},
+			{
+				path: 'autos/form',
+				component: formAuto
 			},
 			{
 				path: 'empleados',
