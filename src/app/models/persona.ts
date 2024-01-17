@@ -1,3 +1,5 @@
+import { Empleado } from "./empleado";
+
 export class Persona {
 
     id_persona: number = 0;
@@ -12,5 +14,6 @@ export class Persona {
     correo: string = '';
     url_imagen: string = '';
     fecha_reg: Date = new Date();
+    empleados: Empleado[] = [];
     
 }
