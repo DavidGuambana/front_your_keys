@@ -10,6 +10,17 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   },
+  
+  {
+    path: '/component/autos',
+    title: 'Autos',
+    icon: 'bi bi-card-text',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  
+  /*
   {
     path: '/component/alert',
     title: 'Alert',
@@ -30,14 +41,6 @@ export const ROUTES: RouteInfo[] = [
     path: '/component/buttons',
     title: 'Button',
     icon: 'bi bi-hdd-stack',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/component/autos',
-    title: 'Autos',
-    icon: 'bi bi-card-text',
     class: '',
     extralink: false,
     submenu: []
@@ -66,6 +69,7 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   },
+  
   {
     path: '/component/table',
     title: 'Table',
@@ -81,5 +85,23 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
+  },
+  */
+  {
+    path: '/component/empleados',
+    title: 'Empleados',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/clientes',
+    title: 'Cientes',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
   }
+  
 ];

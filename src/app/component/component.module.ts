@@ -11,8 +11,10 @@ import { NgbdDropdownBasicComponent } from './dropdown-collapse/dropdown-collaps
 import { NgbdnavBasicComponent } from './nav/nav.component';
 import { NgbdButtonsComponent } from './buttons/buttons.component';
 import { TableComponent } from "./table/table.component";
-import { EmpleadosComponent } from './empleados/empleados.component';
 import { AutosComponent } from './autos/autos.component';
+import { EmpleadosComponent } from './empleados/empleados.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { FormComponent as formCiente } from './clientes/form.component';
 
 
 @NgModule({
@@ -28,11 +30,13 @@ import { AutosComponent } from './autos/autos.component';
     NgbdnavBasicComponent,
     NgbdButtonsComponent,
     TableComponent,
-    AutosComponent
-  ],
-  declarations: [
+    AutosComponent,
     EmpleadosComponent,
     
+  ],
+  declarations: [
+    formCiente,
+    ClientesComponent,
   ],
 })
 export class ComponentsModule { }

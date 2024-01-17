@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Clientes | Formulario</h4>
+        <div class="card-body border-top">
+          <div class="row">
+            <!-- Columna de inputs a la izquierda -->
+            <div class="col-12 col-md-6 col-xl-6">
+              <div class="form-group local-forms mb-3">
+                <label>Fecha de nacimiento <span class="login-danger">*</span></label>
+                <input class="form-control datetimepicker" type="text" placeholder="">
+              </div>
+  
+              <div class="form-group local-forms mb-3">
+                <label>Dirección <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" placeholder="" id="direccion">
+              </div>
+  
+              <div class="form-group local-forms">
+                <label>Correo <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" placeholder="example@gmail.com" id="cp" name="cp">
+              </div>
+            </div>
+  
+            <!-- Columna de archivo al mismo nivel que los inputs sin título -->
+            <div class="col-12 col-md-6 col-xl-6">
+              <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
+              <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+  
+              <!-- Espacio para la imagen -->
+              <div class="imagen-container mt-3">
+                <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid" />
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+

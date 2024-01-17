@@ -9,6 +9,8 @@ import { NgbdButtonsComponent } from './buttons/buttons.component';
 import { AutosComponent } from './autos/autos.component';
 import { TableComponent } from './table/table.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { FormComponent as formCiente } from './clientes/form.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -22,6 +24,10 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'autos',
 				component: AutosComponent
+			},
+			{
+				path: 'empleados',
+				component: EmpleadosComponent
 			},
 			{
 				path: 'pagination',
@@ -47,14 +53,15 @@ export const ComponentsRoutes: Routes = [
 				path: 'buttons',
 				component: NgbdButtonsComponent
 			},
+
 			{
-				path: 'autos',
-				component: AutosComponent
+				path: 'clientes',
+				component: ClientesComponent
 			},
 			{
-				path: 'empleados',
-				component: EmpleadosComponent
-			}
+				path: 'clientes/form',
+				component: formCiente
+			},
 		]
 	}
 ];

@@ -1,0 +1,10 @@
+.container {
+    position: relative;
+    width: 850px;
+    height: 500px;
+    background-color: #FFF;
+    box-shadow: 25px 30px 55px #5557;
+    border-radius: 13px;
+    overflow: hidden;
+
+}

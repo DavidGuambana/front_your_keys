@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .izquierda {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .derecha {
+    flex-basis: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .imagen-container {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Ajusta la altura según sea necesario */
+    overflow: hidden;
+    border-radius: 10px; /* O elimina esta línea para eliminar el redondeo de esquinas */
+  }
+  
+  .imagen-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px; /* Ajusta el redondeo según sea necesario */
+  }
+  
+  #imagenInput {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .custom-table thead th {
+    color: hsl(0, 0%, 38%); /* Color del texto en el encabezado */
+  }
+  
+  
+  
