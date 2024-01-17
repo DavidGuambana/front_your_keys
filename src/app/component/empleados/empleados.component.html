@@ -19,7 +19,7 @@
         
 
           <h5 class="card-subtitle text-muted">Resultados: 0</h5>
-          <div class="table-responsive">
+          <div class="table-responsive"  >
             <table class="table table-hover align-middle text-nowrap">
                 <thead>
                     <tr>
@@ -34,30 +34,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 
-                        <tr *ngFor='let ts of topSelling'>
+                    <tr *ngFor="let emple of empleados">
                         <td>
-                            <div class="d-flex align-items-center">
-                                <img [src]=ts.image alt="user" width="45" class="rounded-circle">
-                                <div class="ms-3">
-                                    <h5 class="mb-0 font-medium">{{ts.uname}}</h5>
-                                    <span class="text-muted">{{ts.gmail}}</span>
-                                </div>
+                            <div class="d-flex align-items-center" >
+                                <img [src]=emple.persona.url_imagen alt="user" width="45" class="rounded-circle">
+                                
                             </div>
                         </td>
-                        <td class="fs-4">{{ts.productName}}</td>
                         <td>
-                            <span class="p-2 bg-{{ts.status}} rounded-circle d-inline-block ms-3"></span>
-                        </td>
-                        
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{ts.weeks}}</h5>
+                            <h5 class="mb-0 fw-normal">{{emple.persona.cedula}}</h5>
                         </td>
                         <td>
-                            <h5 class="mb-0 fw-normal">{{ts.budget}}</h5>
+                            <h5 class="mb-0 fw-normal">{{emple.persona.nombre1}}</h5>
                         </td>
-                    </tr>           
-                    -->   
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{emple.persona.apellido1}}</h5>
+                        </td>
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{emple.persona.fecha_nac}}</h5>
+                        </td>
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{emple.persona.fecha_reg}}</h5>
+                        </td>
+                        <td>
+                            <!--<a [routerLink]="['/component/form', cliente.id_cliente]">
+                                <i class="bi bi-pencil-square fs-4 text-info"></i>
+                            </a>-->
+                        </td>
+                        <td>
+                            <!--<button (click)="eliminar(cliente)">
+                                <i class="bi bi-trash fs-4 text-danger"></i>
+                            </button>-->
+                        </td>
+
+                    </tr>        
                 </tbody>
             </table>
         </div>

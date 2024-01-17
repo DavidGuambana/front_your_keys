@@ -15,4 +15,5 @@ export class Persona {
     url_imagen: string = '';
     fecha_reg: Date = new Date();
     empleados: Empleado[] = [];
+    
 }
