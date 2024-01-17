@@ -9,6 +9,8 @@ import { FeedsComponent } from "./dashboard-components/feeds/feeds.component";
 import { TopSellingComponent } from "./dashboard-components/top-selling/top-selling.component";
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
+import { HomeComponent } from './dashboard-components/home/home.component';
+import { Home2Component } from './dashboard-components/home2/home2.component';
 
 
 const routes: Routes = [
@@ -36,7 +38,9 @@ const routes: Routes = [
     FeedsComponent,
     TopSellingComponent,
     TopCardsComponent,
-    BlogCardsComponent
+    BlogCardsComponent,
+    HomeComponent,
+    Home2Component
   ],
 })
 export class DashboardModule {}
