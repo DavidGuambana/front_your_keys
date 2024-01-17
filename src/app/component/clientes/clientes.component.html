@@ -27,37 +27,47 @@
                         <th class="text-dark font-medium fs-4">Cédula</th>
                         <th class="text-dark font-medium fs-4">Nombre</th>
                         <th class="text-dark font-medium fs-4">Apellido</th>
-                        <th class="text-dark font-medium fs-4">Edad</th>
+                        <th class="text-dark font-medium fs-4">Nacimiento</th>
                         <th class="text-dark font-medium fs-4">Registro</th>
                         <th class="text-dark font-medium fs-4">Editar</th>
                         <th class="text-dark font-medium fs-4">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 
-                        <tr *ngFor='let ts of topSelling'>
+                    <tr *ngFor='let cliente of clientes'>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img [src]=ts.image alt="user" width="45" class="rounded-circle">
-                                <div class="ms-3">
-                                    <h5 class="mb-0 font-medium">{{ts.uname}}</h5>
-                                    <span class="text-muted">{{ts.gmail}}</span>
-                                </div>
+                                <img [src]=cliente.persona.url_imagen alt="user" width="45" class="rounded-circle">
+                                
                             </div>
                         </td>
-                        <td class="fs-4">{{ts.productName}}</td>
                         <td>
-                            <span class="p-2 bg-{{ts.status}} rounded-circle d-inline-block ms-3"></span>
-                        </td>
-                        
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{ts.weeks}}</h5>
+                            <h5 class="mb-0 fw-normal">{{cliente.persona.cedula}}</h5>
                         </td>
                         <td>
-                            <h5 class="mb-0 fw-normal">{{ts.budget}}</h5>
+                            <h5 class="mb-0 fw-normal">{{cliente.persona.nombre1}}</h5>
                         </td>
-                    </tr>           
-                    -->   
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{cliente.persona.apellido1}}</h5>
+                        </td>
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{cliente.persona.fecha_nac}}</h5>
+                        </td>
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{cliente.persona.fecha_reg}}</h5>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/component/form', cliente.id_cliente]">
+                                <i class="bi bi-pencil-square fs-4 text-info"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <button (click)="eliminar(cliente)">
+                                <i class="bi bi-trash fs-4 text-danger"></i>
+                            </button>
+                        </td>
+
+                    </tr>        
                 </tbody>
             </table>
         </div>

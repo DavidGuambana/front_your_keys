@@ -1,5 +1,8 @@
-export class Persona {
+import { Cliente } from "./cliente";
+import { Empleado } from "./empleado";
+import { Usuario } from "./usuario";
 
+export class Persona {
     id_persona: number = 0;
     cedula: string = '';
     nombre1: string = '';
@@ -12,5 +15,7 @@ export class Persona {
     correo: string = '';
     url_imagen: string = '';
     fecha_reg: Date = new Date();
-    
+    empleados: Empleado[] = [];
+    clientes: Cliente[] = [];
+    usuarios: Usuario[] = [];
 }
