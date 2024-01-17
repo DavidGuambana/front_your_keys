@@ -13,5 +13,5 @@ total:number=0;
 tipo_pago:string="";
 pagado:string="";
 reservado:string="";
-fecha_reg:string="";
+fecha_registro:string="";
 }
