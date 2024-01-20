@@ -6,6 +6,8 @@ import { Marca } from 'src/app/models/marca';
 import { Modelo } from 'src/app/models/modelo';
 import { MarcaService } from 'src/app/services/marca.service';
 import { ModeloService } from 'src/app/services/modelo.service';
+import { CategoriaService } from 'src/app/services/categoria.service';
+import { Categoria } from 'src/app/models/categoria';
 
 @Component({
   selector: 'app-form',
@@ -17,14 +19,16 @@ export class FormComponent implements OnInit {
   public auto: Auto = new Auto();
   marcasList: Marca[] = [];
   modelosList:Modelo[]=[];
+  categoriaList:Categoria[]=[];
   imagenUrl: string | undefined;
   nuevaImagenFile: File | undefined;
-  idmarca:number=0;
+  id_marca:any;
 
   constructor(
     private autoService: AutoService,
     private marcaService: MarcaService,
     private modeloService: ModeloService,
+    private categoriaService:CategoriaService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -32,7 +36,10 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.cargarAuto();
     this.cargarMarcas();
+    this.cargarModeloss();
+    this.cargarCategorias();
   }
+
 
   cargarAuto(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -48,27 +55,30 @@ export class FormComponent implements OnInit {
       marcas => this.marcasList = marcas
     );
   }
-
-  cargarModelos(idmarca:any): void {
-    // Configurar idmarca con el valor deseado (por ejemplo, 4)
-    //const filtro = this.idmarca; 
-    // Obtener la lista de modelos
+  cargarModeloss(): void {
     this.modeloService.listar().subscribe(
-      modelos => {
-        // Asignar la lista completa de modelos a modelosList
-        this.modelosList = modelos;
-        console.log('Modelos List sin filtrado:', this.modelosList);
-  
-        // Filtrar la lista de modelos para incluir solo aquellos con id_marca igual a this.idmarca
-        console.log('aqui id marca 1:', idmarca);
-        this.modelosList = this.modelosList.filter(modelo => modelo.id_marca === idmarca);
-  
-        // Imprimir en la consola
-        console.log('filtor:', idmarca);
-        console.log('Modelos List se supone filtrado:', this.modelosList);
-      }
+      modelos => this.modelosList = modelos
     );
   }
+  cargarCategorias() {
+    this.categoriaService.listar().subscribe(
+      categorias => this.categoriaList = categorias
+    );
+  }
+  
+
+
+
+  cargarModelos(): void {
+    console.log('Marca seleccionada:', this.id_marca);
+    this.modeloService.listar().subscribe(
+      modelos => {
+        this.modelosList = modelos;
+        this.modelosList = this.modelosList.filter(modelo => modelo.id_marca === this.id_marca);
+        console.log('Modelos filtrados:', this.modelosList);
+      }
+    );
+  }
 
   onFileSelected(event: any): void {
     const files = event.target.files;
@@ -81,7 +91,8 @@ export class FormComponent implements OnInit {
       reader.readAsDataURL(files[0]);
     }
   }
-  create(): void {
+  create(): void {  
+    this.auto.id_estado=1;
     this.autoService.crear(this.auto).subscribe(() => {
       this.router.navigate(['component/autos']);
     });
