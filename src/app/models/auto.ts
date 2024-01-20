@@ -1,4 +1,6 @@
 import { Alquiler } from "./alquiler";
+import { Marca } from "./marca";
+import { Modelo } from "./modelo";
 
 export class Auto {
     id_auto: number = 0;
@@ -12,4 +14,5 @@ export class Auto {
     url_imagen:string ="";
     id_estado:number = 0;
     listado: Alquiler []= [];
+    modelo:Modelo=new Modelo;
 }

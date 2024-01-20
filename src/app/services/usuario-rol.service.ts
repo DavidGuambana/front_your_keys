@@ -18,7 +18,7 @@ export class UsuarioRolService {
   }
 
   buscar(id_usuario_rol: number):Observable<UsuarioRol>{
-    return this.http.get<UsuarioRol>('${this.urlEndPoint}/${id_usuario_rol}');
+    return this.http.get<UsuarioRol>(`${this.urlEndPoint}/${id_usuario_rol}`);
   }
 
   crear(usuario_rol: UsuarioRol): Observable<UsuarioRol>{
@@ -26,12 +26,12 @@ export class UsuarioRolService {
   }
 
   editar(usuario_rol: UsuarioRol): Observable<UsuarioRol> {
-    const id_usuario_rol = '${this.urlEndPoint}/${usuario_rol.id_usuario_rol}';
+    const id_usuario_rol = `${this.urlEndPoint}/${usuario_rol.id_usuario_rol}`;
     return this.http.put<UsuarioRol>(id_usuario_rol, usuario_rol, { headers: this.httpHeaders});
   }
 
   eliminar(id_usuario_rol: number): Observable<UsuarioRol>{
-    return this.http.delete<UsuarioRol>('${this.urlEndPoint}/${id_usuario_rol}')
+    return this.http.delete<UsuarioRol>(`${this.urlEndPoint}/${id_usuario_rol}`)
   }
 }
 

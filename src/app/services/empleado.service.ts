@@ -18,7 +18,7 @@ export class EmpleadoService {
   }
 
   buscar(id_empleado: number):Observable<Empleado>{
-    return this.http.get<Empleado>('${this.urlEndPoint}/${id_empleado}');
+    return this.http.get<Empleado>(`${this.urlEndPoint}/${id_empleado}`);
   }
 
   crear(empleado: Empleado): Observable<Empleado>{
@@ -26,11 +26,11 @@ export class EmpleadoService {
   }
 
   editar(empleado: Empleado): Observable<Empleado> {
-    const id_empleado = '${this.urlEndPoint}/${empleado.id_empleado}';
+    const id_empleado = `${this.urlEndPoint}/${empleado.id_empleado}`;
     return this.http.put<Empleado>(id_empleado, empleado, { headers: this.httpHeaders});
   }
 
-  eliminar(id_rol: number): Observable<Empleado>{
-    return this.http.delete<Empleado>('${this.urlEndPoint}/${id_empleado}')
+  eliminar(id_empleado: number): Observable<Empleado>{
+    return this.http.delete<Empleado>(`${this.urlEndPoint}/${id_empleado}`)
   }
 }

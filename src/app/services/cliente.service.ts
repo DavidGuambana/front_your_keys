@@ -18,7 +18,7 @@ export class ClienteService {
   }
 
   buscar(id_cliente: number):Observable<Cliente>{
-    return this.http.get<Cliente>('${this.urlEndPoint}/${id_cliente}');
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id_cliente}`);
   }
 
   crear(cliente: Cliente): Observable<Cliente>{
@@ -26,11 +26,11 @@ export class ClienteService {
   }
 
   editar(cliente: Cliente): Observable<Cliente> {
-    const id_cliente = '${this.urlEndPoint}/${cliente.id_cliente}';
+    const id_cliente = `${this.urlEndPoint}/${cliente.id_cliente}`;
     return this.http.put<Cliente>(id_cliente, cliente, { headers: this.httpHeaders});
   }
 
   eliminar(id_cliente: number): Observable<Cliente>{
-    return this.http.delete<Cliente>('${this.urlEndPoint}/${id_cliente}')
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id_cliente}`)
   }
 }

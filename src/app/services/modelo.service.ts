@@ -18,7 +18,7 @@ export class ModeloService {
   }
 
   buscar(id_modelo: number):Observable<Modelo>{
-    return this.http.get<Modelo>('${this.urlEndPoint}/${id_modelo}');
+    return this.http.get<Modelo>(`${this.urlEndPoint}/${id_modelo}`);
   }
 
   crear(modelo: Modelo): Observable<Modelo>{
@@ -26,11 +26,11 @@ export class ModeloService {
   }
 
   editar(modelo: Modelo): Observable<Modelo> {
-    const id_modelo = '${this.urlEndPoint}/${modelo.id_modelo}';
+    const id_modelo = `${this.urlEndPoint}/${modelo.id_modelo}`;
     return this.http.put<Modelo>(id_modelo, modelo, { headers: this.httpHeaders});
   }
 
   eliminar(id_modelo: number): Observable<Modelo>{
-    return this.http.delete<Modelo>('${this.urlEndPoint}/${id_modelo}')
+    return this.http.delete<Modelo>(`${this.urlEndPoint}/${id_modelo}`)
   }
 }

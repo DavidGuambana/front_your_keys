@@ -18,7 +18,7 @@ export class UsuarioService {
   }
 
   buscar(id_usuario: number):Observable<Usuario>{
-    return this.http.get<Usuario>('${this.urlEndPoint}/${id_usuario}');
+    return this.http.get<Usuario>(`${this.urlEndPoint}/${id_usuario}`);
   }
 
   crear(usuario: Usuario): Observable<Usuario>{
@@ -26,11 +26,11 @@ export class UsuarioService {
   }
 
   editar(usuario: Usuario): Observable<Usuario> {
-    const id_usuario = '${this.urlEndPoint}/${rol.id_usuario}';
+    const id_usuario = `${this.urlEndPoint}/${usuario.id_usuario}`;
     return this.http.put<Usuario>(id_usuario, usuario, { headers: this.httpHeaders});
   }
 
   eliminar(id_usuario: number): Observable<Usuario>{
-    return this.http.delete<Usuario>('${this.urlEndPoint}/${id_usuario}')
+    return this.http.delete<Usuario>(`${this.urlEndPoint}/${id_usuario}`)
   }
 }

@@ -19,7 +19,7 @@ export class EstadoService {
   }
 
   buscar(id_estado: number):Observable<Estado>{
-    return this.http.get<Estado>('${this.urlEndPoint}/${id_estado}');
+    return this.http.get<Estado>(`${this.urlEndPoint}/${id_estado}`);
   }
 
   crear(estado: Estado): Observable<Estado>{
@@ -27,11 +27,11 @@ export class EstadoService {
   }
 
   editar(estado: Estado): Observable<Estado> {
-    const id_estado = '${this.urlEndPoint}/${estado.id_estado}';
+    const id_estado = `${this.urlEndPoint}/${estado.id_estado}`;
     return this.http.put<Estado>(id_estado, estado, { headers: this.httpHeaders});
   }
 
   eliminar(id_estado: number): Observable<Estado>{
-    return this.http.delete<Estado>('${this.urlEndPoint}/${id_estado}')
-  }
+    return this.http.delete<Estado>(`${this.urlEndPoint}/${id_estado}`)
+  } 
 }

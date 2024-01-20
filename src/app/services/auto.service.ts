@@ -18,7 +18,7 @@ export class AutoService {
   }
 
   buscar(id_auto: number):Observable<Auto>{
-    return this.http.get<Auto>('${this.urlEndPoint}/${id_auto}');
+    return this.http.get<Auto>(`${this.urlEndPoint}/${id_auto}`);
   }
 
   crear(auto: Auto): Observable<Auto>{
@@ -26,11 +26,11 @@ export class AutoService {
   }
 
   editar(auto: Auto): Observable<Auto> {
-    const id_auto = '${this.urlEndPoint}/${auto.id_auto}';
+    const id_auto = `${this.urlEndPoint}/${auto.id_auto}`;
     return this.http.put<Auto>(id_auto, auto, { headers: this.httpHeaders});
   }
 
   eliminar(id_auto: number): Observable<Auto>{
-    return this.http.delete<Auto>('${this.urlEndPoint}/${id_auto}')
+    return this.http.delete<Auto>(`${this.urlEndPoint}/${id_auto}`)
   }
 }
