@@ -19,7 +19,7 @@ import { Observable } from "rxjs";
     }
   
     buscar(id_marca: number):Observable<Marca>{
-      return this.http.get<Marca>('${this.urlEndPoint}/${id_marca}');
+      return this.http.get<Marca>(`${this.urlEndPoint}/${id_marca}`);
     }
   
     crear(marca: Marca): Observable<Marca>{
@@ -27,11 +27,11 @@ import { Observable } from "rxjs";
     }
   
     editar(marca: Marca): Observable<Marca> {
-      const id_marca = '${this.urlEndPoint}/${marca.id_marca}';
+      const id_marca = `${this.urlEndPoint}/${marca.id_marca}`;
       return this.http.put<Marca>(id_marca, marca, { headers: this.httpHeaders});
     }
   
     eliminar(id_marca: number): Observable<Marca>{
-      return this.http.delete<Marca>('${this.urlEndPoint}/${id_cliente}')
+      return this.http.delete<Marca>(`${this.urlEndPoint}/${id_marca}`)
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
@@ -10,12 +10,13 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./clientes.component.css']
-  
+  styleUrls: ['./clientes.component.css'],
+  standalone: false
 })
-export class FormComponent {
-  imagenUrl: string | undefined;
+export class FormComponent implements OnInit {
+  public titulo: string = "Nuevo cliente";
   nuevaImagenFile: File | undefined;
+  tipos_licencias: string[] = ['A', 'B', 'F','A1','C','C1','D','D1','E','E1','G'];
 
   public cliente: Cliente = new Cliente();
   public personas: Persona[] = [];
@@ -26,9 +27,9 @@ export class FormComponent {
     private service_img: ImagenService,
     private router: Router,
     private activedRoute: ActivatedRoute
-  ){}
+  ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.buscar();
   }
   
@@ -36,24 +37,17 @@ export class FormComponent {
     this.activedRoute.params.subscribe((params) => {
       let id = params['id'];
       if (id) {
-        this.ser_cli.buscar(id).subscribe((cliente) => {
-          this.cliente = cliente;
-  
-          this.ser_per.buscar(cliente.id_persona).subscribe((persona) => {
-            cliente.persona = persona;
-            this.cargarImagen();
-          });
-        });
+        this.titulo = "Actualizar cliente";
+        this.ser_cli.buscar(id).subscribe((cliente) => {this.cliente = cliente;
+            this.ser_per.buscar(cliente.id_persona).subscribe(
+              (persona) => {
+                cliente.persona = persona;
+              }
+            );
+          },
+        );
       }
     });
-  }
-  
-  cargarImagen(): void {
-    if (this.cliente.persona.url_imagen) {
-      this.service_img.getImagen(this.cliente.persona.url_imagen).subscribe((blob) => {
-        this.imagenUrl = URL.createObjectURL(blob);
-      });
-    }
   }
 
   onFileSelected(event: any): void {
@@ -62,14 +56,14 @@ export class FormComponent {
       this.nuevaImagenFile = files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagenUrl = e.target.result;
+        this.cliente.persona.url_imagen = e.target.result;
       };
       reader.readAsDataURL(files[0]);
     }
   }
 
   public guardar(): void {
-    if (this.cliente.id_cliente == 0) {
+    if (this.cliente.id_cliente === 0) {
       this.crear();
     } else {
       this.editar();
@@ -81,11 +75,17 @@ export class FormComponent {
       Swal.fire('¡Campos vacíos!', 'No se admiten campos vacíos.', 'warning');
       return;
     }
+
     if (this.nuevaImagenFile) {
-      this.service_img.postImagen(this.nuevaImagenFile).subscribe((uniqueFileName: string) => {
-        this.cliente.persona.url_imagen = uniqueFileName;
-        this.crearCliente();
-      });
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+        (url_imagen: string) => {
+          this.cliente.persona.url_imagen = url_imagen;
+          this.crearCliente();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
     } else {
       this.crearCliente();
     }
@@ -95,47 +95,79 @@ export class FormComponent {
     if (!this.camposValidos()) {
       Swal.fire('¡Campos vacíos!', 'No se admiten campos vacíos.', 'warning');
     } else {
-      // Verificar si se seleccionó una nueva imagen
       if (this.nuevaImagenFile) {
-        // Subir la nueva imagen al servidor y obtener el nombre único
-        this.service_img.postImagen(this.nuevaImagenFile).subscribe((uniqueFileName) => {
-          // Eliminar la imagen anterior si existe
-          if (this.cliente.persona.url_imagen) {
-            this.service_img.deleteImagen(this.cliente.persona.url_imagen).subscribe(() => {
-              console.log('Imagen anterior eliminada:', this.cliente.persona.url_imagen);
-            });
+        this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+          (uniqueFileName) => {
+            if (this.cliente.persona.url_imagen) {
+              this.service_img.deleteImagen(this.cliente.persona.url_imagen).subscribe(
+                () => {
+                  console.log('Imagen anterior eliminada:', this.cliente.persona.url_imagen);
+                },
+                (error) => {
+                  console.error('Error al eliminar la imagen anterior:', error);
+                }
+              );
+            }
+    
+            this.cliente.persona.url_imagen = uniqueFileName;
+            this.actualizarCliente();
+          },
+          (error) => {
+            console.error('Error al subir la nueva imagen:', error);
           }
-  
-          // Asignar el nuevo nombre único al campo url_imagen
-          this.cliente.persona.url_imagen = uniqueFileName;
-          // Continuar con la actualización del artículo
-          this.actualizarCliente();
-        });
+        );
       } else {
-        // No se seleccionó una nueva imagen, continuar con la actualización del artículo
         this.actualizarCliente();
       }
     }
   }
-  
+
   private crearCliente(): void {
-    this.ser_cli.crear(this.cliente).subscribe((cliente) =>{
-      this.router.navigate(['/articulos']);
-      Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1+" "+cliente.persona.apellido1} creado.`, 'success')});
+    this.ser_per.crear(this.cliente.persona).subscribe(
+      (persona) => {
+        this.cliente.id_persona = persona.id_persona;
+        this.cliente.licencia = persona.cedula;
+        this.ser_cli.crear(this.cliente).subscribe(
+          (cliente) => {
+            this.router.navigate(['/component/clientes']);
+            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} creado.`, 'success');
+          },
+          (error) => {
+            console.error('Error al crear el cliente:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error al crear la persona:', error);
+      }
+    );
   }
 
   private actualizarCliente(): void {
-    // Actualizar el artículo con o sin cambio de imagen
-    this.ser_cli.editar(this.cliente).subscribe((cliente) => {
-      this.router.navigate(['/articulos']);
-      Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1+" "+cliente.persona.apellido1} creado.`, 'success')});
+    this.ser_cli.editar(this.cliente).subscribe(
+      (cliente) => {
+        this.router.navigate(['/clientes']);
+        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} actualizado.`, 'success');
+      },
+      (error) => {
+        console.error('Error al actualizar el cliente:', error);
+      }
+    );
   }
 
   private camposValidos(): boolean {
-    return !!this.cliente.persona.cedula && !!this.cliente.persona.nombre1 && !!this.cliente.persona.nombre2 
-    && !!this.cliente.persona.apellido1 && !!this.cliente.persona.apellido2
-    && !!this.cliente.persona.telefono && !!this.cliente.persona.direccion
-    && !!this.cliente.persona.fecha_nac && !!this.cliente.persona.correo;
-  }  
-
+    const persona = this.cliente.persona;
+    return !!(
+      persona.cedula &&
+      persona.nombre1 &&
+      persona.nombre2 &&
+      persona.apellido1 &&
+      persona.apellido2 &&
+      persona.telefono &&
+      persona.direccion &&
+      persona.fecha_nac &&
+      persona.correo
+    );
+  }
 }
+

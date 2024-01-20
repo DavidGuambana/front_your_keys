@@ -2,87 +2,85 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Clientes | Formulario</h4>
+        <h4 class="card-title">{{titulo}}</h4>
         <div class="card-body border-top">
-          <div class="row">
-            <!-- Columna de inputs a la izquierda -->
-            <div class="col-12 col-md-6 col-xl-6">
-              <div class="form-group local-forms mb-3">
-                <label>Cedula: </label>
-                <input class="form-control datetimepicker" type="text" placeholder="">
+          <form (ngSubmit)="guardar()">
+            <div class="row">
+              <!-- Columna de inputs a la izquierda -->
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms mb-3">
+                  <label>Licencia: </label>
+                  <input class="form-control datetimepicker" type="text" name="licencia" [(ngModel)]="cliente.persona.cedula" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Primer nombre: </label>
+                  <input class="form-control" type="text" name="nombre1" [(ngModel)]="cliente.persona.nombre1" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Segundo nombre: </label>
+                  <input class="form-control" type="text" name="nombre2" [(ngModel)]="cliente.persona.nombre2" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Teléfono: </label>
+                  <input class="form-control" type="text" name="telefono" [(ngModel)]="cliente.persona.telefono" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Fecha nacimiento: </label>
+                  <input class="form-control" type="date" name="fecha_nac" [(ngModel)]="cliente.persona.fecha_nac" required>
+                </div>
               </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Primer nombre: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
+          
+              <!-- Columna de inputs y botón a la derecha -->
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms mb-3">
+                  <label>Tipo de licencia: </label>
+                  <select class="form-control" name="tipo_licencia" [(ngModel)]="cliente.tipo_licencia" required>
+                    <option *ngFor="let tl of tipos_licencias" [ngValue]="tl">{{tl}}</option>
+                  </select>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Primer apellido: </label>
+                  <input class="form-control" type="text" name="apellido1" [(ngModel)]="cliente.persona.apellido1" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Segundo apellido: </label>
+                  <input class="form-control" type="text" name="apellido2" [(ngModel)]="cliente.persona.apellido2" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Dirección: </label>
+                  <input class="form-control" type="text" name="direccion" [(ngModel)]="cliente.persona.direccion" required>
+                </div>
+          
+                <div class="form-group local-forms mb-3">
+                  <label>Email: </label>
+                  <input class="form-control" type="text" name="email" [(ngModel)]="cliente.persona.correo" required>
+                </div>
+          
+                <!-- Botón en el centro -->
+                <div class="col-12 text-center mt-3">
+                  <button class="btn btn-primary">Guardar</button>
+                </div>
               </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Segundo nombre: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-              
-              <div class="form-group local-forms mb-3">
-                <label>Teléfono: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Fecha nacimiento: </label>
-                <input class="form-control" type="date" placeholder="" id="direccion">
-              </div>
-            </div>
-  
-            <!-- Columna de inputs y botón a la derecha -->
-            <div class="col-12 col-md-6 col-xl-6">
-              <div class="form-group local-forms mb-3">
-                <label>Tipo de licencia: </label>
-                <!-- Reemplazar el siguiente input con un combo box -->
-                <select class="form-control" id="tipoLicencia">
-                  <option value="tipo1">Tipo 1</option>
-                  <option value="tipo2">Tipo 2</option>
-                  <!-- Agregar más opciones según sea necesario -->
-                </select>
-              </div>
-
-              <div class="form-group local-forms mb-3">
-                <label>Primer apellido: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Segundo apellido: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Dirección: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-  
-              <div class="form-group local-forms mb-3">
-                <label>Email: </label>
-                <input class="form-control" type="text" placeholder="" id="direccion">
-              </div>
-
-              <!-- Botón en el centro inior -->
-              <div class="col-12 text-center mt-3">
-                <button class="btn btn-primary" 
-                >Guardar</button>
-              </div>
-            </div>
-  
-            <!-- Columna de archivo al mismo nivel que los inputs sin título -->
-            <div class="col-12 col-md-6 col-xl-6">
-              <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
-              <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
-  
-              <!-- Espacio para la imagen -->
-              <div class="imagen-container mt-3">
-                <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid" />
+          
+              <!-- Columna de archivo al mismo nivel que los inputs sin título -->
+              <div class="col-12 col-md-6 col-xl-6">
+                <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
+                <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+          
+                <!-- Espacio para la imagen -->
+                <div class="imagen-container mt-3">
+                  <img *ngIf="cliente.persona.url_imagen" [src]="cliente.persona.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid">
+                </div>
               </div>
             </div>
-          </div>
+          </form>          
         </div>
       </div>
     </div>

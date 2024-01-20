@@ -3,51 +3,63 @@ import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ImagenService } from 'src/app/services/imagen.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  
 })
 export class ClientesComponent {
   clientes: Cliente[] = [];
   personas: Persona[] = [];
-
+  clientesFiltrados: Cliente[] = [];
+  filtro: string = '';
 
   constructor(
     private ser_cli: ClienteService,
     private ser_per: PersonaService,
-  ){}
+    private service_img: ImagenService,
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.listar();
   }
 
-  listar(){
-    this.ser_cli.listar().subscribe(clientes => {
+  listar() {
+    this.ser_cli.listar().subscribe((clientes) => {
       this.clientes = clientes;
 
-      this.ser_per.listar().subscribe(personas => {
+      this.ser_per.listar().subscribe((personas) => {
         this.personas = personas;
 
-        this.clientes.forEach(cliente => {
-          const persona = this.personas.find(persona => persona.id_persona === cliente.id_persona);
+        this.clientes.forEach((cliente) => {
+          const persona = this.personas.find((persona) => persona.id_persona === cliente.id_persona);
           if (persona) {
             cliente.persona = persona;
           }
         });
+
+        // Llenar inicialmente clientesFiltrados con todos los clientes
+        this.clientesFiltrados = this.clientes;
       });
     });
   }
 
+  filtrarClientes() {
+    // Filtrar clientes en base al término de búsqueda
+    this.clientesFiltrados = this.clientes.filter((cliente) => {
+      const textoBusqueda = `${cliente.persona.cedula} ${cliente.persona.nombre1} ${cliente.persona.apellido1} ${cliente.persona.fecha_nac} ${cliente.persona.fecha_reg}`
+        .toLowerCase();
+      return textoBusqueda.includes(this.filtro.toLowerCase());
+    });
+  }
+
   public eliminar(cliente: Cliente): void {
-    this.ser_cli.eliminar(cliente.id_cliente)
-      .subscribe(() => {
-        this.listar();
-        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1+" "+cliente.persona.apellido1} eliminado.`, 'success');
-      });
+    this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
+      this.listar();
+      Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
+    });
   }
 }
-

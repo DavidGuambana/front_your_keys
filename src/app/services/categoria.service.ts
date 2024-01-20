@@ -18,7 +18,7 @@ export class CategoriaService {
   }
 
   buscar(id_categoria: number):Observable<Categoria>{
-    return this.http.get<Categoria>('${this.urlEndPoint}/${id_categoria}');
+    return this.http.get<Categoria>(`${this.urlEndPoint}/${id_categoria}`);
   }
 
   crear(categoria: Categoria): Observable<Categoria>{
@@ -26,11 +26,11 @@ export class CategoriaService {
   }
 
   editar(categoria: Categoria): Observable<Categoria> {
-    const id_categoria = '${this.urlEndPoint}/${categoria.id_categoria}';
+    const id_categoria = `${this.urlEndPoint}/${categoria.id_categoria}`;
     return this.http.put<Categoria>(id_categoria, categoria, { headers: this.httpHeaders});
   }
 
   eliminar(id_categoria: number): Observable<Categoria>{
-    return this.http.delete<Categoria>('${this.urlEndPoint}/${id_categoria}')
+    return this.http.delete<Categoria>(`${this.urlEndPoint}/${id_categoria}`)
   }
 }

@@ -18,55 +18,20 @@ export const ComponentsRoutes: Routes = [
 	{
 		path: '',
 		children: [
-			{
-				path: 'table',
-				component: TableComponent
-			},
-			{
-				path: 'autos',
-				component: AutosComponent
-			},
-			{
-				path: 'autos/form',
-				component: formAuto
-			},
-			{
-				path: 'empleados',
-				component: EmpleadosComponent
-			},
-			{
-				path: 'pagination',
-				component: NgbdpaginationBasicComponent
-			},
-			{
-				path: 'badges',
-				component: BadgeComponent
-			},
-			{
-				path: 'alert',
-				component: NgbdAlertBasicComponent
-			},
-			{
-				path: 'dropdown',
-				component: NgbdDropdownBasicComponent
-			},
-			{
-				path: 'nav',
-				component: NgbdnavBasicComponent
-			},
-			{
-				path: 'buttons',
-				component: NgbdButtonsComponent
-			},
+			{path: 'table',component: TableComponent},
+			{path: 'autos',component: AutosComponent},
+			{path: 'autos/form',component: formAuto},
+			{path: 'empleados',component: EmpleadosComponent},
+			{path: 'pagination',component: NgbdpaginationBasicComponent},
+			{path: 'badges',component: BadgeComponent},
+			{path: 'alert',component: NgbdAlertBasicComponent},
+			{path: 'dropdown',component: NgbdDropdownBasicComponent},
+			{path: 'nav',component: NgbdnavBasicComponent},
+			{path: 'buttons',component: NgbdButtonsComponent},
+			{path: 'clientes',component: ClientesComponent},
+			{path: 'clientes/form',component: formCiente},
+			{path: 'clientes/form/:id', component: formCiente},
 
-			{
-				path: 'clientes',
-				component: ClientesComponent
-			},
-			{
-				path: 'clientes/form',
-				component: formCiente
-			},
 		]
 	}
 ];

@@ -17,7 +17,7 @@ private urlEndPoint:string = 'http://localhost:8080/api/personas';
   }
 
   buscar(id_persona: number):Observable<Persona>{
-    return this.http.get<Persona>('${this.urlEndPoint}/${id_persona}');
+    return this.http.get<Persona>(`${this.urlEndPoint}/${id_persona}`);
   }
 
   crear(persona: Persona): Observable<Persona>{
@@ -25,11 +25,11 @@ private urlEndPoint:string = 'http://localhost:8080/api/personas';
   }
 
   editar(persona: Persona): Observable<Persona> {
-    const id_persona = '${this.urlEndPoint}/${persona.id_persona}';
+    const id_persona = `${this.urlEndPoint}/${persona.id_persona}`;
     return this.http.put<Persona>(id_persona, persona, { headers: this.httpHeaders});
   }
 
   eliminar(id_persona: number): Observable<Persona>{
-    return this.http.delete<Persona>('${this.urlEndPoint}/${id_persona}')
+    return this.http.delete<Persona>(`${this.urlEndPoint}/${id_persona}`)
   }
 }

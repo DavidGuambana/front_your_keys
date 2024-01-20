@@ -18,7 +18,7 @@ export class RolService {
   }
 
   buscar(id_rol: number):Observable<Rol>{
-    return this.http.get<Rol>('${this.urlEndPoint}/${id_rol}');
+    return this.http.get<Rol>(`${this.urlEndPoint}/${id_rol}`);
   }
 
   crear(rol: Rol): Observable<Rol>{
@@ -26,11 +26,11 @@ export class RolService {
   }
 
   editar(rol: Rol): Observable<Rol> {
-    const id_rol = '${this.urlEndPoint}/${rol.id_rol}';
+    const id_rol = `${this.urlEndPoint}/${rol.id_rol}`;
     return this.http.put<Rol>(id_rol, rol, { headers: this.httpHeaders});
   }
 
   eliminar(id_rol: number): Observable<Rol>{
-    return this.http.delete<Rol>('${this.urlEndPoint}/${id_rol}')
+    return this.http.delete<Rol>(`${this.urlEndPoint}/${id_rol}`)
   }
 }
