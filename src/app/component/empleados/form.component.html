@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Formulario de Empleado</h4>
+          <div class="card-body border-top">
+            <div class="row">
+              <!-- Columna de inputs a la izquierda -->
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms mb-3">
+                  <label>Cedula: </label>
+                  <input class="form-control datetimepicker" type="text" placeholder="">
+                </div>
+    
+                <div class="form-group local-forms mb-3">
+                  <label>Usuario: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+
+                <div class="form-group local-forms mb-3">
+                  <label>Primer nombre: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+
+                <div class="form-group local-forms mb-3">
+                  <label>Segundo nombre: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+                
+                <div class="form-group local-forms mb-3">
+                  <label>Teléfono: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+    
+                <div class="form-group local-forms mb-3">
+                  <label>Fecha nacimiento: </label>
+                  <input class="form-control" type="date" placeholder="" id="direccion">
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms mb-3">
+                  <label>Salario: </label>
+                  <input class="form-control" type="text" id="direccion">
+                </div>
+
+                <div class="form-group local-forms mb-3">
+                  <label>Contraseña: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+
+                <div class="form-group local-forms mb-3">
+                  <label>Primer apellido: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+    
+                <div class="form-group local-forms mb-3">
+                  <label>Segundo apellido: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+    
+                <div class="form-group local-forms mb-3">
+                  <label>Dirección: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+    
+                <div class="form-group local-forms mb-3">
+                  <label>Email: </label>
+                  <input class="form-control" type="text" placeholder="" id="direccion">
+                </div>
+  
+                <div class="form-group local-forms mb-3">
+                  <label>Rol: </label>
+                  <!-- Reemplazar el siguiente input con un combo box 
+                  metodo para obtener el id de rol
+                  (change)="onSelectIDRol()"
+                  -->
+                  <select class="form-control" id="tipoLicencia" [(ngModel)]="rol.nombre" >
+                    <option value="{{rol.id_rol}}" *ngFor="let rol of roles">{{rol.nombre}}</option>
+                    <!-- Agregar más opciones según sea necesario -->
+                  </select>
+                </div>
+
+                <!-- Botón en el centro inior -->
+                <div class="col-12 text-center mt-3">
+                  <button class="btn btn-primary" 
+                  >Guardar</button>
+                </div>
+              </div>
+    
+              <!-- Columna de archivo al mismo nivel que los inputs sin título -->
+              <div class="col-12 col-md-6 col-xl-6">
+                <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
+                <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+    
+                <!-- Espacio para la imagen -->
+                <div class="imagen-container mt-3">
+                  <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

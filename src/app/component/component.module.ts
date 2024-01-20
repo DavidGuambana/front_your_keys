@@ -15,6 +15,7 @@ import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
 import { FormComponent as formAuto} from './autos/form.component';
+import { FormComponent } from './empleados/form.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,6 +39,7 @@ import { FormComponent as formAuto} from './autos/form.component';
     ClientesComponent,
     EmpleadosComponent,
     AutosComponent,
+    FormComponent,
   ],
 })
 export class ComponentsModule { }

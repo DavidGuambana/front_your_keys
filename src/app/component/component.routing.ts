@@ -12,6 +12,7 @@ import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
 import { FormComponent as formAuto} from './autos/form.component';
+import { FormComponent as fromEmpleado } from './empleados/form.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -67,6 +68,10 @@ export const ComponentsRoutes: Routes = [
 				path: 'clientes/form',
 				component: formCiente
 			},
+			{
+				path:'empleados/form',
+				component: fromEmpleado
+			}
 		]
 	}
 ];
