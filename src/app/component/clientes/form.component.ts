@@ -32,6 +32,7 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.buscar();
   }
+  
 
   buscar(): void {
     this.activedRoute.params.subscribe((params) => {
@@ -125,8 +126,8 @@ export class FormComponent implements OnInit {
         this.cliente.licencia = persona.cedula;
         this.ser_cli.crear(this.cliente).subscribe(
           (cliente) => {
+            Swal.fire('¡Acción exitosa!', `Cliente ${this.cliente.persona.nombre1 + ' ' + this.cliente.persona.apellido1} creado.`, 'success');
             this.router.navigate(['/component/clientes']);
-            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} creado.`, 'success');
           },
           (error) => {
             console.error('Error al crear el cliente:', error);
@@ -144,8 +145,8 @@ export class FormComponent implements OnInit {
       (persona) => {
         this.ser_cli.editar(this.cliente).subscribe(
           (cliente) => {
+            Swal.fire('¡Acción exitosa!', `Cliente ${this.cliente.persona.nombre1 + ' ' + this.cliente.persona.apellido1} actualizado.`, 'success');
             this.router.navigate(['/component/clientes']);
-            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} actualizado.`, 'success');
           },
           (error) => {
             console.error('Error al alcualizar el cliente:', error);

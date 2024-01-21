@@ -4,13 +4,13 @@
       <div class="card-body">
         <h4 class="card-title">{{ titulo }}</h4>
         <div class="card-body border-top">
-          <form (ngSubmit)="guardar()">
+          <form (ngSubmit)="guardar()" *ngIf="cliente.persona">
             <div class="row">
               <!-- Columna de inputs a la izquierda -->
               <div class="col-12 col-md-4 col-xl-3">
                 <div class="form-group local-forms mb-3">
                   <label>Licencia: </label>
-                  <input class="form-control datetimepicker" type="text" name="licencia"  [(ngModel)]="cliente.persona.cedula" required />
+                  <input class="form-control datetimepicker" type="text" name="licencia" [(ngModel)]="cliente.persona.cedula" required />
                 </div>
 
                 <div class="form-group local-forms mb-3">
@@ -34,7 +34,7 @@
                 </div>
               </div>
 
-              <!-- Columna de inputs y botón a la derecha -->
+              <!-- Columna de inputs a la derecha -->
               <div class="col-12 col-md-4 col-xl-3">
                 <div class="form-group local-forms mb-3">
                   <label>Tipo de licencia: </label>
@@ -76,6 +76,7 @@
                 </div>
               </div>
             </div>
+            <!-- Boton Guardar centrado -->
             <div class="col-12 d-flex justify-content-center align-items-center mt-3">
               <button class="btn btn-outline-success" >Guardar</button>
             </div>
