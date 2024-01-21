@@ -1,83 +1,73 @@
 <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Clientes</h4>
-          <div class="card-body border-top">
-            <div class="button-group d-flex justify-content-between align-items-center">
-              <button type="button" class="btn btn-outline-info" [routerLink]="['/component/clientes/form']">+ Agregar nuevo</button>
-              <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Buscar"
-                  [(ngModel)]="filtro"
-                  (ngModelChange)="filtrarClientes()"
-                  aria-label="Buscar"
-                  aria-describedby="button-addon2"
-                />
-                <div class="input-group-append">
-                  <span class="input-group-text btn-outline-success" id="button-addon2">
-                    <i class="bi bi-search"></i>
-                  </span>
-                </div>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Clientes</h4>
+        <div class="card-body border-top">
+          <div class="button-group d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/clientes/form']"> Agregar
+              nuevo</button>
+            <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
+              <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+                aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrarClientes()">
+              <div class="input-group-append">
+                <span class="input-group-text btn-outline-success" type="button"  id="button-addon2" (click)="borrarFiltro()">
+                  <i class="bi bi-backspace-fill fs-4a"></i>
+                </span>
               </div>
             </div>
           </div>
-  
-          <h5 class="card-subtitle text-muted">Resultados: {{ clientesFiltrados.length }}</h5>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle text-nowrap">
-              <thead>
-                <tr>
-                  <th class="text-dark font-medium fs-4">Foto de perfil</th>
-                  <th class="text-dark font-medium fs-4">Cédula</th>
-                  <th class="text-dark font-medium fs-4">Nombre</th>
-                  <th class="text-dark font-medium fs-4">Apellido</th>
-                  <th class="text-dark font-medium fs-4">Nacimiento</th>
-                  <th class="text-dark font-medium fs-4">Registro</th>
-                  <th class="text-dark font-medium fs-4">Editar</th>
-                  <th class="text-dark font-medium fs-4">Eliminar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let cliente of clientesFiltrados">
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <img [src]="cliente.persona.url_imagen" alt="user" width="45" class="rounded-circle" />
+        </div>
+
+        <h5 class="card-subtitle text-muted">Resultados: {{ clientesFiltrados.length }}</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle text-nowrap">
+            <thead style="background-color: #343a40;" class="fs-4 text-light">
+              <tr>
+                <th>Nombre & Email</th>
+                <th></th>
+                <th>Licencia</th>
+                <th>Nacimiento</th>
+                <th>Registro</th>
+                <th></th>
+                <th></th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientesFiltrados">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img [src]="cliente.persona.url_imagen" onerror="this.src='assets/images/users/incognito.webp'" width="45" class="rounded-circle" />
+                    <div class="ms-3">
+                      <td><h5 class="mb-0 fw-normal">{{ cliente.persona.nombre1 +' '+cliente.persona.apellido1}}</h5></td>
+                      <span class="text-info">{{cliente.persona.correo}}</span>
                     </div>
-                  </td>
-                  <td>
-                    <h5 class="mb-0 fw-normal">{{ cliente.persona.cedula }}</h5>
-                  </td>
-                  <td>
-                    <h5 class="mb-0 fw-normal">{{ cliente.persona.nombre1 }}</h5>
-                  </td>
-                  <td>
-                    <h5 class="mb-0 fw-normal">{{ cliente.persona.apellido1 }}</h5>
-                  </td>
-                  <td>
-                    <h5 class="mb-0 fw-normal">{{ cliente.persona.fecha_nac }}</h5>
-                  </td>
-                  <td>
-                    <h5 class="mb-0 fw-normal">{{ cliente.persona.fecha_reg }}</h5>
-                  </td>
-                  <td>
-                    <a [routerLink]="['/component/clientes/form', cliente.id_cliente]">
-                      <i class="bi bi-pencil-square fs-4 text-info"></i>
-                    </a>
-                  </td>
-                  <td>
-                    <button (click)="eliminar(cliente)">
-                      <i class="bi bi-trash fs-4 text-danger"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  </div>
+                </td>
+                <td>
+                  <button (click)="eliminar(cliente)" class="btn p-0">
+                    <i class="bi bi-bookmark-plus-fill fs-7 text-success"></i>
+                  </button>
+                </td>
+                <td class="fs-4 fw-normal">{{ cliente.persona.cedula }}</td>
+                <td class="fs-4">{{ cliente.persona.fecha_nac}}</td>
+                <td class="fs-4">{{ cliente.persona.fecha_reg}}</td>
+                <td>
+                  <a [routerLink]="['/component/clientes/form', cliente.id_cliente]">
+                    <i class="bi bi-pencil-fill fs-4 text-info"></i>
+                  </a>
+                </td>
+                <td>
+                  <button (click)="eliminar(cliente)" class="btn p-0">
+                    <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

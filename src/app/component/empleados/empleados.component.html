@@ -1,77 +1,80 @@
 <div class="row">
     <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Empleados</h4>
-          <div class="card-body border-top">
-            <div class="button-group d-flex justify-content-between align-items-center">
-                <button type="button" class="btn btn-outline-info" [routerLink]="['/component/empleados/form']">+ Agregar nuevo</button>
-                <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
-                    <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <span class="input-group-text btn-outline-success" id="button-addon2">
-                            <i class="bi bi-search"></i> <!-- Assuming you are using Bootstrap Icons -->
-                        </span>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Empleados</h4>
+                <div class="card-body border-top">
+                    <div class="button-group d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-outline-info"
+                            [routerLink]="['/component/empleados/form']">+ Agregar nuevo</button>
+                        <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+                                aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <span class="input-group-text btn-outline-success" id="button-addon2">
+                                    <i class="bi bi-search"></i> <!-- Assuming you are using Bootstrap Icons -->
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+
+                <h5 class="card-subtitle text-muted">Resultados: 0</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="text-dark font-medium fs-4">Foto de perfil</th>
+                                <th class="text-dark font-medium fs-4">Cédula</th>
+                                <th class="text-dark font-medium fs-4">Nombre</th>
+                                <th class="text-dark font-medium fs-4">Apellido</th>
+                                <th class="text-dark font-medium fs-4">Edad</th>
+                                <th class="text-dark font-medium fs-4">Registro</th>
+                                <th class="text-dark font-medium fs-4">Editar</th>
+                                <th class="text-dark font-medium fs-4">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let emple of empleados">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img [src]=emple.persona.url_imagen alt="user" width="45"
+                                            class="rounded-circle">
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5 class="mb-0 fw-normal">{{emple.persona.cedula}}</h5>
+                                </td>
+                                <td>
+                                    <h5 class="mb-0 fw-normal">{{emple.persona.nombre1}}</h5>
+                                </td>
+                                <td>
+                                    <h5 class="mb-0 fw-normal">{{emple.persona.apellido1}}</h5>
+                                </td>
+                                <td>
+                                    <h5 class="mb-0 fw-normal">{{emple.persona.fecha_nac}}</h5>
+                                </td>
+                                <td>
+                                    <h5 class="mb-0 fw-normal">{{emple.persona.fecha_reg}}</h5>
+                                </td>
+                                <td>
+                                    <!--<a [routerLink]="['/component/form', cliente.id_cliente]">
+                                <i class="bi bi-pencil-square fs-4 text-info"></i>
+                            </a>-->
+                                </td>
+                                <td>
+                                    <!--<button (click)="eliminar(cliente)">
+                                <i class="bi bi-trash fs-4 text-danger"></i>
+                            </button>-->
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        
-
-          <h5 class="card-subtitle text-muted">Resultados: 0</h5>
-          <div class="table-responsive"  >
-            <table class="table table-hover align-middle text-nowrap">
-                <thead>
-                    <tr>
-                        <th class="text-dark font-medium fs-4">Foto de perfil</th>
-                        <th class="text-dark font-medium fs-4">Cédula</th>
-                        <th class="text-dark font-medium fs-4">Nombre</th>
-                        <th class="text-dark font-medium fs-4">Apellido</th>
-                        <th class="text-dark font-medium fs-4">Edad</th>
-                        <th class="text-dark font-medium fs-4">Registro</th>
-                        <th class="text-dark font-medium fs-4">Editar</th>
-                        <th class="text-dark font-medium fs-4">Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let emple of empleados">
-                        <td>
-                            <div class="d-flex align-items-center" >
-                                <img [src]=emple.persona.url_imagen alt="user" width="45" class="rounded-circle">
-                                
-                            </div>
-                        </td>
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{emple.persona.cedula}}</h5>
-                        </td>
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{emple.persona.nombre1}}</h5>
-                        </td>
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{emple.persona.apellido1}}</h5>
-                        </td>
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{emple.persona.fecha_nac}}</h5>
-                        </td>
-                        <td>
-                            <h5 class="mb-0 fw-normal">{{emple.persona.fecha_reg}}</h5>
-                        </td>
-                        <td>
-                            <!--<a [routerLink]="['/component/form', cliente.id_cliente]">
-                                <i class="bi bi-pencil-square fs-4 text-info"></i>
-                            </a>-->
-                        </td>
-                        <td>
-                            <!--<button (click)="eliminar(cliente)">
-                                <i class="bi bi-trash fs-4 text-danger"></i>
-                            </button>-->
-                        </td>
-
-                    </tr>        
-                </tbody>
-            </table>
-        </div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

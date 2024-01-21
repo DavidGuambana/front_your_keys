@@ -56,6 +56,12 @@ export class ClientesComponent {
     });
   }
 
+  borrarFiltro(): void {
+    this.filtro = '';
+    this.filtrarClientes();
+  }
+
+
   public eliminar(cliente: Cliente): void {
     this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
       this.listar();
