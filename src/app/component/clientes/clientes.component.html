@@ -47,9 +47,9 @@
                   </div>
                 </td>
                 <td>
-                  <button (click)="eliminar(cliente)" class="btn p-0">
+                  <a [routerLink]="['/component/alquileres/form', cliente.id_cliente]">
                     <i class="bi bi-bookmark-plus-fill fs-7 text-success"></i>
-                  </button>
+                  </a>
                 </td>
                 <td class="fs-4 fw-normal">{{ cliente.persona.cedula }}</td>
                 <td class="fs-4">{{ cliente.persona.fecha_nac}}</td>
