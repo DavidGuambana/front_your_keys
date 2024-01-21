@@ -1,4 +1,5 @@
 import { Alquiler } from "./alquiler";
+import { Estado } from "./estado";
 import { Marca } from "./marca";
 import { Modelo } from "./modelo";
 
@@ -15,4 +16,5 @@ export class Auto {
     id_estado:number = 0;
     listado: Alquiler []= [];
     modelo:Modelo=new Modelo;
+    estado:Estado=new Estado;
 }

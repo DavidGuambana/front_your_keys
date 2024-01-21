@@ -35,15 +35,15 @@
                   <ul class="list-unstyled mb-0 small">
                     <li><strong>Capacidad:</strong> {{auto.capacidad}}</li>
                     <li><strong>Precio Diario:</strong>{{auto.precio_diario + " $"}}</li>
-                    <li><strong>Estado:</strong> Disponible</li>
+                    <li><strong>Estado:</strong> {{auto.estado.nombre}}</li>
                   </ul>
                 </div>
               </div>
               <div class="d-flex flex-column align-items-center justify-content-center mt-3">
                 <button type="button" class="btn btn-outline-success btn-block mb-2">+Seleccionar</button>
                 <div class="d-flex">
-                  <button type="button" class="btn btn-outline-info  mr-2">Editar</button>
-                  <button type="button" class="btn btn-outline-danger ">Borrar</button>
+                  <button type="button" class="btn btn-outline-info  mr-2" [routerLink]="['/component/autos/form',auto.id_auto]">Editar</button>
+                  <button type="button" class="btn btn-outline-danger" (click)="delete(auto)">Borrar</button>
                 </div>
               </div>
             </div>
