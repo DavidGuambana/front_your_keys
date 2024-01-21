@@ -27,7 +27,7 @@
                   </div>
             
                     <div class="form-group local-forms mb-3">
-                      <label for="idModelo">Modelo<span class="login-danger">*</span></label>
+                      <label for="idModelo">Modelo<span class="login-danger"></span></label>
                       <select name="Modelo" id="Modelo" class="form-control" [(ngModel)]="auto.id_modelo">
                         <option value="-1">[Seleccione]</option>
                         <option *ngFor="let modelo of modelosList" [value]="modelo.id_modelo">
@@ -37,7 +37,7 @@
                     </div>
             
                     <div class="form-group local-forms mb-3">
-                      <label for="idCategoria">Categoria<span class="login-danger">*</span></label>
+                      <label for="idCategoria">Categoria<span class="login-danger"></span></label>
                       <select name="Categoria" id="Categoria" class="form-control" [(ngModel)]="auto.id_categoria">
                         <option value="-1">[Seleccione]</option>
                         <option *ngFor="let cate of categoriaList" [value]="cate.id_categoria">
@@ -45,25 +45,36 @@
                         </option>
                       </select>
                     </div>
+
+                    <div class="form-group local-forms mb-3">
+                      <label for="idEstado">Estado<span class="login-danger"></span></label>
+                      <select name="Estado" id="Estado" class="form-control" [(ngModel)]="auto.id_estado">
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let esta of estadoList" [value]="esta.id_estado">
+                          {{ esta.nombre }}
+                        </option>
+                      </select>
+                    </div>
             
                     <div class="form-group local-forms mb-3">
-                      <label for="color">Color <span class="login-danger">*</span></label>
+                      <label for="color">Color <span class="login-danger"></span></label>
                       <input id="color" class="form-control" type="text" placeholder="Ejemplo: Rojo" [(ngModel)]="auto.color" name="color">
                     </div>
+                    
             
                     <div class="form-group local-forms mb-3">
-                      <label for="capacidad">Capacidad <span class="login-danger">*</span></label>
-                      <input id="capacidad" class="form-control" type="number" placeholder="Ejemplo: 5" [(ngModel)]="auto.capacidad" name="capacidad">
+                      <label for="capacidad">Capacidad <span class="login-danger"></span></label>
+                      <input id="capacidad" class="form-control" type="number" placeholder="Ejemplo: 5" [(ngModel)]="auto.capacidad" name="capacidad" min="0">
                     </div>
             
                     <div class="form-group local-forms mb-3">
-                      <label for="potencia">Potencia <span class="login-danger">*</span></label>
-                      <input id="potencia" class="form-control" type="number" placeholder="Ejemplo: 200" [(ngModel)]="auto.potencia" name="potencia">
+                      <label for="potencia">Potencia <span class="login-danger"></span></label>
+                      <input id="potencia" class="form-control" type="number" placeholder="Ejemplo: 200" [(ngModel)]="auto.potencia" name="potencia" min="0">
                     </div>
             
                     <div class="form-group local-forms mb-3">
-                      <label for="precioDiario">Precio Diario <span class="login-danger">*</span></label>
-                      <input id="precioDiario" class="form-control" type="number" placeholder="Ejemplo: 50" [(ngModel)]="auto.precio_diario" name="precioDiario">
+                      <label for="precioDiario">Precio Diario <span class="login-danger"></span></label>
+                      <input id="precioDiario" class="form-control" type="number" placeholder="Ejemplo: 50" [(ngModel)]="auto.precio_diario" name="precioDiario" min="0">
                     </div>
                   </div>
             
@@ -72,13 +83,17 @@
 
 
                   <div class="col-12 col-md-6 col-xl-6 text-center">              
-                    <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
-                    <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
-                    <div class="imagen-container mt-3" style="width: 300px; height: 300px;">
-                      <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid" />
+                    <div class="card bg-light">
+                      <div class="card-body">
+                        <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
+                        <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+                  
+                        <div class="imagen-container mt-3 mx-auto" style="width: 300px; height: 300px;">
+                          <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid img-thumbnail" />
+                        </div>                      
+                      </div>
                     </div>
-                    <!-- Columna de archivo al mismo nivel que los inputs sin título -->
-                    <div class="col-12 col-md-6 col-xl-6"></div>
+                  
                   </div>
                 </div>
             

@@ -8,6 +8,9 @@ import { MarcaService } from 'src/app/services/marca.service';
 import { ModeloService } from 'src/app/services/modelo.service';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { Categoria } from 'src/app/models/categoria';
+import { Estado } from 'src/app/models/estado';
+import { EstadoService } from 'src/app/services/estado.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
@@ -20,6 +23,7 @@ export class FormComponent implements OnInit {
   marcasList: Marca[] = [];
   modelosList:Modelo[]=[];
   categoriaList:Categoria[]=[];
+  estadoList:Estado[]=[];
   imagenUrl: string | undefined;
   nuevaImagenFile: File | undefined;
   id_marca:any;
@@ -29,6 +33,7 @@ export class FormComponent implements OnInit {
     private marcaService: MarcaService,
     private modeloService: ModeloService,
     private categoriaService:CategoriaService,
+    private estadoService:EstadoService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -36,8 +41,9 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.cargarAuto();
     this.cargarMarcas();
-    this.cargarModeloss();
+    //this.cargarModeloss();
     this.cargarCategorias();
+    this.cargarEstado();
   }
 
 
@@ -65,10 +71,14 @@ export class FormComponent implements OnInit {
       categorias => this.categoriaList = categorias
     );
   }
-  
-
-
-
+  cargarEstado() {
+    this.estadoService.listar().subscribe(
+      estados => {
+        this.estadoList = estados;
+        console.log('Lista de estados:', this.estadoList);
+      }
+    );
+  }
   cargarModelos(): void {
     console.log('Marca seleccionada:', this.id_marca);
     this.modeloService.listar().subscribe(
@@ -91,10 +101,49 @@ export class FormComponent implements OnInit {
       reader.readAsDataURL(files[0]);
     }
   }
-  create(): void {  
-    this.auto.id_estado=1;
-    this.autoService.crear(this.auto).subscribe(() => {
-      this.router.navigate(['component/autos']);
-    });
+  validateForm(): boolean {
+    // Verificar si los campos obligatorios están llenos
+    if (
+      !this.auto ||
+      !this.auto.matricula ||
+      !this.auto.id_modelo ||
+      !this.auto.id_estado ||
+      !this.auto.color ||
+      !this.auto.capacidad ||
+      !this.auto.potencia ||
+      !this.auto.precio_diario ||
+      !this.auto.id_categoria // Agregamos la validación para id_categoria
+    ) {
+      Swal.fire('¡Error!', 'Por favor, completa todos los campos obligatorios.', 'error');
+      return false;
+    }
+    return true;
   }
+  create(): void {
+    if (this.validateForm()) {
+      this.autoService.crear(this.auto).subscribe(
+        () => {
+          this.router.navigate(['component/autos']);
+          Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
+        },
+        (error) => {
+          console.error('Error al crear el auto:', error);
+  
+          // Verificar si el error es específico para datos duplicados
+          if (error.status === 500) {
+            Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
+          } else {
+            Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+          }
+        }
+      );
+    }
+  }
+  
+  
+  
+
+
+   
+
 }   
