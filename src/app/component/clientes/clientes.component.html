@@ -38,7 +38,8 @@
               <tr *ngFor="let cliente of clientesFiltrados">
                 <td>
                   <div class="d-flex align-items-center">
-                    <img [src]="cliente.persona.url_imagen" onerror="this.src='assets/images/users/incognito.webp'" width="45" class="rounded-circle" />
+                    <img [src]="cliente.persona.url_imagen" onerror="this.src='assets/images/users/incognito.webp'"
+                    width="45" class="rounded-circle" />
                     <div class="ms-3">
                       <td><h5 class="mb-0 fw-normal">{{ cliente.persona.nombre1 +' '+cliente.persona.apellido1}}</h5></td>
                       <span class="text-info">{{cliente.persona.correo}}</span>

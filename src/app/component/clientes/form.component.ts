@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit {
   public titulo: string = "Nuevo cliente";
   nuevaImagenFile: File | undefined;
-  tipos_licencias: string[] = ['A', 'B', 'F','A1','C','C1','D','D1','E','E1','G'];
+  tipos_licencias: string[] = ['A', 'B', 'F', 'A1', 'C', 'C1', 'D', 'D1', 'E', 'E1', 'G'];
 
   public cliente: Cliente = new Cliente();
   public personas: Persona[] = [];
@@ -27,24 +27,25 @@ export class FormComponent implements OnInit {
     private service_img: ImagenService,
     private router: Router,
     private activedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buscar();
   }
-  
+
   buscar(): void {
     this.activedRoute.params.subscribe((params) => {
       let id = params['id'];
       if (id) {
         this.titulo = "Actualizar cliente";
-        this.ser_cli.buscar(id).subscribe((cliente) => {this.cliente = cliente;
-            this.ser_per.buscar(cliente.id_persona).subscribe(
-              (persona) => {
-                cliente.persona = persona;
-              }
-            );
-          },
+        this.ser_cli.buscar(id).subscribe((cliente) => {
+          this.cliente = cliente;
+          this.ser_per.buscar(cliente.id_persona).subscribe(
+            (persona) => {
+              cliente.persona = persona;
+            }
+          );
+        },
         );
       }
     });
@@ -90,35 +91,30 @@ export class FormComponent implements OnInit {
       this.crearCliente();
     }
   }
-  
+
   editar(): void {
     if (!this.camposValidos()) {
       Swal.fire('¡Campos vacíos!', 'No se admiten campos vacíos.', 'warning');
-    } else {
-      if (this.nuevaImagenFile) {
-        this.service_img.postImagen(this.nuevaImagenFile).subscribe(
-          (uniqueFileName) => {
-            if (this.cliente.persona.url_imagen) {
-              this.service_img.deleteImagen(this.cliente.persona.url_imagen).subscribe(
-                () => {
-                  console.log('Imagen anterior eliminada:', this.cliente.persona.url_imagen);
-                },
-                (error) => {
-                  console.error('Error al eliminar la imagen anterior:', error);
-                }
-              );
-            }
-    
-            this.cliente.persona.url_imagen = uniqueFileName;
-            this.actualizarCliente();
-          },
-          (error) => {
-            console.error('Error al subir la nueva imagen:', error);
+      return;
+    }
+
+    if (this.nuevaImagenFile) {
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+
+        (url_imagen: string) => {
+          // Eliminar la imagen anterior si existe
+          if (this.cliente.persona.url_imagen) {
+            this.service_img.deleteImagen(this.cliente.persona.url_imagen);
           }
-        );
-      } else {
-        this.actualizarCliente();
-      }
+          this.cliente.persona.url_imagen = url_imagen;
+          this.actualizarCliente();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    } else {
+      this.actualizarCliente();
     }
   }
 
@@ -144,13 +140,20 @@ export class FormComponent implements OnInit {
   }
 
   private actualizarCliente(): void {
-    this.ser_cli.editar(this.cliente).subscribe(
-      (cliente) => {
-        this.router.navigate(['/clientes']);
-        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} actualizado.`, 'success');
+    this.ser_per.editar(this.cliente.persona).subscribe(
+      (persona) => {
+        this.ser_cli.editar(this.cliente).subscribe(
+          (cliente) => {
+            this.router.navigate(['/component/clientes']);
+            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} actualizado.`, 'success');
+          },
+          (error) => {
+            console.error('Error al alcualizar el cliente:', error);
+          }
+        );
       },
       (error) => {
-        console.error('Error al actualizar el cliente:', error);
+        console.error('Error al alcualizar la persona:', error);
       }
     );
   }
