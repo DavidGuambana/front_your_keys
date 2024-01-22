@@ -3,7 +3,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Autos | Formulario</h4>
+        <h4 class="card-title">{{titulo}}</h4>
         <div class="card-body border-top">
           <div class="row">
             <form (ngSubmit)="create()">
@@ -13,8 +13,9 @@
                   <div class="col-12 col-md-6 col-xl-6">
                     <div class="form-group local-forms mb-3">
                       <label for="matricula">Matrícula:<span class="login-danger"></span></label>
-                      <input id="matricula" class="form-control" type="text" placeholder="Ejemplo: ABC-123" [(ngModel)]="auto.matricula" name="matricula">
+                      <input id="matricula" class="form-control" type="text" placeholder="Ejemplo: ABC-123" [(ngModel)]="auto.matricula" name="matricula" [readonly]="esReadOnly()">
                     </div>
+                    
             
                     <div class="form-group local-forms mb-3">
                       <label for="idMarca">Marca:</label>

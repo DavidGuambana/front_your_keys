@@ -173,5 +173,11 @@ export class FormComponent implements OnInit {
       persona.correo
     );
   }
+  esReadOnly(): boolean {
+    if (this.cliente.id_cliente === 0) {
+      return false
+    }
+    return true
+  }
 }
 
