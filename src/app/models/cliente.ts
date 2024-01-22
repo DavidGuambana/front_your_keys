@@ -8,5 +8,6 @@ export class Cliente {
     licencia: string = '';
     tipo_licencia: string = '';
     alquileres: Alquiler []= [];
+    
     persona: Persona = new Persona;
 }

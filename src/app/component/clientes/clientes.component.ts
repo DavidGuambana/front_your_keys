@@ -56,10 +56,30 @@ export class ClientesComponent {
     });
   }
 
+  borrarFiltro(): void {
+    this.filtro = '';
+    this.filtrarClientes();
+  }
+
+
   public eliminar(cliente: Cliente): void {
-    this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
-      this.listar();
-      Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
-    });
+    if (cliente.alquileres.length > 0 || cliente.persona.usuarios.length > 0 || cliente.persona.empleados.length > 0) {
+      if (cliente.alquileres.length > 0) {
+        Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene ${cliente.alquileres.length === 1 ? 'un alquiler' : `${cliente.alquileres.length} alquileres`} asignado(s).`, 'warning');
+      }
+    
+      if (cliente.persona.usuarios.length > 0) {
+        Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene una cuenta de usuario asignado.`, 'warning');
+      }
+    
+      if (cliente.persona.empleados.length > 0) {
+        Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} también es un empleado.`, 'warning');
+      }
+      return;
+    } 
+      this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
+        this.listar();
+        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
+      });
   }
 }

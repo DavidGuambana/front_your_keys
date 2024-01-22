@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: rgb(203, 241, 182);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        th {
+            background-color: #e2eff3;
+            color: #0f0f0f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let marca of marcas">
+                    <td>{{ marca.nombre }}</td>
+                    <td>
+                        <div *ngFor="let modelo of modelo">
+                            {{ marca.id_marca == modelo.id_marca ? modelo.nombre : '' }}
+                        </div>
+                    </td>
+                    <button type="button">Editar</button>
+                </tr>
+            </tbody>
+        </table>
+        <form>
+            <label for="schedule">Registrar:</label>
+            <select id="schedule" name="schedule">
+                <option value="all-day">Modelos</option>
+                <option value="morning">Marca</option>
+                <option value="afternoon">Proteccion</option>
+            </select>
+        </form>
+
+
+
+        <div class="info">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Proteccion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proteccion of proteccion">
+                        <td>{{ proteccion.nombre }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

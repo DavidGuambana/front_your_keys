@@ -12,74 +12,89 @@
                   <!-- Primer bloque de elementos del formulario -->
                   <div class="col-12 col-md-6 col-xl-6">
                     <div class="form-group local-forms mb-3">
-                      <label for="matricula">Matrícula <span class="login-danger">*</span></label>
-                      <input id="matricula" class="form-control" type="text" placeholder="Ejemplo: ABC-123">
+                      <label for="matricula">Matrícula:<span class="login-danger"></span></label>
+                      <input id="matricula" class="form-control" type="text" placeholder="Ejemplo: ABC-123" [(ngModel)]="auto.matricula" name="matricula">
                     </div>
-
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="idMarca">Marca<span class="login-danger">*</span></label>
-                      <select name="Marca" id="Marca" class="form-control" [(ngModel)]="idmarca" (change)="cargarModelos(idmarca)" >
-                        <option value="-1">[Seleccione]</option>
-                        <option *ngFor="let marca of marcasList" [value]="marca.id_marca">
-                          {{ marca.nombre }}
-                        </option>
+                      <label for="idMarca">Marca:</label>
+                      <select name="Marca" id="Marca" class="form-control" (change)="cargarModelos()" [(ngModel)]="id_marca">
+                          <option value="-1">[Seleccione]</option>
+                          <option *ngFor="let marca of marcasList" [ngValue]="marca.id_marca">
+                              {{ marca.nombre }}
+                          </option>
                       </select>
-                    </div>
-
+                  </div>
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="idModelo">Modelo<span class="login-danger">*</span></label>
-                      <select name="Modelo" id="Modelo" class="form-control">
+                      <label for="idModelo">Modelo:<span class="login-danger"></span></label>
+                      <select name="Modelo" id="Modelo" class="form-control" [(ngModel)]="auto.id_modelo">
                         <option value="-1">[Seleccione]</option>
                         <option *ngFor="let modelo of modelosList" [value]="modelo.id_modelo">
                           {{ modelo.nombre }}
                         </option>
                       </select>
                     </div>
-                  
-
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="idCategoria">ID Categoría <span class="login-danger">*</span></label>
-                      <input id="idCategoria" class="form-control" type="number" placeholder="Ejemplo: 1">
+                      <label for="idCategoria">Categoria:<span class="login-danger"></span></label>
+                      <select name="Categoria" id="Categoria" class="form-control" [(ngModel)]="auto.id_categoria">
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let cate of categoriaList" [value]="cate.id_categoria">
+                          {{ cate.nombre }}
+                        </option>
+                      </select>
                     </div>
 
                     <div class="form-group local-forms mb-3">
-                      <label for="color">Color <span class="login-danger">*</span></label>
-                      <input id="color" class="form-control" type="text" placeholder="Ejemplo: Rojo">
+                      <label for="idEstado">Estado:<span class="login-danger"></span></label>
+                      <select name="Estado" id="Estado" class="form-control" [(ngModel)]="auto.id_estado">
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let esta of estadoList" [value]="esta.id_estado">
+                          {{ esta.nombre }}
+                        </option>
+                      </select>
                     </div>
-
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="capacidad">Capacidad <span class="login-danger">*</span></label>
-                      <input id="capacidad" class="form-control" type="number" placeholder="Ejemplo: 5">
+                      <label for="color">Color:<span class="login-danger"></span></label>
+                      <input id="color" class="form-control" type="text" placeholder="" [(ngModel)]="auto.color" name="color">
                     </div>
-
+                    
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="potencia">Potencia <span class="login-danger">*</span></label>
-                      <input id="potencia" class="form-control" type="number" placeholder="Ejemplo: 200">
+                      <label for="capacidad">Capacidad:<span class="login-danger"></span></label>
+                      <input id="capacidad" class="form-control" type="number" placeholder="" [(ngModel)]="auto.capacidad" name="capacidad" min="0">
                     </div>
-
+            
                     <div class="form-group local-forms mb-3">
-                      <label for="precioDiario">Precio Diario <span class="login-danger">*</span></label>
-                      <input id="precioDiario" class="form-control" type="number" placeholder="Ejemplo: 50">
+                      <label for="potencia">Potencia:<span class="login-danger"></span></label>
+                      <input id="potencia" class="form-control" type="number" placeholder="" [(ngModel)]="auto.potencia" name="potencia" min="0">
+                    </div>
+            
+                    <div class="form-group local-forms mb-3">
+                      <label for="precioDiario">Precio Diario:<span class="login-danger"></span></label>
+                      <input id="precioDiario" class="form-control" type="number" placeholder="" [(ngModel)]="auto.precio_diario" name="precioDiario" min="0">
                     </div>
                   </div>
-
+            
                   <!-- Segundo bloque de elementos del formulario -->
-                  <div class="col-12 col-md-6 col-xl-6 text-center">
-                    <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
-                    <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*"
-                      class="d-none">
-                    <div class="imagen-container mt-3" style="width: 300px; height: 300px;">
-                      <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual"
-                        class="imagen-redonda img-fluid" />
-                    </div>
-                    <!-- Columna de archivo al mismo nivel que los inputs sin título -->
-                    <div class="col-12 col-md-6 col-xl-6">
+
+
+                  <div class="col-9 col-md-4 order-md-1">
+                    <label>Foto: </label>
+                    <input class="form-control" type="file" name="foto" (change)="onFileSelected($event)" accept="image/*"/>
+                    <div><br></div>
+                    <!-- Espacio para la imagen -->
+                    <div class="imagen-container mt-1 mb-1 d-flex align-items-center justify-content-center">
+                      <img *ngIf="auto.url_imagen" [src]="auto.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid" />
                     </div>
                   </div>
+
                 </div>
-                <!-- Botón de envío del formulario -->
-                <div class="card-footer text-center">
-                  <button type="button" class="btn btn-rounded btn-success">Guardar</button>
+                <!-- Boton Guardar centrado -->
+                <div class="col-12 d-flex justify-content-center align-items-center mt-3">
+                  <button class="btn btn-outline-success" >Guardar</button>
                 </div>
               </div>
             </form>

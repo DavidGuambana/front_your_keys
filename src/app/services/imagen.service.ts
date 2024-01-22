@@ -21,7 +21,7 @@ export class ImagenService {
     return this.http.get(`${this.apiUrl}/${urlImagen}`, { responseType: 'blob' });
   }
 
-  deleteImagen(urlImagen: string): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/${urlImagen}`);
+  deleteImagen(http: string): Observable<string> {
+    return this.http.delete<string>(`${http}`);
   }
 }

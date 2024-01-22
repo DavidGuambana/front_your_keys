@@ -16,6 +16,13 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
 import { FormComponent as formAuto} from './autos/form.component';
 import { FormComponent } from './empleados/form.component';
+import { AlquileresComponent } from './alquileres/alquileres.component';
+import { DevolucionesComponent } from './devoluciones/devoluciones.component';
+import { ReservasComponent } from './reservas/reservas.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { FormComponent as formAdmin } from './admin/form.component';
+import { AdminComponent } from './admin/admin.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -36,10 +43,16 @@ import { FormComponent } from './empleados/form.component';
   declarations: [
     formCiente,
     formAuto,
+    formAdmin,
     ClientesComponent,
     EmpleadosComponent,
     AutosComponent,
     FormComponent,
+    AlquileresComponent,
+    DevolucionesComponent,
+    ReservasComponent,
+    PerfilComponent,
+    AdminComponent,
   ],
 })
 export class ComponentsModule { }

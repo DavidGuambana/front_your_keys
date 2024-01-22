@@ -4,8 +4,8 @@ export const ROUTES: RouteInfo[] = [
  
   {
     path: '/dashboard',
-    title: 'Dashboard',
-    icon: 'bi bi-speedometer2',
+    title: 'Inicio',
+    icon: 'bi bi-house-door',
     class: '',
     extralink: false,
     submenu: []
@@ -14,7 +14,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/autos',
     title: 'Autos',
-    icon: 'bi bi-card-text',
+    icon: 'bi bi-car-front',
     class: '',
     extralink: false,
     submenu: []
@@ -102,6 +102,39 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
+  },
+  {
+    path: '/component/alquileres',
+    title: 'Alquileres',
+    icon: 'bi bi-bookmark',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/devoluciones',
+    title: 'Devoluciones',
+    icon: 'bi bi-bookmark-check',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/reservas',
+    title: 'Reservas',
+    icon: 'bi bi-bell',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/admin',
+    title: 'Admin',
+    icon: 'bi bi-bell',
+    class: '',
+    extralink: false,
+    submenu: []
   }
+
   
 ];

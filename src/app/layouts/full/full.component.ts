@@ -7,6 +7,7 @@ import { SidebarComponent } from "src/app/shared/sidebar/sidebar.component";
 
 //declare var $: any;
 
+
 @Component({
   selector: "app-full-layout",
   standalone:true,
@@ -15,6 +16,8 @@ import { SidebarComponent } from "src/app/shared/sidebar/sidebar.component";
   styleUrls: ["./full.component.scss"],
 })
 export class FullComponent implements OnInit {
+
+  public currentYear: number = 0;
 
   constructor(public router: Router) {}
   public isCollapsed = false;
@@ -29,6 +32,7 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentYear = new Date().getFullYear();
     if (this.router.url === "/") {
       this.router.navigate(["/dashboard"]);
     }
@@ -63,4 +67,5 @@ export class FullComponent implements OnInit {
       default:
     }
   }
+  
 }
