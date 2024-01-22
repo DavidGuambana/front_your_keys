@@ -20,6 +20,9 @@ import { AlquileresComponent } from './alquileres/alquileres.component';
 import { DevolucionesComponent } from './devoluciones/devoluciones.component';
 import { ReservasComponent } from './reservas/reservas.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { FormComponent as formAdmin } from './admin/form.component';
+import { AdminComponent } from './admin/admin.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { PerfilComponent } from './perfil/perfil.component';
   declarations: [
     formCiente,
     formAuto,
+    formAdmin,
     ClientesComponent,
     EmpleadosComponent,
     AutosComponent,
@@ -48,6 +52,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     DevolucionesComponent,
     ReservasComponent,
     PerfilComponent,
+    AdminComponent,
   ],
 })
 export class ComponentsModule { }

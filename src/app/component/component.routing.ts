@@ -17,6 +17,7 @@ import { ReservasComponent } from './reservas/reservas.component';
 import { DevolucionesComponent } from './devoluciones/devoluciones.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -99,7 +100,13 @@ export const ComponentsRoutes: Routes = [
 			{
 				path:'perfil',
 				component: PerfilComponent
+			},
+			{
+				path:'admin',
+				component: AdminComponent
 			}
+			
+
 		]
 	}
 ];

@@ -126,6 +126,15 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
+  },
+  {
+    path: '/component/admin',
+    title: 'Admin',
+    icon: 'bi bi-bell',
+    class: '',
+    extralink: false,
+    submenu: []
   }
+
   
 ];
