@@ -11,6 +11,7 @@ import { Categoria } from 'src/app/models/categoria';
 import { Estado } from 'src/app/models/estado';
 import { EstadoService } from 'src/app/services/estado.service';
 import Swal from 'sweetalert2';
+import { ImagenService } from 'src/app/services/imagen.service';
 
 @Component({
   selector: 'app-form',
@@ -18,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
+  public titulo: string = "Nuevo auto";
   public auto: Auto = new Auto();
   marcasList: Marca[] = [];
   modelosList:Modelo[]=[];
@@ -29,6 +30,7 @@ export class FormComponent implements OnInit {
   id_marca:any;
 
   constructor(
+    private service_img: ImagenService,
     private autoService: AutoService,
     private marcaService: MarcaService,
     private modeloService: ModeloService,
@@ -51,6 +53,7 @@ export class FormComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id'];
       if (id) {
+        this.titulo = "Actualizar auto";
         this.autoService.buscar(id).subscribe(auto => this.auto = auto);
       }
     });
@@ -90,17 +93,6 @@ export class FormComponent implements OnInit {
     );
   }
 
-  onFileSelected(event: any): void {
-    const files = event.target.files;
-    if (files.length > 0) {
-      this.nuevaImagenFile = files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagenUrl = e.target.result;
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  }
   validateForm(): boolean {
     // Verificar si los campos obligatorios están llenos
     if (
@@ -119,31 +111,59 @@ export class FormComponent implements OnInit {
     }
     return true;
   }
+
   create(): void {
     if (this.validateForm()) {
-      this.autoService.crear(this.auto).subscribe(
-        () => {
-          this.router.navigate(['component/autos']);
-          Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
-        },
-        (error) => {
-          console.error('Error al crear el auto:', error);
-  
-          // Verificar si el error es específico para datos duplicados
-          if (error.status === 500) {
-            Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
-          } else {
-            Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+      if (this.nuevaImagenFile) {
+        this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+          (url_imagen: string) => {
+
+            // Eliminar la imagen anterior si existe
+            if (this.auto.url_imagen && this.titulo == "Actualizar auto") {
+              this.service_img.deleteImagen(this.auto.url_imagen);
+            }
+
+            this.auto.url_imagen = url_imagen;
+            this.crearAuto();
+          },
+          (error) => {
+            console.error('Error al subir la imagen:', error);
           }
-        }
-      );
+        );
+      } else {
+        this.crearAuto();
+      }
     }
   }
-  
-  
-  
 
+  crearAuto(){
+    this.autoService.crear(this.auto).subscribe(
+      () => {
+        this.router.navigate(['component/autos']);
+        Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
+      },
+      (error) => {
+        console.error('Error al crear el auto:', error);
 
-   
+        // Verificar si el error es específico para datos duplicados
+        if (error.status === 500) {
+          Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
+        } else {
+          Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+        }
+      }
+    );
+  }
+  onFileSelected(event: any): void {
+    const files = event.target.files;
+    if (files.length > 0) {
+      this.nuevaImagenFile = files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.auto.url_imagen = e.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  }
 
 }   

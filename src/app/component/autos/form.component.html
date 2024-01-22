@@ -81,25 +81,20 @@
                   <!-- Segundo bloque de elementos del formulario -->
 
 
-
-                  <div class="col-12 col-md-6 col-xl-6 text-center">              
-                    <div class="card bg-light">
-                      <div class="card-body">
-                        <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
-                        <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
-                  
-                        <div class="imagen-container mt-3 mx-auto" style="width: 300px; height: 300px;">
-                          <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid img-thumbnail" />
-                        </div>                      
-                      </div>
+                  <div class="col-9 col-md-4 order-md-1">
+                    <label>Foto: </label>
+                    <input class="form-control" type="file" name="foto" (change)="onFileSelected($event)" accept="image/*"/>
+                    <div><br></div>
+                    <!-- Espacio para la imagen -->
+                    <div class="imagen-container mt-1 mb-1 d-flex align-items-center justify-content-center">
+                      <img *ngIf="auto.url_imagen" [src]="auto.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid" />
                     </div>
-                  
                   </div>
+
                 </div>
-            
-                <!-- Botón de envío del formulario -->
-                <div class="col-12 text-center mt-3">
-                  <button class="btn btn-primary">Guardar</button>
+                <!-- Boton Guardar centrado -->
+                <div class="col-12 d-flex justify-content-center align-items-center mt-3">
+                  <button class="btn btn-outline-success" >Guardar</button>
                 </div>
               </div>
             </form>

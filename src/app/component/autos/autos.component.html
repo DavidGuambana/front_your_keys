@@ -1,59 +1,71 @@
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title">Clientes</h4>
-    <div class="card-body border-top">
-      <div class="button-group d-flex justify-content-between align-items-center">
-        <button type="button" class="btn btn-outline-info" [routerLink]="['/component/autos/form']">+ Agregar nuevo</button>
-        <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
-          <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-          <div class="input-group-append">
-            <span class="input-group-text btn-outline-success" id="button-addon2">
-              <i class="bi bi-search"></i> <!-- Assuming you are using Bootstrap Icons -->
-            </span>
-          </div>
-        </div>
-      </div>
-      <h4 class="font-medium mb-3">Listado autos</h4>
-      <!-- Row -->
-      <div class="row">
-        <!-- column -->
-        <div class="col-lg-3 col-md-6" *ngFor="let auto of autos">
-          <!-- Card -->
-          <div class="card border-dark bg-light mb-3">
-            <img class="card-img-top img-responsive" src="assets/images/bg/bg1.jpg" alt="Card image cap" />
-            <div class="card-body d-flex flex-column align-items-center justify-content-center">
-              <h4 class="card-title text-center"> {{auto.modelo.marca.nombre}} {{auto.modelo.nombre}} </h4>
-              <div class="row">
-                <div class="col">
-                  <ul class="list-unstyled mb-0 small">
-                    <li><strong>Matrícula:</strong> {{auto.matricula}}</li>
-                    <li><strong>Color:</strong>{{auto.color}}</li>
-                    <li><strong>Potencia:</strong>{{auto.potencia + " hp"}}</li>
-                  </ul>
-                </div>
-                <div class="col">
-                  <ul class="list-unstyled mb-0 small">
-                    <li><strong>Capacidad:</strong> {{auto.capacidad}}</li>
-                    <li><strong>Precio Diario:</strong>{{auto.precio_diario + " $"}}</li>
-                    <li><strong>Estado:</strong> {{auto.estado.nombre}}</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="d-flex flex-column align-items-center justify-content-center mt-3">
-                <button type="button" class="btn btn-outline-success btn-block mb-2">+Seleccionar</button>
-                <div class="d-flex">
-                  <button type="button" class="btn btn-outline-info  mr-2" [routerLink]="['/component/autos/form',auto.id_auto]">Editar</button>
-                  <button type="button" class="btn btn-outline-danger" (click)="delete(auto)">Borrar</button>
-                </div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Autos</h4>
+        <div class="card-body border-top">
+          <div class="button-group d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-outline-info bi bi-plus-circle"
+              [routerLink]="['/component/autos/form']"> Agregar
+              nuevo</button>
+            <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
+              <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+                aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrarAutos()">
+              <div class="input-group-append">
+                <span class="input-group-text btn-outline-success" type="button" id="button-addon2"
+                  (click)="borrarFiltro()">
+                  <i class="bi bi-backspace-fill fs-4a"></i>
+                </span>
               </div>
             </div>
           </div>
-          <!-- Card -->
         </div>
-        <!-- column -->
+        <h5 class="card-subtitle text-muted">Resultados: {{ autosFiltrados.length }}</h5>
+        
+        <div class="row">
+          <div class="col-lg-3 col-md-4" *ngFor="let auto of autosFiltrados">
+            <!-- Card -->
+            <div class="card border-dark mb-3" style="border-width: 1px;">
+              <div class="card-body">
+                <h5 class="card-title text-center" style="font-size: 15px;">{{ auto.modelo.marca.nombre + " - " + auto.modelo.nombre }}</h5>
+                <img class="card-img-top img-responsive" [src]="auto.url_imagen" onerror="this.src='assets/images/autos/auto_rojo.jpg'"/>
+                <div class="row">
+                  <div class="col">
+                    <ul class="list-unstyled mb-0 small">
+                      <li><br></li>
+                      <li>Matrícula: <strong>{{auto.matricula}}</strong> </li>
+                      <li>Color: <strong>{{auto.color}}</strong></li>
+                      <li>Potencia: <strong>{{auto.potencia + " hp"}}</strong></li>
+                      <li>Capacidad: <strong>{{auto.capacidad +" personas"}}</strong></li>
+                      <li>Precio: <strong>{{"$"+auto.precio_diario+"/dia"}}</strong></li>
+                      <li>Estado: <strong>{{auto.estado.nombre}}</strong> </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                  <button type="button" class="btn btn-outline-success btn-block mb-2">ALQUILAR AHORA</button>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <div class="d-flex">
+                        <a [routerLink]="['/component/autos/form', auto.id_auto]" class="mr-2">
+                          <i class="bi bi-pencil-fill fs-4 text-info"></i>
+                        </a>
+                      </div>
+                      <div class="mx-3"></div> <!-- Espacio en blanco -->
+                      <div class="d-flex">
+                        <button (click)="delete(auto)" class="btn p-0 ml-2">
+                          <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-      <!-- Row -->
     </div>
   </div>
-</div>
-
