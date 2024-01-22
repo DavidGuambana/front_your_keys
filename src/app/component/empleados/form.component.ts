@@ -58,27 +58,29 @@ constructor(
   }
 
   crear(): void {
-    //if (this.nuevaImagenFile) {
-      //this.service_img.postImagen(this.nuevaImagenFile).subscribe(
-        //(url_imagen: string) => {
-          //this.empleado.persona.url_imagen = url_imagen;
-          this.crearCliente();
-        //},
-        //(error) => {
-          //console.error('Error al subir la imagen:', error);
-        //}
-      //);
-    //} else {
-      //this.crearCliente();
-    //}
+    this.asignarvalores();
+    if (this.nuevaImagenFile) {
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+        (url_imagen: string) => {
+          this.empleado.persona.url_imagen = url_imagen;
+          this.crearEmpleado();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    } else {
+      this.crearEmpleado();
+    }
   }
+  
   onFileSelected(event: any): void {
     const files = event.target.files;
     if (files.length > 0) {
       this.nuevaImagenFile = files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagenUrl = e.target.result;
+        this.empleado.persona.url_imagen = e.target.result;
       };
       reader.readAsDataURL(files[0]);
     }
@@ -128,8 +130,8 @@ constructor(
     return null;
   }
 
-  private crearCliente(): void {
-    this.asignarvalores();
+  private crearEmpleado(): void {
+    
     this.per_service.crear(this.empleado.persona).subscribe(
       (persona) => {
         this.empleado.id_persona = persona.id_persona;

@@ -111,7 +111,7 @@
   
                 <div class="form-group local-forms mb-3">
                   <label>Rol: </label>
-                  <select class="form-control" id="tipoLicencia" (change)="onFileSelected($event)">
+                  <select class="form-control" id="tipoLicencia">
                     <option [value]="rol.id_rol" *ngFor="let rol of roles">{{rol.nombre}}</option>
                     <!-- Agregar más opciones según sea necesario -->
                   </select> 
@@ -124,13 +124,13 @@
               </div>
     
               <!-- Columna de archivo al mismo nivel que los inputs sin título -->
-              <div class="col-12 col-md-6 col-xl-6">
-                <label for="imagenInput" class="btn btn-primary btn-block">Seleccionar Imagen</label>
-                <input type="file" id="imagenInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
-    
+              <div class="col-9 col-md-4 order-md-1">
+                <label>Foto: </label>
+                <input class="form-control" type="file" name="foto" (change)="onFileSelected($event)" accept="image/*"/>
+                <div><br></div>
                 <!-- Espacio para la imagen -->
-                <div class="imagen-container mt-3">
-                  <img *ngIf="empleado.persona.url_imagen" [src]="empleado.persona.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid"/>
+                <div class="imagen-container mt-1 mb-1 d-flex align-items-center justify-content-center">
+                  <img *ngIf="empleado.persona.url_imagen" [src]="empleado.persona.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid" />
                 </div>
               </div>
             </div>

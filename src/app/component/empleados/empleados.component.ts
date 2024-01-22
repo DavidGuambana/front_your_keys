@@ -4,6 +4,7 @@ import { Persona } from 'src/app/models/persona';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-empleados',
@@ -38,6 +39,19 @@ export class EmpleadosComponent implements OnInit {
         });
       });
     });
+  }
+
+  public eliminar(empleado: Empleado): void {
+    if (empleado.alquileres.length > 0 ) {
+      if (empleado.alquileres.length > 0) {
+        Swal.fire('¡Acción imposible!', `El cliente ${empleado.persona.nombre1} ${empleado.persona.apellido1} tiene ${empleado.alquileres.length === 1 ? 'un alquiler' : `${empleado.alquileres.length} alquileres`} asignado(s).`, 'warning');
+      }
+      return;
+    } 
+      this.empleadoService.eliminar(empleado.id_empleado).subscribe(() => {
+        this.listar();
+        Swal.fire('¡Acción exitosa!', `Empleado ${empleado.persona.nombre1 + ' ' + empleado.persona.apellido1} eliminado.`, 'success');
+      });
   }
 }
 
