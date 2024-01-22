@@ -4,87 +4,122 @@
         <div class="card-body">
           <h4 class="card-title">Formulario de Empleado</h4>
           <div class="card-body border-top">
+            <form [formGroup]="formEmple" (ngSubmit)="guardar()">
             <div class="row">
               <!-- Columna de inputs a la izquierda -->
               <div class="col-12 col-md-6 col-xl-6">
                 <div class="form-group local-forms mb-3">
                   <label>Cedula: </label>
-                  <input class="form-control datetimepicker" type="text" placeholder="">
+                  <input class="form-control datetimepicker" type="text"  formControlName="cedula">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('cedula')?.valid || formEmple.get('cedula')?.pristine">
+                    <span *ngIf="formEmple.get('cedula')?.errors?.['required']">La cédula es obligatoria</span>
+                    <span *ngIf="formEmple.get('cedula')?.errors?.['cedula']">La cédula debe tener 10 dígitos y deben ser solo números</span>
+                  </div>
                 </div>
     
                 <div class="form-group local-forms mb-3">
                   <label>Usuario: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input  class="form-control" type="text"  id="direccion" formControlName="usuario">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('usuario')?.valid ||formEmple.get('usuario')?.pristine" >El usuario es obligatorio</div>
                 </div>
 
                 <div class="form-group local-forms mb-3">
                   <label>Primer nombre: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName="nombre_uno">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('nombre_uno')?.valid ||formEmple.get('nombre_uno')?.pristine">
+                    <span *ngIf="formEmple.get('nombre_uno')?.errors?.['required']">El nombre es obligatorio</span>
+                    <span *ngIf="formEmple.get('nombre_uno')?.errors?.['soloLetras']">El nombre solo puede tener létras</span>
+                  </div>
                 </div>
 
                 <div class="form-group local-forms mb-3">
                   <label>Segundo nombre: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName="nombre_dos">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('nombre_dos')?.valid || formEmple.get('nombre_dos')?.pristine">
+                    <span *ngIf="formEmple.get('nombre_dos')?.errors?.['required']">El segundo nombre es obligatiro</span>
+                    <span *ngIf="formEmple.get('nombre_dos')?.errors?.['soloLetras']">El segundo nombre solo puede tener letras</span>
+                  </div>
                 </div>
                 
                 <div class="form-group local-forms mb-3">
                   <label>Teléfono: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName="telefono">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('telefono')?.valid || formEmple.get('telefono')?.pristine">
+                  <span *ngIf="formEmple.get('telefono')?.errors?.['required']">El telefono es obligatorio</span>
+                  <span *ngIf="formEmple.get('telefono')?.errors?.['cedula']">El teléfono no puede tener letras y debe tener 10 dígitos</span>
+                  </div>
                 </div>
     
                 <div class="form-group local-forms mb-3">
                   <label>Fecha nacimiento: </label>
-                  <input class="form-control" type="date" placeholder="" id="direccion">
+                  <input class="form-control" type="date"  id="direccion" >
                 </div>
               </div>
 
               <div class="col-12 col-md-6 col-xl-6">
                 <div class="form-group local-forms mb-3">
                   <label>Salario: </label>
-                  <input class="form-control" type="text" id="direccion">
+                  <input class="form-control" type="text" id="direccion" formControlName="salario" >
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('salario')?.valid || formEmple.get('salario')?.pristine">
+                  <span *ngIf="formEmple.get('salario')?.errors?.['required']">El salario es obligatorio</span>
+                  <span *ngIf="formEmple.get('salario')?.errors?.['decimal']">Solo puede contener números</span>
+                  </div>
                 </div>
 
                 <div class="form-group local-forms mb-3">
                   <label>Contraseña: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text" id="direccion" formControlName="contra" >
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('contra')?.valid || formEmple.get('contra')?.pristine">
+                  <span *ngIf="formEmple.get('contra')?.errors?.['required']">La contraseña es obligatoria</span>
+                  </div>
                 </div>
 
                 <div class="form-group local-forms mb-3">
                   <label>Primer apellido: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text" id="direccion" formControlName="apellido_uno" >
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('apellido_uno')?.valid || formEmple.get('apellido_uno')?.pristine">
+                  <span *ngIf="formEmple.get('apellido_uno')?.errors?.['required']">El apellido es obligatorio</span>
+                  <span *ngIf="formEmple.get('apellido_uno')?.errors?.['soloLetras']">El apellido no puede contener números</span>
+                  </div>
                 </div>
     
                 <div class="form-group local-forms mb-3">
                   <label>Segundo apellido: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName = "apellido_dos" >
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('apellido_dos')?.valid || formEmple.get('apellido_dos')?.pristine">
+                  <span *ngIf="formEmple.get('apellido_dos')?.errors?.['required']">El segundo apellido es obligatorio</span>
+                  <span *ngIf="formEmple.get('apellido_dos')?.errors?.['soloLetras']">No puede contener números</span>
+                  </div>
                 </div>
     
                 <div class="form-group local-forms mb-3">
                   <label>Dirección: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName = "direcction" >
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('direcction')?.valid|| formEmple.get('direcction')?.pristine">
+                    <span *ngIf="formEmple.get('direcction')?.errors?.['required']">La direccion es obligatoria</span>
+                  </div>
                 </div>
     
                 <div class="form-group local-forms mb-3">
                   <label>Email: </label>
-                  <input class="form-control" type="text" placeholder="" id="direccion">
+                  <input class="form-control" type="text"  id="direccion" formControlName="email">
+                  <div class="alert alert-danger mt-2" [hidden]="formEmple.get('email')?.valid ||formEmple.get('email')?.pristine" >
+                    <span *ngIf="formEmple.get('email')?.errors?.['required']">El email es obligatorio</span>
+                    <span *ngIf="formEmple.get('email')?.errors?.['email']">El email debe ser valido</span>
+                  </div>
                 </div>
   
                 <div class="form-group local-forms mb-3">
                   <label>Rol: </label>
-                  <!-- Reemplazar el siguiente input con un combo box 
-                  metodo para obtener el id de rol
-                  (change)="onSelectIDRol()"
-                  -->
-                  <select class="form-control" id="tipoLicencia" [(ngModel)]="rol.nombre" >
-                    <option value="{{rol.id_rol}}" *ngFor="let rol of roles">{{rol.nombre}}</option>
+                  <select class="form-control" id="tipoLicencia" (change)="onFileSelected($event)">
+                    <option [value]="rol.id_rol" *ngFor="let rol of roles">{{rol.nombre}}</option>
                     <!-- Agregar más opciones según sea necesario -->
-                  </select>
+                  </select> 
                 </div>
 
                 <!-- Botón en el centro inior -->
                 <div class="col-12 text-center mt-3">
-                  <button class="btn btn-primary" 
-                  >Guardar</button>
+                  <button class="btn btn-primary" [disabled]="formEmple.invalid" >Guardar</button>
                 </div>
               </div>
     
@@ -95,10 +130,11 @@
     
                 <!-- Espacio para la imagen -->
                 <div class="imagen-container mt-3">
-                  <img *ngIf="imagenUrl !== undefined && imagenUrl" [src]="imagenUrl" alt="Imagen actual" class="imagen-redonda img-fluid" />
+                  <img *ngIf="empleado.persona.url_imagen" [src]="empleado.persona.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid"/>
                 </div>
               </div>
             </div>
+          </form>
           </div>
         </div>
       </div>
