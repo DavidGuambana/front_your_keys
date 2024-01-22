@@ -149,7 +149,12 @@ export class FormComponent implements OnInit {
       this.autoService.crear(this.auto).subscribe(
         () => {
           this.router.navigate(['component/autos']);
-          Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
+          if(this.auto.id_auto==0){
+            Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
+          }else{
+            Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} Actualizado.`, 'success');
+          }
+        
         },
         (error) => {
           console.error('Error al crear el auto:', error);
@@ -179,11 +184,14 @@ export class FormComponent implements OnInit {
   }
 
   validarMatricula(): boolean {
-    for (const auto of this.autolist) {
-      if (auto.matricula === this.auto.matricula) {
-        Swal.fire('¡Error!', 'La matrícula ya existe. Intente con valores diferentes.', 'error');
-        return false;
+    if(this.auto.id_auto==0){
+      for (const auto of this.autolist) {
+        if (auto.matricula === this.auto.matricula) {
+          Swal.fire('¡Error!', 'La matrícula ya existe. Intente con valores diferentes.', 'error');
+          return false;
+        }
       }
+    }else{ 
     }
     return true;
   }
@@ -202,7 +210,10 @@ export class FormComponent implements OnInit {
       return false;
     }
   }
-  
-
-
+  esReadOnly(): boolean {
+    if(this.auto.id_auto==0){
+      return false
+    } 
+    return true
+  }
 }   

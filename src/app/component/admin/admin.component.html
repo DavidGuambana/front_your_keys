@@ -31,6 +31,16 @@
 </head>
 
 <body>
+    <form>
+        <select>
+            <option value="nuevo">Registrar</option>
+            <option [routerLink]="['/component/admin/form', 'modelo']">Modelo</option>
+            <option value="cliente">Marca</option>
+            <option value="empleado">Categoria</option>
+            <option value="ma">Proteccion</option>
+            
+          </select>
+    </form>
 
     <div class="container">
         <table>
@@ -47,32 +57,41 @@
                         <div *ngFor="let modelo of modelo">
                             {{ marca.id_marca == modelo.id_marca ? modelo.nombre : '' }}
                         </div>
+                        <button type="button"   [routerLink]="['/component/admin/form']">Editar</button>
                     </td>
-                    <button type="button">Editar</button>
+                    
                 </tr>
             </tbody>
         </table>
-        <form>
-            <label for="schedule">Registrar:</label>
-            <select id="schedule" name="schedule">
-                <option value="all-day">Modelos</option>
-                <option value="morning">Marca</option>
-                <option value="afternoon">Proteccion</option>
-            </select>
-        </form>
-
-
+       
 
         <div class="info">
             <table>
                 <thead>
                     <tr>
                         <th>Proteccion</th>
+                        <th>Precio</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let proteccion of proteccion">
                         <td>{{ proteccion.nombre }}</td>
+                        <td>{{ proteccion.precio }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let categoria of categoria">
+                        <td>{{ categoria.nombre }}</td>
                     </tr>
                 </tbody>
             </table>
