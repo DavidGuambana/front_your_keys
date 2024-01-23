@@ -4,13 +4,13 @@
         <div class="card-body">
           <h4 class="card-title">Formulario de Empleado</h4>
           <div class="card-body border-top">
-            <form [formGroup]="formEmple" (ngSubmit)="guardar()">
+            <form [formGroup]="formEmple" (ngSubmit)="guardar()" *ngIf="empleado?.persona">
             <div class="row">
               <!-- Columna de inputs a la izquierda -->
               <div class="col-12 col-md-6 col-xl-6">
                 <div class="form-group local-forms mb-3">
                   <label>Cedula: </label>
-                  <input class="form-control datetimepicker" type="text"  formControlName="cedula">
+                  <input class="form-control datetimepicker" type="text"  formControlName="cedula" formControlName="empleado?.persona?.cedula"  [readonly]="esReadOnly()">
                   <div class="alert alert-danger mt-2" [hidden]="formEmple.get('cedula')?.valid || formEmple.get('cedula')?.pristine">
                     <span *ngIf="formEmple.get('cedula')?.errors?.['required']">La cédula es obligatoria</span>
                     <span *ngIf="formEmple.get('cedula')?.errors?.['cedula']">La cédula debe tener 10 dígitos y deben ser solo números</span>
@@ -19,13 +19,13 @@
     
                 <div class="form-group local-forms mb-3">
                   <label>Usuario: </label>
-                  <input  class="form-control" type="text"  id="direccion" formControlName="usuario">
+                  <input  class="form-control" type="text"  id="direccion" formControlName="usuario" [(ngModel)]="empleado.user.username">
                   <div class="alert alert-danger mt-2" [hidden]="formEmple.get('usuario')?.valid ||formEmple.get('usuario')?.pristine" >El usuario es obligatorio</div>
                 </div>
 
                 <div class="form-group local-forms mb-3">
                   <label>Primer nombre: </label>
-                  <input class="form-control" type="text"  id="direccion" formControlName="nombre_uno">
+                  <input class="form-control" type="text"  id="direccion" formControlName="nombre_uno" [(ngModel)]="empleado.user.username">
                   <div class="alert alert-danger mt-2" [hidden]="formEmple.get('nombre_uno')?.valid ||formEmple.get('nombre_uno')?.pristine">
                     <span *ngIf="formEmple.get('nombre_uno')?.errors?.['required']">El nombre es obligatorio</span>
                     <span *ngIf="formEmple.get('nombre_uno')?.errors?.['soloLetras']">El nombre solo puede tener létras</span>
@@ -108,19 +108,9 @@
                     <span *ngIf="formEmple.get('email')?.errors?.['email']">El email debe ser valido</span>
                   </div>
                 </div>
-  
-                <div class="form-group local-forms mb-3">
-                  <label>Rol: </label>
-                  <select class="form-control" id="tipoLicencia">
-                    <option [value]="rol.id_rol" *ngFor="let rol of roles">{{rol.nombre}}</option>
-                    <!-- Agregar más opciones según sea necesario -->
-                  </select> 
-                </div>
 
                 <!-- Botón en el centro inior -->
-                <div class="col-12 text-center mt-3">
-                  <button class="btn btn-primary" [disabled]="formEmple.invalid" >Guardar</button>
-                </div>
+                
               </div>
     
               <!-- Columna de archivo al mismo nivel que los inputs sin título -->
@@ -133,6 +123,9 @@
                   <img *ngIf="empleado.persona.url_imagen" [src]="empleado.persona.url_imagen" alt="Imagen actual" class="imagen-redonda img-fluid" />
                 </div>
               </div>
+            </div>
+            <div class="col-12 d-flex justify-content-center align-items-center mt-3">
+              <button class="btn btn-outline-success" [disabled]="formEmple.invalid">Guardar</button>
             </div>
           </form>
           </div>

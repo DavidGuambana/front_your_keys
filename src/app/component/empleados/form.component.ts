@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit{
   
   imagenUrl: string | undefined;
-
+  public titulo: string = "Nuevo empleado";
   nuevaImagenFile: File | undefined;
   public rol :Rol = new Rol;
   public empleado :Empleado = new Empleado();
@@ -44,16 +44,35 @@ constructor(
   private per_service: PersonaService,
   private rol_service: RolService,
   private router: Router,
+  private activedRoute: ActivatedRoute
 ){}
   ngOnInit(): void {
-    this.listarRoles();
+    this.buscar();
+  }
+
+  buscar(): void {
+    this.activedRoute.params.subscribe((params) => {
+      let id = params['id_empleado'];
+      if (id) {
+        this.titulo = "Actualizar empleado";
+        this.emp_service.buscar(id).subscribe((empleado) => {
+          this.empleado = empleado;
+          this.per_service.buscar(empleado.id_persona).subscribe(
+            (persona) => {
+              empleado.persona = persona;
+            }
+          );
+        },
+        );
+      }
+    });
   }
 
   public guardar(): void {
     if (this.empleado.id_empleado === 0) {
       this.crear();
     } else {
-      //this.editar();
+      this.editar();
     }
   }
 
@@ -138,7 +157,7 @@ constructor(
         this.emp_service.crear(this.empleado).subscribe(
           (empleado) => {
             this.router.navigate(['/component/empleados']);
-            Swal.fire('¡Acción exitosa!', `Cliente ${empleado.persona.nombre1 + ' ' + empleado.persona.apellido1} creado.`, 'success');
+            Swal.fire('¡Acción exitosa!', `Cliente ${empleado?.persona?.nombre1 + ' ' + empleado?.persona?.apellido1} creado.`, 'success');
           },
           (error) => {
             console.error('Error al crear el empleado:', error);
@@ -175,6 +194,52 @@ constructor(
       this.empleado.persona.apellido1 = apellido1;
       this.empleado.persona.apellido2 = apellido2;
       this.empleado.persona.direccion = direccion;
+    }
+  }
+  esReadOnly(): boolean {
+    if (this.empleado.id_empleado === 0) {
+      return false
+    }
+    return true
+  }
+  private actualizarEmpleado(): void {
+    this.per_service.editar(this.empleado.persona).subscribe(
+      (persona) => {
+        this.emp_service.editar(this.empleado).subscribe(
+          (cliente) => {
+            Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} actualizado.`, 'success');
+            this.router.navigate(['/component/clientes']);
+          },
+          (error) => {
+            console.error('Error al alcualizar el empelado:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error al alcualizar la persona:', error);
+      }
+    );
+  }
+
+  editar(): void {
+    if (this.nuevaImagenFile) {
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+
+        (url_imagen: string) => {
+          // Eliminar la imagen anterior si existe
+
+          if (this.empleado.persona.url_imagen) {
+            this.service_img.deleteImagen(this.empleado.persona.url_imagen);
+          }
+          this.empleado.persona.url_imagen = url_imagen;
+          this.actualizarEmpleado();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    } else {
+      this.actualizarEmpleado();
     }
   }
 }

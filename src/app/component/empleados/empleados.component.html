@@ -1,26 +1,24 @@
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Empleados</h4>
-                <div class="card-body border-top">
-                    <div class="button-group d-flex justify-content-between align-items-center">
-                        <button type="button" class="btn btn-outline-info"
-                            [routerLink]="['/component/empleados/form']">+ Agregar nuevo</button>
-                        <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
-                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
-                                aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <span class="input-group-text btn-outline-success" id="button-addon2">
-                                    <i class="bi bi-search"></i> <!-- Assuming you are using Bootstrap Icons -->
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Clientes</h4>
+          <div class="card-body border-top">
+            <div class="button-group d-flex justify-content-between align-items-center">
+              <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/clientes/form']"> Agregar
+                nuevo</button>
+              <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
+                <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+                  aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrarClientes()">
+                <div class="input-group-append">
+                  <span class="input-group-text btn-outline-success" type="button"  id="button-addon2" (click)="borrarFiltro()">
+                    <i class="bi bi-backspace-fill fs-4a"></i>
+                  </span>
                 </div>
-
-
-                <h5 class="card-subtitle text-muted">Resultados: 0</h5>
+              </div>
+            </div>
+          </div>
+          <h5 class="card-subtitle text-muted">Resultados: {{ empleadosFiltrados.length }}</h5>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle text-nowrap">
                         <thead  style="background-color: #343a40;" class="fs-4 text-light">
@@ -33,12 +31,11 @@
                                 <th >Registro</th>
                                 <th >Editar</th>
                                 <th >Eliminar</th>
-                                <th></th>
-                                <th></th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let emple of empleados" >
+                            <tr *ngFor="let emple of empleadosFiltrados" >
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img [src]="emple?.persona?.url_imagen" onerror="this.src='assets/images/users/incognito.webp'"
@@ -51,7 +48,8 @@
                                 <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_nac}}</h5></td>
                                 <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_reg}}</h5></td>
                                 <td>
-                                    <a [routerLink]="['/component/clientes/form', emple.id_empleado]">
+                                    <a [routerLink]="['/component/empleados/form',emple?.id_empleado]">
+                                     
                                       <i class="bi bi-pencil-fill fs-4 text-info"></i>
                                     </a>
                                   </td>

@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 export class EmpleadosComponent implements OnInit {
   public empleados:Empleado[] = [];
   personas:Persona [] = [];
+  empleadosFiltrados: Empleado[] = [];
+  filtro: string = '';
 
 
   constructor(
@@ -37,8 +39,14 @@ export class EmpleadosComponent implements OnInit {
             empleado.persona = persona;
           }
         });
+        this.empleadosFiltrados = this.empleados;
       });
     });
+  }
+
+  borrarFiltro(): void {
+    this.filtro = '';
+    this.filtrarClientes();
   }
 
   public eliminar(empleado: Empleado): void {
@@ -52,6 +60,15 @@ export class EmpleadosComponent implements OnInit {
         this.listar();
         Swal.fire('¡Acción exitosa!', `Empleado ${empleado.persona.nombre1 + ' ' + empleado.persona.apellido1} eliminado.`, 'success');
       });
+  }
+
+  filtrarClientes() {
+    // Filtrar clientes en base al término de búsqueda
+    this.empleadosFiltrados = this.empleados.filter((empleado) => {
+      const textoBusqueda = `${empleado.persona.cedula} ${empleado.persona.nombre1} ${empleado.persona.apellido1} ${empleado.persona.fecha_nac} ${empleado.persona.fecha_reg}`
+        .toLowerCase();
+      return textoBusqueda.includes(this.filtro.toLowerCase());
+    });
   }
 }
 
