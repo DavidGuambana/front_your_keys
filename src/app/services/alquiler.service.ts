@@ -7,7 +7,7 @@ import { Alquiler } from '../models/alquiler';
   providedIn: 'root'
 })
 export class AlquilerService {
-  private urlEndPoint:string = "http://localhost:8080/api/alquiler";
+  private urlEndPoint:string = "http://localhost:8080/api/alquileres";
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http:HttpClient){}
