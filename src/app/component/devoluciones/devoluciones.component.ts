@@ -99,7 +99,7 @@ export class DevolucionesComponent implements OnInit{
               (empleado) => empleado.id_empleado === alquiler.id_empleado
             );
             if (empleado) {
-              alquiler.empleado = empleado;
+              //alquiler.empleado = empleado;
   
               // Relacionar empleado con persona
               const personaEmpleado = personas.find(

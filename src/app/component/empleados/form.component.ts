@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Empl_mostrar_edicion } from 'src/app/models/Empl_mostrar_edicion';
 import { Usuario } from 'src/app/models/usuario';
+import { UsuarioRol } from 'src/app/models/usuario_rol';
+import { UsuarioRolService } from 'src/app/services/usuario-rol.service';
 
 
 
@@ -26,6 +28,7 @@ export class FormComponent implements OnInit{
   public rol :Rol = new Rol;
   public empleado :Empleado = new Empleado();
   public roles: Rol[]= [];
+  public relacionUR:UsuarioRol = new UsuarioRol;
   formEmple = new FormGroup({
     'cedula': new FormControl('',[Validators.required,this.soloNumerosValidator]),
     'usuario' : new FormControl('',Validators.required),
@@ -48,7 +51,8 @@ constructor(
   private per_service: PersonaService,
   private rol_service: RolService,
   private router: Router,
-  private activedRoute: ActivatedRoute
+  private activedRoute: ActivatedRoute,
+  private usuarioRol_service:UsuarioRolService
 ){}
   ngOnInit(): void {
     this.buscar();
@@ -196,6 +200,7 @@ constructor(
     console.log(this.useringre.id_persona,this.useringre.username,this.useringre.password)
     this.user_service.crear(this.useringre).subscribe(
       (useringre)=>{
+        this.relacionarusuarioRol(useringre.id_usuario);
         Swal.fire('¡Acción exitosa!', `Empleado ${useringre.password + ' ' + useringre.id_usuario} creado.`, 'success');
       },
       (error) =>{
@@ -204,6 +209,19 @@ constructor(
     );
   }
 
+  public relacionarusuarioRol(id_usuario:number):void{
+    this.relacionUR.id_usuario = id_usuario;
+    this.relacionUR.id_rol = 2;
+    this.usuarioRol_service.crear(this.relacionUR).subscribe(
+      (usuarioRol)=>{
+        console.log(usuarioRol.id_usuario_rol);
+        Swal.fire('¡Acción exitosa segunda relación hecho!', `Empleado`, 'success');
+      },
+      (error) =>{
+
+      }
+    );
+  }
   public asignarvalores(){
     const cedula = this.formEmple.get('cedula')?.value;
     const nombre1 = this.formEmple.get('nombre_uno')?.value;
