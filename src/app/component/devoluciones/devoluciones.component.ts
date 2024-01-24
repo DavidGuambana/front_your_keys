@@ -4,6 +4,7 @@ import { Alquiler } from 'src/app/models/alquiler';
 import { Auto } from 'src/app/models/auto';
 import { Cliente } from 'src/app/models/cliente';
 import { Devolucion } from 'src/app/models/devolucion';
+import { Empleado } from 'src/app/models/empleado';
 import { Persona } from 'src/app/models/persona';
 import { Proteccion } from 'src/app/models/proteccion';
 import { AlquilerService } from 'src/app/services/alquiler.service';
@@ -22,6 +23,7 @@ export class DevolucionesComponent implements OnInit{
   alquileres :Alquiler[]=[];
   personas:Persona[]=[];
   clientes:Cliente[]=[];
+  empleados:Empleado[]=[];
   devoluciones:Devolucion[]=[];
   protecciones:Proteccion[]=[];
   autos:Auto[]=[];
@@ -49,9 +51,10 @@ export class DevolucionesComponent implements OnInit{
       autos: this.ser_auto.listar(),
       protecciones: this.ser_protec.listar(),
       clientes: this.ser_cli.listar(),
-      personas: this.ser_per.listar(),  // Agrega este servicio si no lo tienes ya
+      empleados: this.ser_emple.listar(),
+      personas: this.ser_per.listar(),
     })
-      .subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, personas }) => {
+      .subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
         devoluciones.forEach((devolucion) => {
           const alquiler = alquileres.find(
             (alquiler) => alquiler.id_alquiler === devolucion.id_alquiler
@@ -83,11 +86,27 @@ export class DevolucionesComponent implements OnInit{
               alquiler.cliente = cliente;
   
               // Relacionar cliente con persona
-              const persona = personas.find(
+              const personaCliente = personas.find(
                 (persona) => persona.id_persona === cliente.id_persona
               );
-              if (persona) {
-                cliente.persona = persona;
+              if (personaCliente) {
+                cliente.persona = personaCliente;
+              }
+            }
+  
+            // Relacionar alquiler con empleado
+            const empleado = empleados.find(
+              (empleado) => empleado.id_empleado === alquiler.id_empleado
+            );
+            if (empleado) {
+              alquiler.empleado = empleado;
+  
+              // Relacionar empleado con persona
+              const personaEmpleado = personas.find(
+                (persona) => persona.id_persona === empleado.id_persona
+              );
+              if (personaEmpleado) {
+                empleado.persona = personaEmpleado;
               }
             }
           }
@@ -98,7 +117,6 @@ export class DevolucionesComponent implements OnInit{
         this.devoluciones = this.devoluciones;  // Asegúrate de tener la propiedad devolucionesFiltradas definida
       });
   }
-  
   
   
 
