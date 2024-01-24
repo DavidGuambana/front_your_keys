@@ -1,3 +1,4 @@
+import { Alquiler } from "./alquiler";
 import { Persona } from "./persona";
 import { Rol } from "./rol";
 import { Usuario } from "./usuario";
@@ -11,4 +12,5 @@ export class Empleado {
     rol: Rol = new Rol;
     user: Usuario = new Usuario; 
     userlista : UsuarioRol = new UsuarioRol;
+    alquileres :Alquiler []=[];
 }

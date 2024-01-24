@@ -87,6 +87,10 @@ export const ComponentsRoutes: Routes = [
 				component: fromEmpleado
 			},
 			{
+				path: 'empleados/form/:id',
+				component: fromEmpleado
+			},
+			{
 				path:'alquileres',
 				component: AlquileresComponent
 			},

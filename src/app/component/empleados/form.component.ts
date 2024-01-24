@@ -8,6 +8,11 @@ import { ImagenService } from 'src/app/services/imagen.service';
 import { AbstractControl,FormGroup, FormControl,ValidationErrors,Validators } from '@angular/forms';
 import { Empleado } from 'src/app/models/empleado';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Empl_mostrar_edicion } from 'src/app/models/Empl_mostrar_edicion';
+import { Usuario } from 'src/app/models/usuario';
+import { UsuarioRol } from 'src/app/models/usuario_rol';
+import { UsuarioRolService } from 'src/app/services/usuario-rol.service';
 
 
 
@@ -16,13 +21,14 @@ import Swal from 'sweetalert2';
   templateUrl: './form.component.html'
 })
 export class FormComponent implements OnInit{
-  
+  useringre:Usuario = new Usuario;
   imagenUrl: string | undefined;
-
+  public titulo: string = "Nuevo empleado";
   nuevaImagenFile: File | undefined;
   public rol :Rol = new Rol;
   public empleado :Empleado = new Empleado();
   public roles: Rol[]= [];
+  public relacionUR:UsuarioRol = new UsuarioRol;
   formEmple = new FormGroup({
     'cedula': new FormControl('',[Validators.required,this.soloNumerosValidator]),
     'usuario' : new FormControl('',Validators.required),
@@ -39,46 +45,81 @@ export class FormComponent implements OnInit{
 selectedRoleId: any;
   
 constructor(
+  private user_service: UsuarioService,
   private emp_service: EmpleadoService,
   private service_img: ImagenService,
   private per_service: PersonaService,
   private rol_service: RolService,
   private router: Router,
+  private activedRoute: ActivatedRoute,
+  private usuarioRol_service:UsuarioRolService
 ){}
   ngOnInit(): void {
-    this.listarRoles();
+    this.buscar();
   }
 
-  public guardar(): void {
-    if (this.empleado.id_empleado === 0) {
-      this.crear();
-    } else {
-      //this.editar();
-    }
+  buscar(): void {
+    this.activedRoute.params.subscribe((params) => {
+      let id = params['id'];
+      console.log(params);
+      if (id) {
+        this.titulo = "Actualizar empleado";
+        this.emp_service.buscar(id).subscribe((empleado) => {
+          this.empleado = empleado;
+          this.per_service.buscar(empleado.id_persona).subscribe(
+            (persona) => {
+              var salarioString = empleado.salario.toString;
+              empleado.persona = persona;
+              const empeladomostrar:Empl_mostrar_edicion = {
+                cedula: empleado.persona.cedula,
+                usuario:'KKKK',
+                nombre_uno:empleado.persona.nombre1,
+                nombre_dos:empleado.persona.nombre2,
+                apellido_uno:empleado.persona.apellido1,
+                apellido_dos:empleado.persona.apellido2,
+                telefono:empleado.persona.telefono,
+                direcction:empleado.persona.direccion,
+                email:empleado.persona.correo,
+                salario:'500'
+                //salario:empleado.salario.toString
+            };
+
+              console.log (empleado.persona.cedula);
+              this.formEmple.patchValue(empeladomostrar);
+            }
+          );
+        },
+        );
+      }
+    });
   }
+
+  
 
   crear(): void {
-    //if (this.nuevaImagenFile) {
-      //this.service_img.postImagen(this.nuevaImagenFile).subscribe(
-        //(url_imagen: string) => {
-          //this.empleado.persona.url_imagen = url_imagen;
-          this.crearCliente();
-        //},
-        //(error) => {
-          //console.error('Error al subir la imagen:', error);
-        //}
-      //);
-    //} else {
-      //this.crearCliente();
-    //}
+    this.asignarvalores();
+    if (this.nuevaImagenFile) {
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+        (url_imagen: string) => {
+          this.empleado.persona.url_imagen = url_imagen;
+          this.crearEmpleado();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    } else {
+      this.crearEmpleado();
+    }
   }
+  
   onFileSelected(event: any): void {
     const files = event.target.files;
     if (files.length > 0) {
       this.nuevaImagenFile = files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagenUrl = e.target.result;
+        this.empleado.persona.url_imagen = e.target.result;
       };
       reader.readAsDataURL(files[0]);
     }
@@ -128,18 +169,20 @@ constructor(
     return null;
   }
 
-  private crearCliente(): void {
-    this.asignarvalores();
+  private crearEmpleado(): void {
     this.per_service.crear(this.empleado.persona).subscribe(
       (persona) => {
         this.empleado.id_persona = persona.id_persona;
+        this.useringre.id_persona = persona.id_persona;
         this.emp_service.crear(this.empleado).subscribe(
-          (empleado) => {
+          (cliente) => {
+            console.log(persona.id_persona);
+            this.relacionarUsuario(persona.id_persona);
+            Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} creado.`, 'success');
             this.router.navigate(['/component/empleados']);
-            Swal.fire('¡Acción exitosa!', `Cliente ${empleado.persona.nombre1 + ' ' + empleado.persona.apellido1} creado.`, 'success');
           },
           (error) => {
-            console.error('Error al crear el empleado:', error);
+            console.error('Error al crear el cliente:', error);
           }
         );
       },
@@ -148,7 +191,37 @@ constructor(
       }
     );
   }
+  
+  public relacionarUsuario(vairbale:number):void{
+    this.useringre.id_persona = vairbale;
+    this.useringre.id_usuario=0;
+    this.useringre.username = this.empleado.user.username;
+    this.useringre.password = this.empleado.user.password;
+    console.log(this.useringre.id_persona,this.useringre.username,this.useringre.password)
+    this.user_service.crear(this.useringre).subscribe(
+      (useringre)=>{
+        this.relacionarusuarioRol(useringre.id_usuario);
+        Swal.fire('¡Acción exitosa!', `Empleado ${useringre.password + ' ' + useringre.id_usuario} creado.`, 'success');
+      },
+      (error) =>{
+        console.error('Error en la relación de usuario y persona',error)
+      }
+    );
+  }
 
+  public relacionarusuarioRol(id_usuario:number):void{
+    this.relacionUR.id_usuario = id_usuario;
+    this.relacionUR.id_rol = 2;
+    this.usuarioRol_service.crear(this.relacionUR).subscribe(
+      (usuarioRol)=>{
+        console.log(usuarioRol.id_usuario_rol);
+        Swal.fire('¡Acción exitosa segunda relación hecho!', `Empleado`, 'success');
+      },
+      (error) =>{
+
+      }
+    );
+  }
   public asignarvalores(){
     const cedula = this.formEmple.get('cedula')?.value;
     const nombre1 = this.formEmple.get('nombre_uno')?.value;
@@ -173,6 +246,52 @@ constructor(
       this.empleado.persona.apellido1 = apellido1;
       this.empleado.persona.apellido2 = apellido2;
       this.empleado.persona.direccion = direccion;
+    }
+  }
+  esReadOnly(): boolean {
+    if (this.empleado.id_empleado === 0) {
+      return false
+    }
+    return true
+  }
+  private actualizarEmpleado(): void {
+    this.per_service.editar(this.empleado.persona).subscribe(
+      (persona) => {
+        this.emp_service.editar(this.empleado).subscribe(
+          (cliente) => {
+            Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} actualizado.`, 'success');
+            this.router.navigate(['/component/clientes']);
+          },
+          (error) => {
+            console.error('Error al alcualizar el empelado:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error al alcualizar la persona:', error);
+      }
+    );
+  }
+
+  editar(): void {
+    if (this.nuevaImagenFile) {
+      this.service_img.postImagen(this.nuevaImagenFile).subscribe(
+
+        (url_imagen: string) => {
+          // Eliminar la imagen anterior si existe
+
+          if (this.empleado.persona.url_imagen) {
+            this.service_img.deleteImagen(this.empleado.persona.url_imagen);
+          }
+          this.empleado.persona.url_imagen = url_imagen;
+          this.actualizarEmpleado();
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    } else {
+      this.actualizarEmpleado();
     }
   }
 }

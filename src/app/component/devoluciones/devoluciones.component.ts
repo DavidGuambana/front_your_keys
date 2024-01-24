@@ -1,9 +1,123 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { Alquiler } from 'src/app/models/alquiler';
+import { Auto } from 'src/app/models/auto';
+import { Cliente } from 'src/app/models/cliente';
+import { Devolucion } from 'src/app/models/devolucion';
+import { Empleado } from 'src/app/models/empleado';
+import { Persona } from 'src/app/models/persona';
+import { Proteccion } from 'src/app/models/proteccion';
+import { AlquilerService } from 'src/app/services/alquiler.service';
+import { AutoService } from 'src/app/services/auto.service';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { DevolucionService } from 'src/app/services/devolucion.service';
+import { EmpleadoService } from 'src/app/services/empleado.service';
+import { PersonaService } from 'src/app/services/persona.service';
+import { ProteccionService } from 'src/app/services/proteccion.service';
 
 @Component({
   selector: 'app-devoluciones',
   templateUrl: './devoluciones.component.html',
 })
-export class DevolucionesComponent {
+export class DevolucionesComponent implements OnInit{
+  alquileres :Alquiler[]=[];
+  personas:Persona[]=[];
+  clientes:Cliente[]=[];
+  empleados:Empleado[]=[];
+  devoluciones:Devolucion[]=[];
+  protecciones:Proteccion[]=[];
+  autos:Auto[]=[];
+
+
+
+
+  constructor(
+    private ser_cli: ClienteService,
+    private ser_per: PersonaService,
+    private ser_alqui:AlquilerService,
+    private ser_devo:DevolucionService,
+    private ser_protec:ProteccionService,
+    private ser_emple:EmpleadoService,
+    private ser_auto:AutoService,
+  ) {}
+
+  ngOnInit() {
+    this.listar();
+  }
+  listar() {
+    forkJoin({
+      devoluciones: this.ser_devo.listar(),
+      alquileres: this.ser_alqui.listar(),
+      autos: this.ser_auto.listar(),
+      protecciones: this.ser_protec.listar(),
+      clientes: this.ser_cli.listar(),
+      empleados: this.ser_emple.listar(),
+      personas: this.ser_per.listar(),
+    })
+      .subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
+        devoluciones.forEach((devolucion) => {
+          const alquiler = alquileres.find(
+            (alquiler) => alquiler.id_alquiler === devolucion.id_alquiler
+          );
+          if (alquiler) {
+            devolucion.alquiler = alquiler;
+  
+            // Relacionar alquiler con auto
+            const auto = autos.find(
+              (auto) => auto.id_auto === alquiler.id_auto
+            );
+            if (auto) {
+              alquiler.auto = auto;
+            }
+  
+            // Relacionar alquiler con proteccion
+            const proteccion = protecciones.find(
+              (proteccion) => proteccion.id_proteccion === alquiler.id_proteccion
+            );
+            if (proteccion) {
+              alquiler.proteccion = proteccion;
+            }
+  
+            // Relacionar alquiler con cliente
+            const cliente = clientes.find(
+              (cliente) => cliente.id_cliente === alquiler.id_cliente
+            );
+            if (cliente) {
+              alquiler.cliente = cliente;
+  
+              // Relacionar cliente con persona
+              const personaCliente = personas.find(
+                (persona) => persona.id_persona === cliente.id_persona
+              );
+              if (personaCliente) {
+                cliente.persona = personaCliente;
+              }
+            }
+  
+            // Relacionar alquiler con empleado
+            const empleado = empleados.find(
+              (empleado) => empleado.id_empleado === alquiler.id_empleado
+            );
+            if (empleado) {
+              //alquiler.empleado = empleado;
+  
+              // Relacionar empleado con persona
+              const personaEmpleado = personas.find(
+                (persona) => persona.id_persona === empleado.id_persona
+              );
+              if (personaEmpleado) {
+                empleado.persona = personaEmpleado;
+              }
+            }
+          }
+        });
+  
+        this.devoluciones = devoluciones;
+        // Llenar inicialmente devolucionesFiltradas con todas las devoluciones
+        this.devoluciones = this.devoluciones;  // Asegúrate de tener la propiedad devolucionesFiltradas definida
+      });
+  }
+  
+  
 
 }
