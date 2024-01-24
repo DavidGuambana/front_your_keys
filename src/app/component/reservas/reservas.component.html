@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             <!--El for para recorrer las reservas de autos *ngFor="let emple of empleadosFiltrados"-->
-                            <tr  >
+                            <tr *ngFor="let alquiler of alquileresReservados" >
                                 <td>
                                     <!--Código de imagen en la que mostramos la imagen de la reserva tanto de cliente como de auto-->
                                     <div class="d-flex align-items-center">
@@ -50,7 +50,7 @@
                                 <td><h5 class="mb-0 fw-normal"></h5></td>
                                 <td><h5 class="mb-0 fw-normal"></h5></td>
                                 <td><h5 class="mb-0 fw-normal"></h5></td>
-                                <td><h5 class="mb-0 fw-normal"></h5></td>
+                                <td><h5 class="mb-0 fw-normal"></h5>{{alquiler?.tipo_pago}}</td>
                                 <td><h5 class="mb-0 fw-normal"></h5></td>
                                 <td></td>
                                 <th></th>

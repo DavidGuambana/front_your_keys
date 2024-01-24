@@ -8,6 +8,9 @@ import { ImagenService } from 'src/app/services/imagen.service';
 import { AbstractControl,FormGroup, FormControl,ValidationErrors,Validators } from '@angular/forms';
 import { Empleado } from 'src/app/models/empleado';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Empl_mostrar_edicion } from 'src/app/models/Empl_mostrar_edicion';
+import { Usuario } from 'src/app/models/usuario';
 
 
 
@@ -16,7 +19,7 @@ import Swal from 'sweetalert2';
   templateUrl: './form.component.html'
 })
 export class FormComponent implements OnInit{
-  
+  useringre:Usuario = new Usuario;
   imagenUrl: string | undefined;
   public titulo: string = "Nuevo empleado";
   nuevaImagenFile: File | undefined;
@@ -39,6 +42,7 @@ export class FormComponent implements OnInit{
 selectedRoleId: any;
   
 constructor(
+  private user_service: UsuarioService,
   private emp_service: EmpleadoService,
   private service_img: ImagenService,
   private per_service: PersonaService,
@@ -52,14 +56,32 @@ constructor(
 
   buscar(): void {
     this.activedRoute.params.subscribe((params) => {
-      let id = params['id_empleado'];
+      let id = params['id'];
+      console.log(params);
       if (id) {
         this.titulo = "Actualizar empleado";
         this.emp_service.buscar(id).subscribe((empleado) => {
           this.empleado = empleado;
           this.per_service.buscar(empleado.id_persona).subscribe(
             (persona) => {
+              var salarioString = empleado.salario.toString;
               empleado.persona = persona;
+              const empeladomostrar:Empl_mostrar_edicion = {
+                cedula: empleado.persona.cedula,
+                usuario:'KKKK',
+                nombre_uno:empleado.persona.nombre1,
+                nombre_dos:empleado.persona.nombre2,
+                apellido_uno:empleado.persona.apellido1,
+                apellido_dos:empleado.persona.apellido2,
+                telefono:empleado.persona.telefono,
+                direcction:empleado.persona.direccion,
+                email:empleado.persona.correo,
+                salario:'500'
+                //salario:empleado.salario.toString
+            };
+
+              console.log (empleado.persona.cedula);
+              this.formEmple.patchValue(empeladomostrar);
             }
           );
         },
@@ -68,13 +90,7 @@ constructor(
     });
   }
 
-  public guardar(): void {
-    if (this.empleado.id_empleado === 0) {
-      this.crear();
-    } else {
-      this.editar();
-    }
-  }
+  
 
   crear(): void {
     this.asignarvalores();
@@ -150,22 +166,40 @@ constructor(
   }
 
   private crearEmpleado(): void {
-    
     this.per_service.crear(this.empleado.persona).subscribe(
       (persona) => {
         this.empleado.id_persona = persona.id_persona;
+        this.useringre.id_persona = persona.id_persona;
         this.emp_service.crear(this.empleado).subscribe(
-          (empleado) => {
+          (cliente) => {
+            console.log(persona.id_persona);
+            this.relacionarUsuario(persona.id_persona);
+            Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} creado.`, 'success');
             this.router.navigate(['/component/empleados']);
-            Swal.fire('¡Acción exitosa!', `Cliente ${empleado?.persona?.nombre1 + ' ' + empleado?.persona?.apellido1} creado.`, 'success');
           },
           (error) => {
-            console.error('Error al crear el empleado:', error);
+            console.error('Error al crear el cliente:', error);
           }
         );
       },
       (error) => {
         console.error('Error al crear la persona:', error);
+      }
+    );
+  }
+  
+  public relacionarUsuario(vairbale:number):void{
+    this.useringre.id_persona = vairbale;
+    this.useringre.id_usuario=0;
+    this.useringre.username = this.empleado.user.username;
+    this.useringre.password = this.empleado.user.password;
+    console.log(this.useringre.id_persona,this.useringre.username,this.useringre.password)
+    this.user_service.crear(this.useringre).subscribe(
+      (useringre)=>{
+        Swal.fire('¡Acción exitosa!', `Empleado ${useringre.password + ' ' + useringre.id_usuario} creado.`, 'success');
+      },
+      (error) =>{
+        console.error('Error en la relación de usuario y persona',error)
       }
     );
   }

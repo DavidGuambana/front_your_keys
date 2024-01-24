@@ -12,7 +12,8 @@ import { ProteccionService } from 'src/app/services/proteccion.service';
   templateUrl: './reservas.component.html',
 })
 export class ReservasComponent implements OnInit{
-  public alquileres: Alquiler[]=[];
+  public alquileresReservados: Alquiler[]=[];
+  public alquiler:Alquiler = new Alquiler;
 
   constructor(
     private ser_persona:PersonaService,
@@ -29,11 +30,11 @@ export class ReservasComponent implements OnInit{
   traerReservas(){
     const alquileres$ = this.ser_alqui.listar();
 
-    const alquileresReservados$ = alquileres$.pipe(
+    const alquileresReservados = alquileres$.pipe(
       map(alquileres => alquileres.filter(alquiler => alquiler.reservado === true))
     );
 
-    forkJoin([alquileres$, alquileresReservados$]).subscribe(
+    forkJoin([alquileres$, alquileresReservados]).subscribe(
       ([alquileres, alquileresReservados]) => {
         // Hacer algo con los alquileres y alquileresReservados
         console.log('Todos los alquileres:', alquileres);
