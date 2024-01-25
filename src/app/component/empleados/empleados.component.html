@@ -5,7 +5,7 @@
           <h4 class="card-title">Clientes</h4>
           <div class="card-body border-top">
             <div class="button-group d-flex justify-content-between align-items-center">
-              <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/clientes/form']"> Agregar
+              <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/empleados/form']"> Agregar
                 nuevo</button>
               <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
                 <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
@@ -48,8 +48,7 @@
                                 <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_nac}}</h5></td>
                                 <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_reg}}</h5></td>
                                 <td>
-                                    <a [routerLink]="['/component/empleados/form',emple?.id_empleado]">
-                                     
+                                    <a [routerLink]="['/component/empleados/form',emple.id_empleado]">
                                       <i class="bi bi-pencil-fill fs-4 text-info"></i>
                                     </a>
                                   </td>

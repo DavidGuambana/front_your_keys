@@ -9,6 +9,7 @@ import { Categoria } from 'src/app/models/categoria';
 import { CategoriaService } from 'src/app/services/categoria.service';
 
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -23,6 +24,7 @@ export class AdminComponent implements OnInit {
   public proteccion: Proteccion[] = [];
   public modelo: Modelo[] = [];
   public categoria: Categoria[] = [];
+  
 
 
 
@@ -30,7 +32,8 @@ export class AdminComponent implements OnInit {
     private marcaService: MarcaService,
     private proteccionService: ProteccionService,
     private modeloService: ModeloService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+
 
   ) { }
 
@@ -39,6 +42,7 @@ export class AdminComponent implements OnInit {
     this.lista2();
     this.lista3();
     this.lista4();
+  
 
 
   }
@@ -68,6 +72,7 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  
 }
 
 

@@ -2,23 +2,21 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Clientes</h4>
+          <h4 class="card-title">Devoluciones</h4>
           <div class="card-body border-top">
             <div class="button-group d-flex justify-content-between align-items-center">
-              <button type="button" class="btn btn-outline-info bi bi-plus-circle"> Agregar
-                nuevo</button>
               <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
                 <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
-                  aria-describedby="button-addon2">
+                  aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrarDevoluciones()">
                 <div class="input-group-append">
-                  <span class="input-group-text btn-outline-success" type="button" id="button-addon2">
+                  <span class="input-group-text btn-outline-success" type="button" id="button-addon2" (click)="borrarFiltro()">
                     <i class="bi bi-backspace-fill fs-4a"></i>
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <h5 class="card-subtitle text-muted">Resultados: "40"</h5>
+          <h5 class="card-subtitle text-muted">Resultados: {{devoluciones.length}}</h5>
           <div class="table-responsive">
             <table class="table table-hover align-middle text-nowrap">
               <thead style="background-color: #343a40;" class="fs-4 text-light">
@@ -41,7 +39,7 @@
                   <td class="fs-4">{{devolucion.fecha}}</td>
                   <td class="fs-4">{{devolucion.alquiler.total}} $</td>
                   <td class="text-center">
-                    <button class="btn p-0">
+                    <button class="btn p-0" (click)="generatePdf(devolucion.id_devolucion)">                      
                       <i class="bi bi-printer-fill fs-4 text-primary align-middle"></i>
                     </button>
                   </td>

@@ -1,8 +1,54 @@
-<div class="input-group">
-    <label>Modelos</label>
-    <span class="input-group-text">First and last name</span>
-    <input type="text" aria-label="First name" class="form-control">
-    <input type="text" aria-label="Last name" class="form-control">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Agrega cualquier otra configuración del head que necesites -->
+</head>
+<body>
+
+  <div style="text-align: left;">
+    <button type="button" (click)="toggleContenido()" class="btn btn-primary">{{mostrarContenido ? 'Ocultar' : 'Registrar'}} Modelo</button>
+    <button type="button" (click)="toggleContenido2()" class="btn btn-primary">{{mostrarContenido2 ? 'Ocultar' : 'Registrar'}} Marca</button>
   </div>
 
-  
+  <div *ngIf="mostrarContenido">
+    <form>
+      <div class="form-group">
+        <h1>Registro de Modelos</h1>
+        <label for="nombre">Nombre del Modelo:</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevoModelo.nombre" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="marca">Marca:</label>
+        <select name="marca" id="marca" class="form-control" [(ngModel)]="nuevoModelo.id_marca">
+          <option value="-1">[Seleccione]</option>
+          <option *ngFor="let marca of marcasList" [ngValue]="marca.id_marca">
+            {{ marca.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <button type="button" (click)="crearModelo()" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+
+  <div *ngIf="mostrarContenido2">
+    <form>
+      <div class="form-group">
+        <h1>Registro de Marcas</h1>
+        <label for="nombreMarca">Nombre del Marca:</label>
+        <input type="text" id="nombreMarca" name="nombreMarca" [(ngModel)]="nuevaMarca.nombre" class="form-control">
+      </div>
+      <button type="button" (click)="crearMarca()" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
