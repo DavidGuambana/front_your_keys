@@ -56,7 +56,6 @@ export class DevolucionesComponent implements OnInit {
       clientes: this.ser_cli.listar(),
       empleados: this.ser_emple.listar(),
       personas: this.ser_per.listar(),
-<<<<<<< HEAD
     }).subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
       devoluciones.forEach((devolucion) => {
         const alquiler = alquileres.find((alquiler) => alquiler.id_alquiler === devolucion.id_alquiler);
@@ -80,63 +79,6 @@ export class DevolucionesComponent implements OnInit {
             const personaCliente = personas.find((persona) => persona.id_persona === cliente.id_persona);
             if (personaCliente) {
               cliente.persona = personaCliente;
-=======
-    })
-      .subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
-        devoluciones.forEach((devolucion) => {
-          const alquiler = alquileres.find(
-            (alquiler) => alquiler.id_alquiler === devolucion.id_alquiler
-          );
-          if (alquiler) {
-            devolucion.alquiler = alquiler;
-  
-            // Relacionar alquiler con auto
-            const auto = autos.find(
-              (auto) => auto.id_auto === alquiler.id_auto
-            );
-            if (auto) {
-              alquiler.auto = auto;
-            }
-  
-            // Relacionar alquiler con proteccion
-            const proteccion = protecciones.find(
-              (proteccion) => proteccion.id_proteccion === alquiler.id_proteccion
-            );
-            if (proteccion) {
-              alquiler.proteccion = proteccion;
-            }
-  
-            // Relacionar alquiler con cliente
-            const cliente = clientes.find(
-              (cliente) => cliente.id_cliente === alquiler.id_cliente
-            );
-            if (cliente) {
-              alquiler.cliente = cliente;
-  
-              // Relacionar cliente con persona
-              const personaCliente = personas.find(
-                (persona) => persona.id_persona === cliente.id_persona
-              );
-              if (personaCliente) {
-                cliente.persona = personaCliente;
-              }
-            }
-  
-            // Relacionar alquiler con empleado
-            const empleado = empleados.find(
-              (empleado) => empleado.id_empleado === alquiler.id_empleado
-            );
-            if (empleado) {
-              //alquiler.empleado = empleado;
-  
-              // Relacionar empleado con persona
-              const personaEmpleado = personas.find(
-                (persona) => persona.id_persona === empleado.id_persona
-              );
-              if (personaEmpleado) {
-                empleado.persona = personaEmpleado;
-              }
->>>>>>> 1c6d3bffa80dd6404e997c392a96b3a401129bef
             }
           }
 
@@ -168,7 +110,7 @@ export class DevolucionesComponent implements OnInit {
 
   borrarFiltro(): void {
     this.filtro = '';
-    this.devoluciones=this.devolucionesfiltradas;
+    this.devoluciones;
   }
 
   
