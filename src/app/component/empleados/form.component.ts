@@ -22,6 +22,8 @@ import { UsuarioRolService } from 'src/app/services/usuario-rol.service';
 })
 export class FormComponent implements OnInit{
   useringre:Usuario = new Usuario;
+  public usuarioedita:string="";
+  public usuariopassword:string="";
   imagenUrl: string | undefined;
   public titulo: string = "Nuevo empleado";
   nuevaImagenFile: File | undefined;
@@ -49,7 +51,6 @@ constructor(
   private emp_service: EmpleadoService,
   private service_img: ImagenService,
   private per_service: PersonaService,
-  private rol_service: RolService,
   private router: Router,
   private activedRoute: ActivatedRoute,
   private usuarioRol_service:UsuarioRolService
@@ -58,43 +59,68 @@ constructor(
     this.buscar();
   }
 
+  public guardar(): void {
+    this.activedRoute.params.subscribe((params) => {
+      let id = params['id'];
+      if(id){
+        this.editar();
+    } else {
+      this.crear();
+    }
+  });
+  }
+
+
   buscar(): void {
     this.activedRoute.params.subscribe((params) => {
       let id = params['id'];
-      console.log(params);
-      if (id) {
+      if(id){
         this.titulo = "Actualizar empleado";
         this.emp_service.buscar(id).subscribe((empleado) => {
           this.empleado = empleado;
-          this.per_service.buscar(empleado.id_persona).subscribe(
-            (persona) => {
-              var salarioString = empleado.salario.toString;
-              empleado.persona = persona;
-              const empeladomostrar:Empl_mostrar_edicion = {
-                cedula: empleado.persona.cedula,
-                usuario:'KKKK',
-                nombre_uno:empleado.persona.nombre1,
-                nombre_dos:empleado.persona.nombre2,
-                apellido_uno:empleado.persona.apellido1,
-                apellido_dos:empleado.persona.apellido2,
-                telefono:empleado.persona.telefono,
-                direcction:empleado.persona.direccion,
-                email:empleado.persona.correo,
-                salario:'500'
-                //salario:empleado.salario.toString
-            };
+          this.user_service.listar().subscribe(
+            (usuarios) => {
+              const usuarioEncontrado = usuarios.find(usuario => usuario.id_persona === empleado.id_persona);
+              this.per_service.buscar(empleado.id_persona).subscribe(
+                (persona) => {
+                  if(!usuarioEncontrado){
+                    console.log('El usuario es gay');
+                  }else{
+                    empleado.persona = persona;
+                    const empeladomostrar:Empl_mostrar_edicion = {
+                    cedula: empleado.persona.cedula,
+                    usuario: usuarioEncontrado.username,
+                    nombre_uno:empleado.persona.nombre1,
+                    nombre_dos:empleado.persona.nombre2,
+                    apellido_uno:empleado.persona.apellido1,
+                    apellido_dos:empleado.persona.apellido2,
+                    telefono:empleado.persona.telefono,
+                    direcction:empleado.persona.direccion,
+                    email:empleado.persona.correo,
+                    salario:empleado.salario.toString(),
+                    contra:usuarioEncontrado.password,
+                    id_usuario:usuarioEncontrado.id_usuario
+                };
+                  console.log (empleado.persona.cedula);
+                  this.formEmple.patchValue(empeladomostrar);
 
-              console.log (empleado.persona.cedula);
-              this.formEmple.patchValue(empeladomostrar);
+                  }
+                  
+                }
+              );
+            },
+            (error) => {
+              console.error('Error al obtener la lista de usuarios:', error);
             }
           );
+          
         },
         );
+      }else{
+        
       }
     });
   }
-
-  
 
   crear(): void {
     this.asignarvalores();
@@ -125,28 +151,16 @@ constructor(
     }
   }
 
-  listarRoles() {
-    this.rol_service.listar().subscribe(
-      (data) => {
-        this.roles = data;
-      },
-      (error) => {
-        console.error('Error al obtener roles', error);
-      }
-    );
-  }
-
   onSelectIDRol(id:number):void{
     this.rol.id_rol = id;
   }
 
   //COMANDO PARA VALIDAR CAMPOS VACÍOS: .invalid() ^\d+$
   soloLetrasValidator(control: AbstractControl) {
-    const soloLetrasRegex = /^[a-zA-Z ]*$/; 
-    const esSoloLetras = soloLetrasRegex.test(control.value);
-  
-    return esSoloLetras ? null : { soloLetras: true };
-  }
+  const soloLetrasRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/;
+  const esSoloLetras = soloLetrasRegex.test(control.value);
+  return esSoloLetras ? null : { soloLetras: true };
+}
 
   soloNumerosValidator(control: AbstractControl) {
     const valor = control.value;
@@ -222,32 +236,7 @@ constructor(
       }
     );
   }
-  public asignarvalores(){
-    const cedula = this.formEmple.get('cedula')?.value;
-    const nombre1 = this.formEmple.get('nombre_uno')?.value;
-    const nombre2 = this.formEmple.get('nombre_dos')?.value;
-    const usuario = this.formEmple.get('usuario')?.value;
-    const correo = this.formEmple.get('email')?.value;
-    const salario = this.formEmple.get('salario')?.value;
-    const telefono = this.formEmple.get('telefono')?.value;
-    const contraseña = this.formEmple.get('contra')?.value;
-    const apellido1 = this.formEmple.get('apellido_uno')?.value;
-    const apellido2 = this.formEmple.get('apellido_dos')?.value;
-    const direccion = this.formEmple.get('direcction')?.value;
-    if(cedula && nombre1 && nombre2 && usuario && correo && salario && telefono && contraseña && apellido1 && apellido2 &&direccion){
-      this.empleado.persona.cedula = cedula;
-      this.empleado.persona.nombre1 = nombre1;
-      this.empleado.persona.nombre2 = nombre2;
-      this.empleado.user.username = usuario;
-      this.empleado.persona.correo = correo;
-      this.empleado.salario = parseFloat(salario);
-      this.empleado.persona.telefono = telefono;
-      this.empleado.user.password = contraseña;
-      this.empleado.persona.apellido1 = apellido1;
-      this.empleado.persona.apellido2 = apellido2;
-      this.empleado.persona.direccion = direccion;
-    }
-  }
+  
   esReadOnly(): boolean {
     if (this.empleado.id_empleado === 0) {
       return false
@@ -255,12 +244,14 @@ constructor(
     return true
   }
   private actualizarEmpleado(): void {
+    this.asignarvalores();
+    console.log();
     this.per_service.editar(this.empleado.persona).subscribe(
       (persona) => {
+        console.log(persona);
         this.emp_service.editar(this.empleado).subscribe(
-          (cliente) => {
-            Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} actualizado.`, 'success');
-            this.router.navigate(['/component/clientes']);
+          (empleado) => {
+                this.editarUsuariOnly();
           },
           (error) => {
             console.error('Error al alcualizar el empelado:', error);
@@ -271,6 +262,7 @@ constructor(
         console.error('Error al alcualizar la persona:', error);
       }
     );
+
   }
 
   editar(): void {
@@ -279,7 +271,6 @@ constructor(
 
         (url_imagen: string) => {
           // Eliminar la imagen anterior si existe
-
           if (this.empleado.persona.url_imagen) {
             this.service_img.deleteImagen(this.empleado.persona.url_imagen);
           }
@@ -293,5 +284,57 @@ constructor(
     } else {
       this.actualizarEmpleado();
     }
+  }
+
+  public asignarvalores(){
+    const cedula = this.formEmple.get('cedula')?.value;
+    const nombre1 = this.formEmple.get('nombre_uno')?.value;
+    const nombre2 = this.formEmple.get('nombre_dos')?.value;
+    const usuario = this.formEmple.get('usuario')?.value;
+    const correo = this.formEmple.get('email')?.value;
+    const salario = this.formEmple.get('salario')?.value;
+    const telefono = this.formEmple.get('telefono')?.value;
+    const contraseña = this.formEmple.get('contra')?.value;
+    const apellido1 = this.formEmple.get('apellido_uno')?.value;
+    const apellido2 = this.formEmple.get('apellido_dos')?.value;
+    const direccion = this.formEmple.get('direcction')?.value;
+    if(cedula && nombre1 && nombre2 && usuario && correo && salario && telefono && contraseña && apellido1 && apellido2 &&direccion){
+      this.empleado.user = this.empleado.user || {};
+      this.empleado.persona.cedula = cedula;
+      this.empleado.persona.nombre1 = nombre1;
+      this.empleado.persona.nombre2 = nombre2;
+      this.empleado.user.username = usuario;
+      this.empleado.persona.correo = correo;
+      this.empleado.salario = parseFloat(salario);
+      this.empleado.persona.telefono = telefono;
+      this.empleado.user.password = contraseña;
+      this.empleado.persona.apellido1 = apellido1;
+      this.empleado.persona.apellido2 = apellido2;
+      this.empleado.persona.direccion = direccion;
+    }else{
+      Swal.fire('Error en la actualización de empleado', 'success');
+      this.router.navigate(['/component/clientes']);
+    }
+  }
+
+  public editarUsuariOnly():void{
+    this.per_service.buscar(this.empleado.persona.id_persona).subscribe(
+      (persona)=>{
+        this.user_service.listar().subscribe(
+          (usuario) =>{
+            const usuarioEncontrado = usuario.find(usuario => usuario.id_persona === persona.id_persona);
+            if(usuarioEncontrado){
+              this.empleado.user.id_usuario = usuarioEncontrado?.id_usuario
+              this.user_service.editar(this.empleado.user).subscribe(
+                (usuario) => {
+                  Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} actualizado.`, 'success');
+                  this.router.navigate(['/component/empleados']);
+                }
+              );
+            }
+          }
+        );
+      }
+    );
   }
 }

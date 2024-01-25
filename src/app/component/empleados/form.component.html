@@ -2,15 +2,15 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Formulario de Empleado</h4>
+          <h4 class="card-title">{{titulo}}</h4>
           <div class="card-body border-top">
-            <form [formGroup]="formEmple" (ngSubmit)="crear()" *ngIf="empleado?.persona">
+            <form [formGroup]="formEmple" (ngSubmit)="guardar()" *ngIf="empleado?.persona">
             <div class="row">
               <!-- Columna de inputs a la izquierda -->
               <div class="col-12 col-md-6 col-xl-6">
                 <div class="form-group local-forms mb-3">
                   <label>Cedula: </label>
-                  <input class="form-control datetimepicker" type="text"  formControlName="cedula">
+                  <input class="form-control datetimepicker" type="text"  formControlName="cedula" [readonly]="esReadOnly()">
                   <div class="alert alert-danger mt-2" [hidden]="formEmple.get('cedula')?.valid || formEmple.get('cedula')?.pristine">
                     <span *ngIf="formEmple.get('cedula')?.errors?.['required']">La cédula es obligatoria</span>
                     <span *ngIf="formEmple.get('cedula')?.errors?.['cedula']">La cédula debe tener 10 dígitos y deben ser solo números</span>

@@ -1,4 +1,5 @@
 export class Empl_mostrar_edicion{
+    id_usuario:number=0;
     cedula:string = "";
     usuario:string="";
     nombre_uno:string="";
@@ -9,4 +10,5 @@ export class Empl_mostrar_edicion{
     direcction:string= "";
     email:string="";
     salario:string="";
+    contra:string="";
 }
