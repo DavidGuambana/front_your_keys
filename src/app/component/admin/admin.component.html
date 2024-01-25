@@ -31,17 +31,6 @@
 </head>
 
 <body>
-    <form>
-        <select>
-            <option value="nuevo">Registrar</option>
-            <option [routerLink]="['/component/admin/form', 'modelo']">Modelo</option>
-            <option value="cliente">Marca</option>
-            <option value="empleado">Categoria</option>
-            <option value="ma">Proteccion</option>
-            
-          </select>
-    </form>
-
     <div class="container">
         <table>
             <thead>
@@ -57,13 +46,13 @@
                         <div *ngFor="let modelo of modelo">
                             {{ marca.id_marca == modelo.id_marca ? modelo.nombre : '' }}
                         </div>
-                        <button type="button"   [routerLink]="['/component/admin/form']">Editar</button>
+                        <button type="button" [routerLink]="['/component/admin/form']">Editar</button>
                     </td>
-                    
                 </tr>
+                
             </tbody>
         </table>
-       
+
 
         <div class="info">
             <table>

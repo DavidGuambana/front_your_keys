@@ -114,7 +114,6 @@ export const ComponentsRoutes: Routes = [
 				path:'admin/form',
 				component: fromAdmin
 			}
-			
 
 		]
 	}
