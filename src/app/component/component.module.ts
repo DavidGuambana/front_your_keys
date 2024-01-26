@@ -37,7 +37,6 @@ import { AdminComponent } from './admin/admin.component';
     NgbdButtonsComponent,
     TableComponent,
     
-    
   ],
   declarations: [
     formCiente,

@@ -21,6 +21,7 @@ import { ImagenService } from 'src/app/services/imagen.service';
 export class FormComponent implements OnInit {
   public titulo: string = "Nuevo auto";
   public auto: Auto = new Auto();
+  autolist: Auto[]=[];
   marcasList: Marca[] = [];
   modelosList:Modelo[]=[];
   categoriaList:Categoria[]=[];
@@ -42,6 +43,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarAuto();
+    this.cargarAutos();
     this.cargarMarcas();
     //this.cargarModeloss();
     this.cargarCategorias();
@@ -62,6 +64,11 @@ export class FormComponent implements OnInit {
   cargarMarcas(): void {
     this.marcaService.listar().subscribe(
       marcas => this.marcasList = marcas
+    );
+  }
+  cargarAutos(): void {
+    this.autoService.listar().subscribe(
+      autos => this.autolist = autos
     );
   }
   cargarModeloss(): void {
@@ -136,24 +143,34 @@ export class FormComponent implements OnInit {
     }
   }
 
-  crearAuto(){
-    this.autoService.crear(this.auto).subscribe(
-      () => {
-        this.router.navigate(['component/autos']);
-        Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
-      },
-      (error) => {
-        console.error('Error al crear el auto:', error);
-
-        // Verificar si el error es específico para datos duplicados
-        if (error.status === 500) {
-          Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
-        } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+  crearAuto() {
+    if (this.validarFormato() && this.validarMatricula()) {
+      // El formato es válido y la matrícula no está duplicada, procede con la creación del auto
+      this.autoService.crear(this.auto).subscribe(
+        () => {
+          this.router.navigate(['component/autos']);
+          if(this.auto.id_auto==0){
+            Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} creado.`, 'success');
+          }else{
+            Swal.fire('¡Acción exitosa!', `Auto Placa ${this.auto.matricula} Actualizado.`, 'success');
+          }
+        
+        },
+        (error) => {
+          console.error('Error al crear el auto:', error);
+  
+          // Verificar si el error es específico para datos duplicados
+          if (error.status === 500) {
+            Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
+          } else {
+            Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+          }
         }
-      }
-    );
+      );
+    }
   }
+  
+  
   onFileSelected(event: any): void {
     const files = event.target.files;
     if (files.length > 0) {
@@ -166,4 +183,37 @@ export class FormComponent implements OnInit {
     }
   }
 
+  validarMatricula(): boolean {
+    if(this.auto.id_auto==0){
+      for (const auto of this.autolist) {
+        if (auto.matricula === this.auto.matricula) {
+          Swal.fire('¡Error!', 'La matrícula ya existe. Intente con valores diferentes.', 'error');
+          return false;
+        }
+      }
+    }else{ 
+    }
+    return true;
+  }
+  
+
+  validarFormato(): boolean {
+    // Expresión regular placa Ejemplo: ABC-1234)
+    const formatoPlacaEcuatoriana = /^[A-Za-z]{3}-\d{4}$/;
+  
+    if (this.auto.matricula && formatoPlacaEcuatoriana.test(this.auto.matricula)) {
+      // El formato es válido
+      return true;
+    } else {
+      // El formato no es válido
+      Swal.fire('¡Error!', 'Formato de placa inválido. Intente con un formato válido (por ejemplo: ABC-1234).', 'error');
+      return false;
+    }
+  }
+  esReadOnly(): boolean {
+    if(this.auto.id_auto==0){
+      return false
+    } 
+    return true
+  }
 }   

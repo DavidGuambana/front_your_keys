@@ -13,7 +13,8 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { FormComponent as formCiente } from './clientes/form.component';
 import { FormComponent as formAuto} from './autos/form.component';
 import { FormComponent as fromEmpleado } from './empleados/form.component';
-import { FormComponent  as formAlquiler} from './alquileres/form.component';
+import { FormComponent as fromAdmin } from './admin/form.component';
+import { FormComponent as fromAlquiler } from './alquileres/form.component';
 import { ReservasComponent } from './reservas/reservas.component';
 import { DevolucionesComponent } from './devoluciones/devoluciones.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
@@ -87,16 +88,20 @@ export const ComponentsRoutes: Routes = [
 				component: fromEmpleado
 			},
 			{
+				path: 'empleados/form/:id',
+				component: fromEmpleado
+			},
+			{
 				path:'alquileres',
 				component: AlquileresComponent
 			},
 			{
 				path: 'alquileres/form',
-				component: formAlquiler
+				component: fromAlquiler
 			},
 			{
 				path: 'alquileres/form/:id',
-				component: formAlquiler
+				component: fromAlquiler
 			},
 			{
 				path:'devoluciones',
@@ -113,8 +118,11 @@ export const ComponentsRoutes: Routes = [
 			{
 				path:'admin',
 				component: AdminComponent
+			},
+			{
+				path:'admin/form',
+				component: fromAdmin
 			}
-			
 
 		]
 	}
