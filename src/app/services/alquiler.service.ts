@@ -8,4 +8,12 @@ import { Alquiler } from '../models/alquiler';
 })
 export class AlquilerService {
 
+  private urlEndPoint:string = 'http://localhost:8080/api/alquileres';
+
+  constructor(private http: HttpClient) { }
+
+  listar(): Observable<Alquiler[]>{
+    return this.http.get<Alquiler[]>(this.urlEndPoint);
+  }
+
 }

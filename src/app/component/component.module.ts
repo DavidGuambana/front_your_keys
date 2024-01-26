@@ -38,7 +38,6 @@ import { AdminComponent } from './admin/admin.component';
     TableComponent,
     
     
-    
   ],
   declarations: [
     formCiente,

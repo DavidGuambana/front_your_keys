@@ -1,1 +1,88 @@
-<p>alquileres works!</p>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Alquileres</h4>
+        <div class="card-body border-top">
+          <div
+            class="button-group d-flex justify-content-between align-items-center"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-info bi bi-plus-circle"
+              [routerLink]="['/component/alquileres/form']"
+            >
+              Agregar nuevo
+            </button>
+            <div
+              class="input-group align-items-center"
+              style="max-width: 500px; height: 60px"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar"
+                aria-label="Buscar"
+                aria-describedby="button-addon2"
+                [(ngModel)]="filtro"
+                (ngModelChange)="filtrarAlquileres()"
+              />
+              <div class="input-group-append">
+                <span
+                  class="input-group-text btn-outline-success"
+                  type="button"
+                  id="button-addon2"
+                  (click)="borrarFiltro()"
+                >
+                  <i class="bi bi-backspace-fill fs-4a"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h5 class="card-subtitle text-muted">
+          Resultados: {{ alquileresFiltrados.length }}
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle text-nowrap">
+            <thead style="background-color: #343a40" class="fs-4 text-light">
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Auto</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Total</th>
+                <th>Tipo de Pago</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let alquiler of alquileresFiltrados">
+                <td class="fs-4">{{ alquiler.id_alquiler }}</td>
+                <td>
+                  <div class="ms-3">
+                    <h5 class="mb-0 fw-normal">
+                      Hola
+                    </h5>
+                  </div>
+                </td>
+                <td>
+                  <div class="ms-3">
+                    <h5 class="mb-0 fw-normal">
+                      Hola
+                    </h5>
+                  </div>
+                </td>
+                <td class="fs-4">{{ alquiler.fecha_ini }}</td>
+                <td class="fs-4">{{ alquiler.fecha_fin }}</td>
+                <td class="fs-4">{{ alquiler.total }}</td>
+                <td class="fs-4">{{ alquiler.tipo_pago }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
