@@ -2,8 +2,8 @@ import { Auto } from "./auto";
 import { Cliente } from "./cliente";
 import { Empleado } from "./empleado";
 import { Proteccion } from "./proteccion";
-export class Alquiler{
 
+export class Alquiler {
 
 id_alquiler:number=0;
  id_cliente:number=0;

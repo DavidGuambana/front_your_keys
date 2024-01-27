@@ -1,30 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ImagenService } from 'src/app/services/imagen.service';
 import { PersonaService } from 'src/app/services/persona.service';
+import { SharedService } from 'src/app/shared/shared.service';
+import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
 })
-export class ClientesComponent {
+export class ClientesComponent implements OnInit{
   clientes: Cliente[] = [];
   personas: Persona[] = [];
   clientesFiltrados: Cliente[] = [];
   filtro: string = '';
+  subscription!: Subscription;
 
   constructor(
     private ser_cli: ClienteService,
     private ser_per: PersonaService,
     private service_img: ImagenService,
+    private router: Router,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
     this.listar();
+    
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   listar() {
@@ -82,4 +92,5 @@ export class ClientesComponent {
         Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
       });
   }
+
 }
