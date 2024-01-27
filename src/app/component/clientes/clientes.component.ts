@@ -40,7 +40,6 @@ export class ClientesComponent {
             cliente.persona = persona;
           }
         });
-
         // Llenar inicialmente clientesFiltrados con todos los clientes
         this.clientesFiltrados = this.clientes;
       });
@@ -61,25 +60,41 @@ export class ClientesComponent {
     this.filtrarClientes();
   }
 
-
   public eliminar(cliente: Cliente): void {
     if (cliente.alquileres.length > 0 || cliente.persona.usuarios.length > 0 || cliente.persona.empleados.length > 0) {
       if (cliente.alquileres.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene ${cliente.alquileres.length === 1 ? 'un alquiler' : `${cliente.alquileres.length} alquileres`} asignado(s).`, 'warning');
       }
-    
+  
       if (cliente.persona.usuarios.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene una cuenta de usuario asignado.`, 'warning');
       }
-    
+  
       if (cliente.persona.empleados.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} también es un empleado.`, 'warning');
       }
       return;
     } 
-      this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
-        this.listar();
-        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
-      });
+    
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Se eliminará el cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
+          // Solo una llamada, aquí eliminamos el cliente y luego su persona
+          this.ser_per.eliminar(cliente.persona.id_persona).subscribe(() => {
+            this.listar();
+            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
+          });
+        });
+      }
+    });
   }
 }
