@@ -22,6 +22,7 @@ import { ReservasComponent } from './reservas/reservas.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormComponent as formAdmin } from './admin/form.component';
 import { AdminComponent } from './admin/admin.component';
+import { FormproteComponent as formproteccion} from './admin/formprote.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { AdminComponent } from './admin/admin.component';
     formCiente,
     formAuto,
     formAdmin,
+    formproteccion,
     ClientesComponent,
     EmpleadosComponent,
     AutosComponent,
