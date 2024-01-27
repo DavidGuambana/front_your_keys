@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
@@ -32,7 +32,6 @@ export class ClientesComponent implements OnInit{
     this.listar();
     
   }
-
 
   listar() {
     this.ser_cli.listar().subscribe((clientes) => {
@@ -103,6 +102,11 @@ export class ClientesComponent implements OnInit{
         });
       }
     });
+  }
+
+  seleccionarCliente(cliente: Cliente): void {
+    this.sharedService.setClienteSeleccionado(cliente);
+    this.router.navigate(['/component/alquileres/form']); 
   }
 
 }

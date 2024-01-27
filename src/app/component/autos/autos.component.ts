@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Estado } from 'src/app/models/estado';
 import { EstadoService } from 'src/app/services/estado.service';
+import { SharedService } from 'src/app/shared/shared.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -28,7 +29,8 @@ export class AutosComponent implements OnInit {
     private marcaService: MarcaService,
     private modeloService: ModeloService,
     private estadoService: EstadoService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -120,5 +122,10 @@ export class AutosComponent implements OnInit {
   borrarFiltro(): void {
     this.filtro = '';
     this.filtrarAutos();
+  }
+
+  seleccionarAuto(auto: Auto): void {
+    this.sharedService.setAutoSeleccionado(auto);
+    this.router.navigate(['/component/alquileres/form']); 
   }
 }

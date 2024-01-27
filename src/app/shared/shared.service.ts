@@ -1,15 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Cliente } from 'src/app/models/cliente'; 
+import { Auto } from '../models/auto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
-  private habilitarBotonesSource = new BehaviorSubject<boolean>(true);
-  habilitarBotones$ = this.habilitarBotonesSource.asObservable();
+  private clienteSeleccionado: Cliente | null = null;
+  private autoSeleccionado: Auto | null = null;
 
-  actualizarHabilitarBotones(valor: boolean) {
-    this.habilitarBotonesSource.next(valor);
+  setClienteSeleccionado(cliente: Cliente): void {
+    this.clienteSeleccionado = cliente;
   }
+
+  getClienteSeleccionado(): Cliente | null {
+    return this.clienteSeleccionado;
+  }
+
+  setAutoSeleccionado(auto: Auto): void {
+    this.autoSeleccionado = auto;
+  }
+
+  getAutoSeleccionado(): Auto | null {
+    return this.autoSeleccionado;
+  }
+  
 }

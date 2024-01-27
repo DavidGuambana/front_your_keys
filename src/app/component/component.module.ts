@@ -9,15 +9,16 @@ import { NgbdAlertBasicComponent } from './alert/alert.component';
 import { NgbdDropdownBasicComponent } from './dropdown-collapse/dropdown-collapse.component';
 import { NgbdnavBasicComponent } from './nav/nav.component';
 import { NgbdButtonsComponent } from './buttons/buttons.component';
-import { TableComponent } from "./table/table.component";
+import { TableComponent } from './table/table.component';
 import { AutosComponent } from './autos/autos.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { ClientesComponent } from './clientes/clientes.component';
-import { FormComponent as formCiente } from './clientes/form.component';
-import { FormComponent as formAuto} from './autos/form.component';
-import { FormComponent } from './empleados/form.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { DevolucionesComponent } from './devoluciones/devoluciones.component';
+import { FormComponent as formCiente } from './clientes/form.component';
+import { FormComponent as formAuto } from './autos/form.component';
+import { FormComponent as formAlquiler } from './alquileres/form.component';
+import { FormComponent } from './empleados/form.component';
 import { ReservasComponent } from './reservas/reservas.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormComponent as formAdmin } from './admin/form.component';
@@ -37,12 +38,12 @@ import { FormproteComponent as formproteccion} from './admin/formprote.component
     NgbdnavBasicComponent,
     NgbdButtonsComponent,
     TableComponent,
-    
   ],
   declarations: [
     formCiente,
     formAuto,
     formAdmin,
+    formAlquiler,
     formproteccion,
     ClientesComponent,
     EmpleadosComponent,
@@ -53,6 +54,7 @@ import { FormproteComponent as formproteccion} from './admin/formprote.component
     ReservasComponent,
     PerfilComponent,
     AdminComponent,
+    AlquileresComponent,
   ],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

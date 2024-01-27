@@ -47,36 +47,23 @@
           <table class="table table-hover align-middle text-nowrap">
             <thead style="background-color: #343a40" class="fs-4 text-light">
               <tr>
-                <th>ID</th>
                 <th>Cliente</th>
                 <th>Auto</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha Fin</th>
+                <th>Tiempo Restante</th>
                 <th>Total</th>
                 <th>Tipo de Pago</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let alquiler of alquileresFiltrados">
-                <td class="fs-4">{{ alquiler.id_alquiler }}</td>
-                <td>
-                  <div class="ms-3">
-                    <h5 class="mb-0 fw-normal">
-                      Hola
-                    </h5>
-                  </div>
-                </td>
-                <td>
-                  <div class="ms-3">
-                    <h5 class="mb-0 fw-normal">
-                      Hola
-                    </h5>
-                  </div>
-                </td>
+                <td class="fs-4">{{alquiler.cliente.persona.nombre1}} {{alquiler.cliente.persona.apellido1}}</td>
+                <td class="fs-4">{{alquiler.auto.modelo.marca.nombre}} {{alquiler.auto.modelo.nombre}}</td>
                 <td class="fs-4">{{ alquiler.fecha_ini }}</td>
-                <td class="fs-4">{{ alquiler.fecha_fin }}</td>
-                <td class="fs-4">{{ alquiler.total }}</td>
+                <td class="fs-4">{{ alquiler.fecha_fin}}</td>
+                <td class="fs-4">Tiempo</td>
+                <td class="fs-4">{{ alquiler.total}} $</td>
                 <td class="fs-4">{{ alquiler.tipo_pago }}</td>
               </tr>
             </tbody>
