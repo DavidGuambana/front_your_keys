@@ -33,9 +33,6 @@ export class ClientesComponent implements OnInit{
     
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
   listar() {
     this.ser_cli.listar().subscribe((clientes) => {
