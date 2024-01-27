@@ -1,80 +1,17 @@
-<div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Clientes</h4>
-          <div class="card-body border-top">
-            <div class="button-group d-flex justify-content-between align-items-center">
-              <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/clientes/form']"> Agregar
-                nuevo</button>
-              <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
-                <!--<input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrarClientes()">-->
-                <div class="input-group-append">
-                  <!--<span class="input-group-text btn-outline-success" type="button"  id="button-addon2" (click)="borrarFiltro()">
-                    <i class="bi bi-backspace-fill fs-4a"></i>
-                  </span>-->
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Método para buscar reservas que tendré que usar en un futuro {{ empleadosFiltrados.length }}-->
-          <h5 class="card-subtitle text-muted">Resultados:</h5>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle text-nowrap">
-                        <thead  style="background-color: #343a40;" class="fs-4 text-light">
-                            <tr>
-                                <th >Foto de cliente</th>
-                                <th >Cédula cliente</th>
-                                <th >Matrícula auto</th>
-                                <th >Tipo pago</th>
-                                <th >Precio protección</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
-                                <th >Total</th>
-                                <th >Editar</th>
-                                <th >Eliminar</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--El for para recorrer las reservas de autos *ngFor="let emple of empleadosFiltrados"-->
-                            <tr *ngFor="let alquiler of alquileresReservados" >
-                                <td>
-                                    <!--Código de imagen en la que mostramos la imagen de la reserva tanto de cliente como de auto-->
-                                    <div class="d-flex align-items-center">
-                                        <!--<img [src]="emple?.persona?.url_imagen" onerror="this.src='assets/images/users/incognito.webp'"
-                                        width="45" class="rounded-circle" />-->
-                                    </div>
-                                </td>
-                                <!-- Aquí se pone la siguiente linea de código para obtener datos del backend {{emple?.persona?.cedula}}-->
-                                <td><h5 class="mb-0 fw-normal"></h5></td>
-                                <td><h5 class="mb-0 fw-normal"></h5></td>
-                                <td><h5 class="mb-0 fw-normal"></h5></td>
-                                <td><h5 class="mb-0 fw-normal"></h5>{{alquiler?.tipo_pago}}</td>
-                                <td><h5 class="mb-0 fw-normal"></h5></td>
-                                <td></td>
-                                <th></th>
-                                <td>
-                                    
-                                    <!--Ruta para la edición de reservas, -->
-                                    <a>
-            
-                                      <i class="bi bi-pencil-fill fs-4 text-info"></i>
-                                    </a>
-                                  </td>
-                                  <td>
-                                    <!--Método para eliminar la reserva que ahora mismo no uso, pero pronto lo usaré(click)="eliminar(emple)"-->
-                                    <button class="btn p-0">
-                                      <i class="bi bi-trash-fill fs-4 
-                                      text-danger"></i>
-                                    </button>
-                                  </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<div class="container " >
+  <div class="card dark d-flex justify-content-start" *ngFor="let cli of alquileresreservados">
+    <img src="{{cli?.cliente?.persona?.url_imagen}}" onerror="this.src='assets/images/users/incognito.webp'"
+    width="100"  alt="...">
+    <div class="card-body ">
+      <div class="text-section">
+        <h5 class="card-title">{{cli?.cliente?.persona?.nombre1}}  {{cli?.cliente?.persona?.apellido1}}</h5>
+        <p class="card-text">Cedula: {{cli?.cliente?.persona?.cedula}}</p>
+        <p class="card-text"></p>
+      </div>
+      <div class="cta-section">
+        <div>$ {{cli?.total}} </div>
+        <a href="#" class="btn btn-light">Buy Now</a>
+      </div>
     </div>
-</div>
+  </div>
+  </div>

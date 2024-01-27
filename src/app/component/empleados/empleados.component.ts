@@ -5,10 +5,12 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Cliente } from 'src/app/models/cliente';
 
 @Component({
   selector: 'app-empleados',
   templateUrl: './empleados.component.html'
+  
 })
 export class EmpleadosComponent implements OnInit {
   public empleados:Empleado[] = [];
