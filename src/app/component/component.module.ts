@@ -43,6 +43,7 @@ import { FormproteComponent as formproteccion} from './admin/formprote.component
     formCiente,
     formAuto,
     formAdmin,
+    formAlquiler,
     formproteccion,
     ClientesComponent,
     EmpleadosComponent,

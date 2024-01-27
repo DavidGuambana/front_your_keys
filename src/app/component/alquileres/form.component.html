@@ -65,7 +65,7 @@
                            [value]="proteccion.id_proteccion"
                            (change)="seleccionarProteccion(proteccion.id_proteccion)"
                            [checked]="proteccion.id_proteccion === proteccionSeleccionada">
-                    {{ proteccion.nombre }} ({{ proteccion.precio | number:'2.2' }}) <br>
+                    {{ proteccion.nombre }} -> Precio: $({{ proteccion.precio | number:'2.2'}}) <br>
                   </div>
                 </div>
               </div>                                         

@@ -8,6 +8,7 @@ import { ProteccionService } from 'src/app/services/proteccion.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Alquiler } from 'src/app/models/alquiler';
 
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html'
@@ -84,7 +85,6 @@ export class FormComponent implements OnInit {
 
   public actualizarCamposConAuto(auto: Auto): void {
     console.log('Actualizando campos con auto:', auto);
-    // Supongamos que 'licencia', 'nombre' y 'apellido' son campos en tu formulario de alquiler
     this.alquilerForm2.patchValue({
       matricula: auto.matricula,
       color: auto.color,
@@ -92,13 +92,15 @@ export class FormComponent implements OnInit {
       capacidad: auto.capacidad,
       precio: auto.precio_diario,
       estado: auto.estado.nombre,
-      // ...actualiza otros campos según sea necesario
     });
   }
 
   cargarProtecciones() {
     this.proteccionService.listar().subscribe(
-      protecciones => this.proteccionList = protecciones
+      protecciones => {
+        this.proteccionList = protecciones;
+        console.log("Protecciones cargadas:", this.proteccionList);
+      }
     );
   }
 
