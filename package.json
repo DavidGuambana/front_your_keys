@@ -30,6 +30,7 @@
     "jspdf-autotable": "^3.8.1",
     "ng-apexcharts": "^1.7.6",
     "rxjs": "~7.8.0",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
