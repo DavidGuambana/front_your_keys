@@ -57,7 +57,7 @@ export class DevolucionesComponent implements OnInit{
       .subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
         devoluciones.forEach((devolucion) => {
           const alquiler = alquileres.find(
-            (alquiler) => alquiler.id_alquiler === devolucion.id_alquiler
+            (alquiler) => alquiler.reservado === true
           );
           if (alquiler) {
             devolucion.alquiler = alquiler;

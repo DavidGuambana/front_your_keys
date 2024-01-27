@@ -1,5 +1,6 @@
 import { Auto } from "./auto";
 import { Cliente } from "./cliente";
+import { Persona } from "./persona";
 import { Proteccion } from "./proteccion";
 export class Alquiler{
 
@@ -21,4 +22,5 @@ fecha_reg:string="";
 auto:Auto=new Auto;
 cliente:Cliente=new Cliente;
 proteccion:Proteccion=new Proteccion;
+persona:Persona = new Persona;
 }

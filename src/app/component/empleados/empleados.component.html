@@ -18,35 +18,38 @@
               </div>
             </div>
           </div>
-          <h5 class="card-subtitle text-muted">Resultados: {{ empleadosFiltrados.length }}</h5>
+          <h5 class="card-subtitle text-muted">Resultados: {{empleadosFiltrados.length }}</h5>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle text-nowrap">
                         <thead  style="background-color: #343a40;" class="fs-4 text-light">
                             <tr>
                                 <th >Foto de perfil</th>
                                 <th >Cédula</th>
-                                <th >Nombre</th>
-                                <th >Apellido</th>
+                                <th >Telefono</th>
+                                <th >Sueldo</th>
                                 <th >Edad</th>
                                 <th >Registro</th>
                                 <th >Editar</th>
                                 <th >Eliminar</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let emple of empleadosFiltrados" >
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img [src]="emple?.persona?.url_imagen" onerror="this.src='assets/images/users/incognito.webp'"
-                                        width="45" class="rounded-circle" />
-                                    </div>
-                                </td>
-                                <td><h5 class="mb-0 fw-normal">{{emple?.persona?.cedula}}</h5></td>
-                                <td><h5 class="mb-0 fw-normal">{{emple?.persona?.nombre1}}</h5></td>
-                                <td><h5 class="mb-0 fw-normal">{{emple?.persona?.apellido1}}</h5></td>
-                                <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_nac}}</h5></td>
-                                <td><h5 class="mb-0 fw-normal">{{emple?.persona?.fecha_reg}}</h5></td>
+                              <td>
+                                <div class="d-flex align-items-center">
+                                  <img [src]="emple?.persona?.url_imagen" onerror="this.src='assets/images/users/incognito.webp'"
+                                  width="45" class="rounded-circle" />
+                                  <div class="ms-3">
+                                    <td><h5 class="mb-0 fw-normal">{{ emple.persona.nombre1 +' '+emple.persona.apellido1}}</h5></td>
+                                    <span class="text-info">{{emple.persona.correo}}</span>
+                                  </div>
+                                </div>
+                              </td>
+                                <td class="fs-4 fw-normal">{{emple?.persona?.cedula}}</td>
+                                <td class="fs-4">{{emple?.persona?.telefono}}</td>
+                                <td class="fs-4">{{ "$"+emple?.salario}}</td>
+                                <td class="fs-4">{{emple?.persona?.fecha_nac}}</td>
+                                <td class="fs-4">{{emple?.persona?.fecha_reg}}</td>
                                 <td>
                                     <a [routerLink]="['/component/empleados/form',emple.id_empleado]">
                                       <i class="bi bi-pencil-fill fs-4 text-info"></i>
