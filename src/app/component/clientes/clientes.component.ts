@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
@@ -31,10 +31,6 @@ export class ClientesComponent implements OnInit{
   ngOnInit() {
     this.listar();
     
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   listar() {
@@ -91,6 +87,11 @@ export class ClientesComponent implements OnInit{
         this.listar();
         Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
       });
+  }
+
+  seleccionarCliente(cliente: Cliente): void {
+    this.sharedService.setClienteSeleccionado(cliente);
+    this.router.navigate(['/component/alquileres/form']); 
   }
 
 }

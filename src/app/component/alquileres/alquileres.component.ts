@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { SharedService } from 'src/app/shared/shared.service';
 import { Alquiler } from 'src/app/models/alquiler';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
@@ -8,97 +9,106 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { AutoService } from 'src/app/services/auto.service';
 import { AlquilerService } from 'src/app/services/alquiler.service';
-import { Subscription } from 'rxjs';
+import { Modelo } from 'src/app/models/modelo';
+import { ModeloService } from 'src/app/services/modelo.service';
+import { Marca } from 'src/app/models/marca';
+import { MarcaService } from 'src/app/services/marca.service';
+import { Router } from '@angular/router';
+import { FormComponent } from './form.component';
 
 @Component({
   selector: 'app-alquileres',
   templateUrl: './alquileres.component.html',
 })
-export class AlquileresComponent {
+export class AlquileresComponent implements OnInit {
   alquileres: Alquiler[] = [];
   clientes: Cliente[] = [];
   personas: Persona[] = [];
+  formComponent:  FormComponent[] =[];
   autos: Auto[] = [];
+  modelos: Modelo[] = [];
+  marcas: Marca[] = [];
   alquileresFiltrados: Alquiler[] = [];
   filtro: string = '';
-  subscription!: Subscription;
 
   constructor(
+    private router: Router,
     private ser_alqui: AlquilerService,
     private ser_cli: ClienteService,
     private ser_per: PersonaService,
     private ser_aut: AutoService,
-    private router: Router
+    private ser_mod: ModeloService,
+    private ser_mar: MarcaService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit() {
     this.listar();
-    
   }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-  
 
   listar() {
-    // Obtener alquileres
-    this.ser_alqui.listar().subscribe((alquileres) => {
-      this.alquileres = alquileres;
+    forkJoin({
+      alquileres: this.ser_alqui.listar(),
+      clientes: this.ser_cli.listar(),
+      personas: this.ser_per.listar(),
+      autos: this.ser_aut.listar(),
+      modelos: this.ser_mod.listar(),
+      marcas: this.ser_mar.listar(),
+    }).subscribe(
+      ({ alquileres, clientes, personas, autos, modelos, marcas }) => {
+        alquileres.forEach((alquiler) => {
+          const cliente = clientes.find(
+            (cliente) => cliente.id_cliente === alquiler.id_cliente
+          );
+          if (cliente) {
+            alquiler.cliente = cliente;
 
-      // Obtener clientes
-      this.ser_cli.listar().subscribe((clientes) => {
-        this.clientes = clientes;
+            const personaCliente = personas.find(
+              (persona) => persona.id_persona === cliente.id_persona
+            );
+            if (personaCliente) {
+              cliente.persona = personaCliente;
+            }
+          }
 
-        // Obtener personas
-        this.ser_per.listar().subscribe((personas) => {
-          this.personas = personas;
+          const auto = autos.find((auto) => auto.id_auto === alquiler.id_auto);
+          if (auto) {
+            alquiler.auto = auto;
 
-          // Obtener autos
-          this.ser_aut.listar().subscribe((autos) => {
-            this.autos = autos;
+            const modelo = modelos.find(
+              (modelo) => modelo.id_modelo === auto.id_modelo
+            );
+            if (modelo) {
+              auto.modelo = modelo;
 
-            // Asociar personas a clientes
-            this.clientes.forEach((cliente) => {
-              const persona = this.personas.find(
-                (p) => p.id_persona === cliente.id_persona
+              const marca = marcas.find(
+                (marca) => marca.id_marca === modelo.id_marca
               );
-              if (persona) {
-                cliente.persona = persona;
+              if (marca) {
+                modelo.marca = marca;
               }
-            });
-
-            // Asociar autos a alquileres
-            this.alquileres.forEach((alquiler) => {
-              const auto = this.autos.find(
-                (a) => a.id_auto === alquiler.id_auto
-              );
-              if (auto) {
-                alquiler.auto = auto;
-              }
-            });
-
-            // Llenar inicialmente alquileresFiltrados con todos los alquileres
-            this.alquileresFiltrados = this.alquileres;
-          });
+            }
+          }
         });
-      });
-    });
+
+        this.alquileres = alquileres;
+        this.alquileresFiltrados = alquileres;
+      }
+    );
   }
 
   filtrarAlquileres() {
-    // Filtrar alquileres en base al término de búsqueda
     this.alquileresFiltrados = this.alquileres.filter((alquiler) => {
-      const textoBusqueda = `${alquiler.id_alquiler} ${alquiler.fecha_ini} ${alquiler.fecha_fin} ${alquiler.total} ${alquiler.tipo_pago}`.toLowerCase();
+      const textoBusqueda =
+        `${alquiler.cliente.persona.nombre1} ${alquiler.cliente.persona.apellido1} ${alquiler.fecha_ini}
+        ${alquiler.auto.modelo.marca.nombre} ${alquiler.auto.modelo.nombre} ${alquiler.fecha_fin} ${alquiler.total} ${alquiler.tipo_pago}`.toLowerCase();
       return textoBusqueda.includes(this.filtro.toLowerCase());
     });
   }
-  
 
   borrarFiltro(): void {
     this.filtro = '';
-    this.filtrarAlquileres();
+    this.alquileresFiltrados = this.alquileres;
   }
+
 }

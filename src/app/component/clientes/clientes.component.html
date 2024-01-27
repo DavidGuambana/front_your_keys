@@ -24,7 +24,7 @@
             <thead style="background-color: #343a40;" class="fs-4 text-light">
               <tr>
                 <th>Nombre & Email</th>
-                <th></th>
+                <th>New Alquiler</th>
                 <th>Licencia</th>
                 <th>Nacimiento</th>
                 <th>Registro</th>
@@ -44,11 +44,13 @@
                     </div>
                   </div>
                 </td>
-                <td>
-                  <a [routerLink]="['/component/alquileres/form', cliente.id_cliente]">
-                    <i class="bi bi-bookmark-plus-fill fs-7 text-success"></i>
-                  </a>
-                </td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center">
+                    <a (click)="seleccionarCliente(cliente)">
+                      <i class="bi bi-bookmark-plus-fill fs-7 text-success"></i>
+                    </a>
+                  </div>
+                </td>              
                 <td class="fs-4 fw-normal">{{ cliente.persona.cedula }}</td>
                 <td class="fs-4">{{ cliente.persona.fecha_nac}}</td>
                 <td class="fs-4">{{ cliente.persona.fecha_reg}}</td>

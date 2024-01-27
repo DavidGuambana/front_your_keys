@@ -1,0 +1,29 @@
+.list-group {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .list-group-item {
+    position: relative;
+    padding-left: 25px; /* Espacio para el círculo */
+    cursor: pointer;
+  }
+  
+  .circle {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #007bff; /* Color del borde del círculo */
+    background-color: #fff; /* Color de fondo del círculo */
+  }
+  
+  .list-group-item.selected .circle {
+    background-color: #007bff; /* Cambia el color de fondo cuando está seleccionado */
+    border-color: #007bff; /* Cambia el color del borde cuando está seleccionado */
+    /* Puedes agregar más estilos para indicar visualmente que está seleccionado */
+  }
+  

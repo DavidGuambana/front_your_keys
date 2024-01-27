@@ -10,19 +10,43 @@
           <div class="col-md-5">
             <div class="form-group local-forms mb-3">
               <label for="alquiler" class="mr-2">Agregar Cliente:</label>
-              <button class="btn btn-primary" type="button" style="margin-left: 20px;" (click)="agregarCliente()">Agregar</button>
+              <button
+                class="btn btn-primary"
+                type="button"
+                style="margin-left: 20px"
+                (click)="newCliente()"
+              >
+                Agregar
+              </button>
             </div>
 
             <div class="form-row mb-3">
               <div class="col-12">
                 <div class="d-flex">
                   <div class="col mb-2">
-                    <input class="form-control" type="text" id="campo1" name="campo1" placeholder="Licencia..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo1"
+                      name="campo1"
+                      placeholder="Licencia..."
+                      [value]="alquilerForm.get('licencia')?.value"
+                      readonly
+                    />
                   </div>
                 </div>
                 <div class="d-flex">
                   <div class="col mb-2">
-                    <input class="form-control" type="text" id="campo2" name="campo2" placeholder="Nombre & Apellido..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo2"
+                      name="campo2"
+                      placeholder="Nombre & Apellido..."
+                      [value]="
+                        alquilerForm.get('nombre')?.value "
+                      readonly
+                    />
                   </div>
                 </div>
               </div>
@@ -32,20 +56,21 @@
               <div class="form-group local-forms mb-3">
                 <label for="alquiler" class="mr-2">Tipo de protección:</label>
               </div>
+
               <div class="d-flex">
-                <div class="col mx-1 mb-2">
-                  <select class="form-control w-100" name="tipo_proteccion" required>
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="1">Protección 1</option>
-                    <option value="2">Protección 2</option>
-                    <option value="3">Protección 3</option>
-                  </select>
+                <div class="col mx-1 mb-4">
+                  <div *ngFor="let proteccion of proteccionList">
+                    <input type="radio"
+                           name="proteccion"
+                           [value]="proteccion.id_proteccion"
+                           (change)="seleccionarProteccion(proteccion.id_proteccion)"
+                           [checked]="proteccion.id_proteccion === proteccionSeleccionada">
+                    {{ proteccion.nombre }} ({{ proteccion.precio | number:'2.2' }}) <br>
+                  </div>
                 </div>
-                <div class="col mx-1 mb-2">
-                  <input class="form-control" type="text" id="campo5" name="campo5" placeholder="Precio..." readonly/>
-                </div>
-              </div>
-            </div>            
+              </div>                                         
+              
+            </div>
 
             <div class="col-12">
               <div class="form-group local-forms mb-3">
@@ -65,41 +90,101 @@
             <div class="col-12">
               <div class="form-group local-forms mb-3">
                 <label>TOTAL: </label>
-                <input class="form-control w-100" type="text" name="total" placeholder="TOTAL..." readonly />
+                <input
+                  class="form-control w-100"
+                  type="text"
+                  name="total"
+                  placeholder="TOTAL..."
+                  readonly
+                />
               </div>
-            </div>            
-  
+            </div>
           </div>
 
           <!-- Columna derecha -->
           <div class="col-md-7">
             <div class="form-group local-forms mb-3">
               <label for="alquiler" class="mr-2">Agregar Auto:</label>
-              <button class="btn btn-primary" type="button" style="margin-left: 20px;" (click)="agregarAuto()">Agregar</button>
+              <button
+                class="btn btn-primary"
+                type="button"
+                style="margin-left: 20px"
+                (click)="newAuto()"
+              >
+                Agregar
+              </button>
             </div>
 
             <div class="form-row mb-3">
               <div class="col-12">
                 <div class="d-flex">
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo1" name="campo1" placeholder="Matrícula..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo1"
+                      name="campo1"
+                      placeholder="Matrícula..."
+                      [value]="alquilerForm2.get('matricula')?.value"
+                      readonly
+                    />
                   </div>
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo2" name="campo2" placeholder="Color..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo2"
+                      name="campo2"
+                      placeholder="Color..."
+                      [value]="alquilerForm2.get('color')?.value"
+                      readonly
+                    />
                   </div>
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo3" name="campo3" placeholder="Potencia..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo3"
+                      name="campo3"
+                      placeholder="Potencia..."
+                      [value]="alquilerForm2.get('potencia')?.value"
+                      readonly
+                    />
                   </div>
                 </div>
                 <div class="d-flex">
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo4" name="campo4" placeholder="Capacidad..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo4"
+                      name="campo4"
+                      placeholder="Capacidad..."
+                      [value]="alquilerForm2.get('capacidad')?.value"
+                      readonly
+                    />
                   </div>
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo5" name="campo5" placeholder="Precio..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo5"
+                      name="campo5"
+                      placeholder="Precio..."
+                      [value]="alquilerForm2.get('precio')?.value"
+                      readonly
+                    />
                   </div>
                   <div class="col mx-1 mb-2">
-                    <input class="form-control" type="text" id="campo6" name="campo6" placeholder="Estado..." readonly/>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="campo6"
+                      name="campo6"
+                      placeholder="Estado..."
+                      [value]="alquilerForm2.get('estado')?.value"
+                      readonly
+                    />
                   </div>
                 </div>
               </div>
@@ -107,22 +192,32 @@
 
             <div class="form-group local-forms mb-3">
               <label>Fecha de inicio del Alquiler: </label>
-              <input class="form-control" type="date" name="fecha_nac" required />
+              <input
+                class="form-control"
+                type="date"
+                name="fecha_nac"
+                required
+              />
             </div>
 
             <div class="form-group local-forms mb-3">
               <label>Fecha en que finalizará el Alquiler: </label>
-              <input class="form-control" type="date" name="fecha_nac" required />
+              <input
+                class="form-control"
+                type="date"
+                name="fecha_nac"
+                required
+              />
             </div>
-
           </div>
         </div>
 
         <!-- Boton Guardar centrado -->
-        <div class="col-12 d-flex justify-content-center align-items-center mt-3">
+        <div
+          class="col-12 d-flex justify-content-center align-items-center mt-3"
+        >
           <button class="btn btn-outline-success">Guardar</button>
         </div>
-
       </div>
     </div>
   </div>
