@@ -20,6 +20,7 @@ import { DevolucionesComponent } from './devoluciones/devoluciones.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AdminComponent } from './admin/admin.component';
+import { FormproteComponent as formproteccion } from './admin/formprote.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -122,6 +123,10 @@ export const ComponentsRoutes: Routes = [
 			{
 				path:'admin/form',
 				component: fromAdmin
+			},
+			{
+				path:'admin/form',
+				component: formproteccion
 			}
 
 		]

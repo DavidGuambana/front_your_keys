@@ -16,6 +16,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { ProteccionService } from 'src/app/services/proteccion.service';
 import autoTable from 'jspdf-autotable';
+import { combineLatest } from 'rxjs'
 
 @Component({
   selector: 'app-devoluciones',
@@ -48,44 +49,44 @@ export class DevolucionesComponent implements OnInit {
   }
 
   listar() {
-    forkJoin({
-      devoluciones: this.ser_devo.listar(),
-      alquileres: this.ser_alqui.listar(),
-      autos: this.ser_auto.listar(),
-      protecciones: this.ser_protec.listar(),
-      clientes: this.ser_cli.listar(),
-      empleados: this.ser_emple.listar(),
-      personas: this.ser_per.listar(),
-    }).subscribe(({ devoluciones, alquileres, autos, protecciones, clientes, empleados, personas }) => {
+    combineLatest([
+      this.ser_devo.listar(),
+      this.ser_alqui.listar(),
+      this.ser_auto.listar(),
+      this.ser_protec.listar(),
+      this.ser_cli.listar(),
+      this.ser_emple.listar(),
+      this.ser_per.listar(),
+    ]).subscribe(([devoluciones, alquileres, autos, protecciones, clientes, empleados, personas]) => {
       devoluciones.forEach((devolucion) => {
         const alquiler = alquileres.find((alquiler) => alquiler.id_alquiler === devolucion.id_alquiler);
         if (alquiler) {
           devolucion.alquiler = alquiler;
-
+  
           const auto = autos.find((auto) => auto.id_auto === alquiler.id_auto);
           if (auto) {
             alquiler.auto = auto;
           }
-
+  
           const proteccion = protecciones.find((proteccion) => proteccion.id_proteccion === alquiler.id_proteccion);
           if (proteccion) {
             alquiler.proteccion = proteccion;
           }
-
+  
           const cliente = clientes.find((cliente) => cliente.id_cliente === alquiler.id_cliente);
           if (cliente) {
             alquiler.cliente = cliente;
-
+  
             const personaCliente = personas.find((persona) => persona.id_persona === cliente.id_persona);
             if (personaCliente) {
               cliente.persona = personaCliente;
             }
           }
-
+  
           const empleado = empleados.find((empleado) => empleado.id_empleado === alquiler.id_empleado);
           if (empleado) {
             alquiler.empleado = empleado;
-
+  
             const personaEmpleado = personas.find((persona) => persona.id_persona === empleado.id_persona);
             if (personaEmpleado) {
               empleado.persona = personaEmpleado;
@@ -93,26 +94,24 @@ export class DevolucionesComponent implements OnInit {
           }
         }
       });
-
+  
       this.devoluciones = devoluciones;
-      this.devolucionesfiltradas= devoluciones;
+      this.devolucionesfiltradas = devoluciones; 
     });
   }
-   filtrarDevoluciones() {
-
-    this.devoluciones = this.devoluciones.filter((devolucion) => {
+  
+  filtrarDevoluciones() {
+    this.devoluciones = this.devolucionesfiltradas.filter((devolucion) => {
       const textoBusqueda =
         `${devolucion.alquiler.cliente.persona.nombre1} ${devolucion.alquiler.cliente.persona.apellido1} ${devolucion.alquiler.cliente.persona.cedula}
-      ${devolucion.alquiler.auto.matricula} ${devolucion.alquiler.fecha_ini} ${devolucion.fecha} ${devolucion.alquiler.total}`.toLowerCase();
+        ${devolucion.alquiler.auto.matricula} ${devolucion.alquiler.fecha_ini} ${devolucion.fecha} ${devolucion.alquiler.total}`.toLowerCase();
       return textoBusqueda.includes(this.filtro.toLowerCase());
     });
   }
-
   borrarFiltro(): void {
     this.filtro = '';
-    this.devoluciones;
+    this.devoluciones = this.devolucionesfiltradas;  // Restaurar la lista original al borrar el filtro
   }
-
   
 
   generatePdf(devolucionId: number): void{
@@ -279,4 +278,3 @@ function calcularDiferenciaEnDias(fechaInicio: Date, fechaFin: Date): number {
   const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
   return diferenciaEnDias;
 }
-
