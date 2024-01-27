@@ -110,7 +110,7 @@ export class FormComponent implements OnInit {
       this.service_img.postImagen(this.nuevaImagenFile).subscribe(
         (url_imagen: string) => {
           this.cliente.persona.url_imagen = url_imagen;
-          this.crearCliente();
+          this.crearCliente2();
         },
         (error) => {
           console.error('Error al subir la imagen:', error);
@@ -230,9 +230,6 @@ crearCliente2(): void {
       }
     );
   }
-  
-  
-  
   
 
   private actualizarCliente(): void {
