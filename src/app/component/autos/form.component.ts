@@ -21,6 +21,7 @@ import { ImagenService } from 'src/app/services/imagen.service';
 export class FormComponent implements OnInit {
   public titulo: string = "Nuevo auto";
   public auto: Auto = new Auto();
+  public marca:Marca=new Marca();
   autolist: Auto[]=[];
   marcasList: Marca[] = [];
   modelosList:Modelo[]=[];
@@ -45,7 +46,7 @@ export class FormComponent implements OnInit {
     this.cargarAuto();
     this.cargarAutos();
     this.cargarMarcas();
-    //this.cargarModeloss();
+    this.cargarModeloss();
     this.cargarCategorias();
     this.cargarEstado();
   }

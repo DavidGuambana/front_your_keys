@@ -30,44 +30,67 @@
     </style>
 </head>
 
+
 <body>
+    <button type="button" class="btn btn-outline-info bi bi-plus-circle"
+    [routerLink]="['/component/admin/form']"> Registrar</button>
     <div class="container">
         <table>
             <thead>
                 <tr>
-                    <th>Marca</th>
-                    <th>Modelo</th>
+                    <th>Id marca</th>
+                    <th>Nombre</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let marca of marcas">
-                    <td>{{ marca.nombre }}</td>
-                    <td>
-                        <div *ngFor="let modelo of modelo">
-                            {{ marca.id_marca == modelo.id_marca ? modelo.nombre : '' }}
-                        </div>
-                        <button type="button" [routerLink]="['/component/admin/form']">Editar</button>
-                    </td>
-                </tr>
-                
-            </tbody>
+
+            <tr *ngFor="let marca of marcas">
+                <td>{{marca.id_marca}}</td>
+                <td>{{ marca.nombre }}</td>
+                <button (click)="eliminarmarca(marca)" class="btn p-0 ml-2">
+                    <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                  </button>
+            </tr>
         </table>
+
+
+
+        <div class="modelo">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id modelo</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let modelo of modelo">
+                    <td>{{modelo.id_modelo}}</td>
+                    <td> {{modelo.nombre}}</td>
+
+                </tr>
+            </table>
+        </div>
 
 
         <div class="info">
             <table>
                 <thead>
                     <tr>
+                        <th>Id Proteccion</th>
                         <th>Proteccion</th>
                         <th>Precio</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let proteccion of proteccion">
+                        <td>{{proteccion.id_proteccion}}</td>
                         <td>{{ proteccion.nombre }}</td>
                         <td>{{ proteccion.precio }}</td>
+                        <button (click)="eliminarpro(proteccion)" class="btn p-0 ml-2">
+                            <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                          </button>
                     </tr>
                 </tbody>
+               
             </table>
         </div>
 
@@ -75,11 +98,13 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Id Categoria</th>
                         <th>Categoria</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let categoria of categoria">
+                        <td>{{categoria.id_categoria}}</td>
                         <td>{{ categoria.nombre }}</td>
                     </tr>
                 </tbody>

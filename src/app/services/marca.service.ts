@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
   export class MarcaService {
   
     private urlEndPoint:string = 'http://localhost:8080/api/marcas';
+
     private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
   
     constructor(private http: HttpClient) { }
@@ -30,8 +31,10 @@ import { Observable } from "rxjs";
       const id_marca = `${this.urlEndPoint}/${marca.id_marca}`;
       return this.http.put<Marca>(id_marca, marca, { headers: this.httpHeaders});
     }
+
+    eliminar(id_marca: number): Observable<Marca> {
+      return this.http.delete<Marca>(`${this.urlEndPoint}/${id_marca}`);
+    }
   
-    eliminar(id_marca: number): Observable<Marca>{
-      return this.http.delete<Marca>(`${this.urlEndPoint}/${id_marca}`)
-    }
+    
 }

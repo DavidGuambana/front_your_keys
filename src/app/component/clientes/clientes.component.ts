@@ -1,30 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ImagenService } from 'src/app/services/imagen.service';
 import { PersonaService } from 'src/app/services/persona.service';
+import { SharedService } from 'src/app/shared/shared.service';
+import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
 })
-export class ClientesComponent {
+export class ClientesComponent implements OnInit{
   clientes: Cliente[] = [];
   personas: Persona[] = [];
   clientesFiltrados: Cliente[] = [];
   filtro: string = '';
+  subscription!: Subscription;
 
   constructor(
     private ser_cli: ClienteService,
     private ser_per: PersonaService,
     private service_img: ImagenService,
+    private router: Router,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
     this.listar();
+    
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   listar() {
@@ -40,7 +50,6 @@ export class ClientesComponent {
             cliente.persona = persona;
           }
         });
-
         // Llenar inicialmente clientesFiltrados con todos los clientes
         this.clientesFiltrados = this.clientes;
       });
@@ -61,25 +70,42 @@ export class ClientesComponent {
     this.filtrarClientes();
   }
 
-
   public eliminar(cliente: Cliente): void {
     if (cliente.alquileres.length > 0 || cliente.persona.usuarios.length > 0 || cliente.persona.empleados.length > 0) {
       if (cliente.alquileres.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene ${cliente.alquileres.length === 1 ? 'un alquiler' : `${cliente.alquileres.length} alquileres`} asignado(s).`, 'warning');
       }
-    
+  
       if (cliente.persona.usuarios.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} tiene una cuenta de usuario asignado.`, 'warning');
       }
-    
+  
       if (cliente.persona.empleados.length > 0) {
         Swal.fire('¡Acción imposible!', `El cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} también es un empleado.`, 'warning');
       }
       return;
     } 
-      this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
-        this.listar();
-        Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
-      });
+    
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Se eliminará el cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ser_cli.eliminar(cliente.id_cliente).subscribe(() => {
+          // Solo una llamada, aquí eliminamos el cliente y luego su persona
+          this.ser_per.eliminar(cliente.persona.id_persona).subscribe(() => {
+            this.listar();
+            Swal.fire('¡Acción exitosa!', `Cliente ${cliente.persona.nombre1 + ' ' + cliente.persona.apellido1} eliminado.`, 'success');
+          });
+        });
+      }
+    });
   }
+
 }
