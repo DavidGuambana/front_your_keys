@@ -16,5 +16,6 @@ export class Auto {
     id_estado:number = 0;
     listado: Alquiler []= [];
     modelo:Modelo=new Modelo;
+    marca: Marca = new Marca;
     estado:Estado=new Estado;
 }
