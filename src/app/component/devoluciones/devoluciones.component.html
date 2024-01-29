@@ -35,7 +35,7 @@
                 <td class="fs-4" >{{devolucion.alquiler.cliente.persona.nombre1}} {{devolucion.alquiler.cliente.persona.apellido1}} </td>
                 <td class="fs-4" >{{devolucion.alquiler.cliente.persona.cedula}}</td>
                 <td class="fs-4">{{devolucion.alquiler.auto.matricula}}</td>
-                <td class="fs-4">{{devolucion.alquiler.fecha_ini}}</td>
+                <td class="fs-4">{{devolucion.alquiler.fecha_ini | date : "yyyy-MM-dd"}}</td>
                 <td class="fs-4">{{devolucion.fecha}}</td>
                 <td class="fs-4">{{devolucion.alquiler.total}} $</td>
                 <td class="text-center">
