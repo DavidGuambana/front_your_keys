@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { SharedService } from 'src/app/shared/shared.service';
 import { Alquiler } from 'src/app/models/alquiler';
 import { Cliente } from 'src/app/models/cliente';
 import { Persona } from 'src/app/models/persona';
@@ -13,8 +12,10 @@ import { Modelo } from 'src/app/models/modelo';
 import { ModeloService } from 'src/app/services/modelo.service';
 import { Marca } from 'src/app/models/marca';
 import { MarcaService } from 'src/app/services/marca.service';
-import { Router } from '@angular/router';
 import { FormComponent } from './form.component';
+import { Observable, interval } from 'rxjs';
+import { map, startWith, takeWhile } from 'rxjs/operators';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-alquileres',
@@ -24,22 +25,21 @@ export class AlquileresComponent implements OnInit {
   alquileres: Alquiler[] = [];
   clientes: Cliente[] = [];
   personas: Persona[] = [];
-  formComponent:  FormComponent[] =[];
+  formComponent: FormComponent[] = [];
   autos: Auto[] = [];
   modelos: Modelo[] = [];
   marcas: Marca[] = [];
   alquileresFiltrados: Alquiler[] = [];
   filtro: string = '';
+  providers!: [AsyncPipe];
 
   constructor(
-    private router: Router,
     private ser_alqui: AlquilerService,
     private ser_cli: ClienteService,
     private ser_per: PersonaService,
     private ser_aut: AutoService,
     private ser_mod: ModeloService,
     private ser_mar: MarcaService,
-    private sharedService: SharedService,
   ) {}
 
   ngOnInit() {
@@ -99,9 +99,10 @@ export class AlquileresComponent implements OnInit {
 
   filtrarAlquileres() {
     this.alquileresFiltrados = this.alquileres.filter((alquiler) => {
+      const estado = alquiler.pagado ? 'pagado' : 'pendiente';
       const textoBusqueda =
-        `${alquiler.cliente.persona.nombre1} ${alquiler.cliente.persona.apellido1} ${alquiler.fecha_ini}
-        ${alquiler.auto.modelo.marca.nombre} ${alquiler.auto.modelo.nombre} ${alquiler.fecha_fin} ${alquiler.total} ${alquiler.tipo_pago}`.toLowerCase();
+        `${alquiler.cliente.persona.nombre1} ${alquiler.cliente.persona.apellido1} ${alquiler.auto.modelo.marca.nombre} ${alquiler.auto.modelo.nombre}
+         ${alquiler.fecha_ini} ${alquiler.fecha_fin} ${alquiler.total} ${estado}`.toLowerCase();
       return textoBusqueda.includes(this.filtro.toLowerCase());
     });
   }
@@ -111,4 +112,32 @@ export class AlquileresComponent implements OnInit {
     this.alquileresFiltrados = this.alquileres;
   }
 
+  calcularTiempoRestante(alquiler: Alquiler): Observable<string> {
+    return interval(1000).pipe(
+      startWith(0),
+      map(() => {
+        const fechaInicio = new Date(alquiler.fecha_ini).getTime();
+        const fechaFin = new Date(alquiler.fecha_fin).getTime();
+        const ahora = new Date().getTime();
+
+        const tiempoRestanteMs = fechaFin - ahora;
+
+        if (tiempoRestanteMs <= 0) {
+          return 'Alquiler finalizado';
+        }
+
+        const dias = Math.floor(tiempoRestanteMs / (1000 * 60 * 60 * 24));
+        const horas = Math.floor(
+          (tiempoRestanteMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutos = Math.floor(
+          (tiempoRestanteMs % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const segundos = Math.floor((tiempoRestanteMs % (1000 * 60)) / 1000);
+
+        return `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      }),
+      takeWhile((tiempoRestante) => tiempoRestante !== 'Alquiler finalizado')
+    );
+  }
 }

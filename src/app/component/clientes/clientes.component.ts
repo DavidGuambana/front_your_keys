@@ -104,9 +104,28 @@ export class ClientesComponent implements OnInit{
     });
   }
 
+ // seleccionarCliente(cliente: Cliente): void {
+   // this.sharedService.setClienteSeleccionado(cliente);
+   // this.router.navigate(['/component/alquileres/form']); 
+ // }
+
   seleccionarCliente(cliente: Cliente): void {
-    this.sharedService.setClienteSeleccionado(cliente);
-    this.router.navigate(['/component/alquileres/form']); 
-  }
+    Swal.fire({
+      title: '¿Añadir este cliente?',
+      text: `¿Desea agregar al cliente ${cliente.persona.nombre1} ${cliente.persona.apellido1} al alquiler?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, agregar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.sharedService.setClienteSeleccionado(cliente);
+        this.router.navigate(['/component/alquileres/form']); 
+      }
+    });
+  } 
 
 }
