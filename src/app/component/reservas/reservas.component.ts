@@ -13,6 +13,7 @@ import { MarcaService } from 'src/app/services/marca.service';
 import { ModeloService } from 'src/app/services/modelo.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { ProteccionService } from 'src/app/services/proteccion.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reservas',
@@ -20,8 +21,10 @@ import { ProteccionService } from 'src/app/services/proteccion.service';
   styleUrls:['./reservas.component.css']
 })
 export class ReservasComponent implements OnInit{
+
   alquileresreservados :Alquiler[]=[];
   idClientes: number[] = [];
+  alquileres:Alquiler[] = [];
   personas:Persona[]=[];
   public clientes:Cliente[]=[];
   public clientesFiltrados:Cliente[]=[];
@@ -43,6 +46,7 @@ export class ReservasComponent implements OnInit{
   }
 
   listar() {
+    this.alquileresreservados = [];
     forkJoin({
       alquileres: this.ser_alqui.listar(),
       autos: this.ser_auto.listar(),
@@ -95,6 +99,31 @@ export class ReservasComponent implements OnInit{
     
   }
 
-  
+  eliminarReserva(id:number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true, 
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ser_alqui.eliminar(id).subscribe(
+          () => {
+            Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
+            this.listar();
+          },
+          (error) => {
+            // If there is an error, it logs the error in the console
+            // and shows an error message
+            console.error(`Error al eliminar el elquiler con ID ${id}:`, error);
+            Swal.fire('Error', 'Hubo un error al eliminar este alquiler, esta en uso', 'error');
+          }
+        );
+      }
+    });
+    }
 
 }
