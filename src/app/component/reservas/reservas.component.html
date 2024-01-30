@@ -8,18 +8,20 @@
         <p class="card-text">Cedula: {{cli?.cliente?.persona?.cedula}}</p>
         <p class="card-text">Telefono:{{cli?.cliente?.persona?.telefono}}</p>
       </div>
-      <div class="img-cont">
-        <img id="image-car" src="{{cli?.cliente?.persona?.url_imagen}}" onerror="this.src='assets/images/users/incognito.webp'"
-        width="100">
+      <div class="img-cont" >
+        <img id="image-car" src="{{cli?.auto?.url_imagen}}" width="100" onerror="this.src='assets/images/autos/auto_rojo.jpg'">
       </div>
       <div class=seccion_auto>
-        <h5 class="card-title">{{cli?.auto?.modelo?.marca?.nombre}} {{cli?.auto?.modelo?.nombre}} </h5>
+        <h5 class="card-title">{{cli?.auto?.modelo?.marca?.nombre}} {{cli?.auto?.modelo?.nombre}}</h5>
         <p class="card-text">Caballos.P:{{cli?.auto?.potencia}}</p>
         <p class="card-text">Fecha de reserva: {{cli?.fecha_ini}}</p>
       </div>
       <div class="cta-section">
         <div>$ {{cli?.total}} </div>
-        <a href="#" class="btn btn-light">ACEPTAR</a>
+        <a class="btn btn-light" id="boton_aceptar" ><i class="bi bi-check-circle-fill"></i>
+        </a>
+        <a class="btn btn-light" id="boton_cancelar" (click)="eliminarReserva(cli.id_alquiler)"><i class="bi bi-x-circle-fill"></i>
+        </a>
       </div>
     </div>
   </div>
