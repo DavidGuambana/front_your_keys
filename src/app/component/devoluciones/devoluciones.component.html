@@ -21,6 +21,7 @@
           <table class="table table-hover align-middle text-nowrap">
             <thead style="background-color: #343a40;" class="fs-4 text-light">
               <tr>
+                <th>N#</th>
                 <th>Nombre & Apellido</th>
                 <th>Cédula</th>
                 <th>Placa</th>
@@ -32,6 +33,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let devolucion of devoluciones">
+                <td class="fs-4">{{devolucion.id_devolucion}}</td>
                 <td class="fs-4" >{{devolucion.alquiler.cliente.persona.nombre1}} {{devolucion.alquiler.cliente.persona.apellido1}} </td>
                 <td class="fs-4" >{{devolucion.alquiler.cliente.persona.cedula}}</td>
                 <td class="fs-4">{{devolucion.alquiler.auto.matricula}}</td>

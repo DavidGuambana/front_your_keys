@@ -10,9 +10,12 @@ declare var $: any;
 })
 export class NavigationComponent implements AfterViewInit {
   @Output() toggleSidebar = new EventEmitter<void>();
-
+   
 
   public showSearch = false;
+  public usuario: string | null = localStorage.getItem('nombreUsuario');
+  public idpersona: string | null = localStorage.getItem('idPersona');
+  public tipousuario: string | null = localStorage.getItem('TipoUsuario');
 
   constructor(private modalService: NgbModal) {
   }
