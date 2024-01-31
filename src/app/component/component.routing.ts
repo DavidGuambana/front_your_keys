@@ -21,7 +21,9 @@ import { AlquileresComponent } from './alquileres/alquileres.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormproteComponent as formproteccion } from './admin/formprote.component';
-
+import { FormmarcaComponent  as formmarca} from './admin/formmarca.component';
+import { FormmodeloComponent as formmodelo} from './admin/formmodelo.component';
+import { ForcateComponent as formcategoria } from './admin/forcate.component';
 
 export const ComponentsRoutes: Routes = [
 	{
@@ -125,10 +127,22 @@ export const ComponentsRoutes: Routes = [
 				component: fromAdmin
 			},
 			{
-				path:'admin/form',
+				path: 'admin/formmarca/:id',
+				component: formmarca
+			},
+			{
+				path: 'admin/formmodelo/:id',
+				component: formmodelo
+			},
+			{
+				path: 'admin/formprote/:id',
 				component: formproteccion
+			},
+			{
+				path: 'admin/forcate/:id',
+				component: formcategoria
 			}
-
+			
 		]
 	}
 ];

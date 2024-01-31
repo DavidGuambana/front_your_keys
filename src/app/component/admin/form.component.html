@@ -11,6 +11,7 @@
     <button type="button" (click)="toggleContenido()" class="btn btn-primary">{{mostrarContenido ? 'Ocultar' : 'Registrar'}} Modelo</button>
     <button type="button" (click)="toggleContenido2()" class="btn btn-primary">{{mostrarContenido2 ? 'Ocultar' : 'Registrar'}} Marca</button>
     <button type="button" (click)="toggleContenido3()" class="btn btn-primary">{{mostrarContenido3 ? 'Ocultar' : 'Registrar'}} Proteccion</button>
+    <button type="button" (click)="toggleContenido4()" class="btn btn-primary">{{mostrarContenido4 ? 'Ocultar' : 'Registrar'}} Categoria</button>
   </div>
 
   <div *ngIf="mostrarContenido">
@@ -59,6 +60,18 @@
       </div>
   
       <button type="button" (click)="crearProteccion()" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+
+  <div *ngIf="mostrarContenido4">
+    <form>
+      <div class="form-group">
+        <h1>Registro de Categoria</h1>
+        <label for="nombreCategoria">Nombre de Categoria:</label>
+        <input type="text" id="nombreCategoria" name="nombreCategoria" [(ngModel)]="nuevaCategoria.nombre" class="form-control">
+      </div>
+  
+      <button type="button" (click)="crearCategoria()" class="btn btn-primary">Guardar</button>
     </form>
   </div>
   

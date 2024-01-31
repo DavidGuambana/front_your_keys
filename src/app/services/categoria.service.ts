@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Categoria } from '../models/categoria';
+import { catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { throwError } from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +37,18 @@ export class CategoriaService {
   eliminar(id_categoria: number): Observable<Categoria>{
     return this.http.delete<Categoria>(`${this.urlEndPoint}/${id_categoria}`)
   }
+
+getCategoria(id_categoria: number): Observable<Categoria> {
+  const url = `${this.urlEndPoint}/${id_categoria}`;
+  return this.http.get<Categoria>(url).pipe(
+    tap((categoria) => console.log('Categoria obtenido:', categoria)),
+    catchError((error) => {
+      console.error('Error en la solicitud HTTP:', error);
+      return throwError('Error al obtener la categoria');
+    })
+  );
+}
+
+
+
 }
