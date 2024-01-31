@@ -104,11 +104,6 @@ export class ClientesComponent implements OnInit{
     });
   }
 
- // seleccionarCliente(cliente: Cliente): void {
-   // this.sharedService.setClienteSeleccionado(cliente);
-   // this.router.navigate(['/component/alquileres/form']); 
- // }
-
   seleccionarCliente(cliente: Cliente): void {
     Swal.fire({
       title: '¿Añadir este cliente?',

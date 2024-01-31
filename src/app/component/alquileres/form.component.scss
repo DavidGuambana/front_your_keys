@@ -23,3 +23,35 @@
     flex: 1; /* Esto distribuirá el espacio disponible de manera uniforme entre las columnas */
     max-width: 330px; /* O ajusta el ancho máximo según tus necesidades */
   }
+
+  .contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+  }
+
+  .parrafo {
+    background-color: #f2f7f8;
+    border: 1px solid #e9ecef;
+    padding: 5px;
+    margin: 5px 20px;
+    width: 80%;
+    font-size: 1em; /* Tamaño de letra común para todos los campos */
+  }
+
+  .parrafo2 {
+    padding: 5px;
+    margin: 5px 20px;
+    width: 80%;
+    font-size: 1em; /* Tamaño de letra común para todos los campos */
+    text-align: right;
+  }
+
+  .ultimo-parrafo {
+    font-size: 1.3em;
+    border: 2px solid #e9ecef;
+    color: #3498db;
+    height: 40px;
+  }

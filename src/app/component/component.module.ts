@@ -25,6 +25,7 @@ import { FormComponent as formAdmin } from './admin/form.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormproteComponent as formproteccion} from './admin/formprote.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
