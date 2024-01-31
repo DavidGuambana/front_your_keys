@@ -1,0 +1,25 @@
+/* Estilo para las opciones de protección */
+.proteccion-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #e9ecef;
+    background-color: #f2f7f8; 
+    border-radius: 5px;
+  }
+  
+  /* Estilo para el círculo de opción */
+  .proteccion-option input {
+    margin-right: 10px;
+  }
+  
+  /* Estilo para el texto de la opción */
+  .proteccion-option label {
+    margin-bottom: 0;
+  }
+
+  .custom-column {
+    flex: 1; /* Esto distribuirá el espacio disponible de manera uniforme entre las columnas */
+    max-width: 330px; /* O ajusta el ancho máximo según tus necesidades */
+  }

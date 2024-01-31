@@ -125,7 +125,36 @@ export class AutosComponent implements OnInit {
   }
 
   seleccionarAuto(auto: Auto): void {
-    this.sharedService.setAutoSeleccionado(auto);
-    this.router.navigate(['/component/alquileres/form']); 
+    if (auto.estado.nombre === 'Disponible') {
+      Swal.fire({
+        title: '¿Añadir este auto?',
+        text: `¿Desea agregar el auto ${auto.modelo.marca.nombre} ${auto.modelo.nombre} al alquiler?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, agregar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.sharedService.setAutoSeleccionado(auto);
+          this.router.navigate(['/component/alquileres/form']); 
+        }
+      });
+    } else if (auto.estado.nombre === 'Alquilado') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Auto Alquilado',
+        text: 'Este auto ya está alquilado. Por favor, elige otro auto disponible.'
+      });
+    } else if (auto.estado.nombre === 'Reparación') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Auto en Reparación',
+        text: 'Este auto se encuentra en reparación. Por favor, elige otro auto disponible.'
+      });
+    }
   }
+  
+
 }
