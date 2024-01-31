@@ -4,7 +4,9 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Editar Marca</h3>
+
                     <form ngNativeValidate (ngSubmit)="crearMarca()">
+                        
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" [(ngModel)]="marca.nombre" name="nombre" required>
@@ -14,6 +16,8 @@
                             <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
                         </div>
                     </form>
+
+
                 </div>
             </div>
         </div>
