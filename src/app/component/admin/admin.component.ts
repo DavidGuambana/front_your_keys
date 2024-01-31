@@ -9,6 +9,7 @@ import { Categoria } from 'src/app/models/categoria';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 
@@ -29,15 +30,18 @@ export class AdminComponent implements OnInit {
   public proteccion: Proteccion[] = [];
   public modelo: Modelo[] = [];
   public categoria: Categoria[] = [];
-  
-
-
+  mostrarMarca: boolean = false;
+  mostrarModelo: boolean = false;
+  mostrarProteccion: boolean = false;
+  mostrarCategoria: boolean = false;
 
   constructor(
+    private router: Router,
     private marcaService: MarcaService,
     private proteccionService: ProteccionService,
     private modeloService: ModeloService,
     private categoriaService: CategoriaService,
+  
 
   ) { }
 
@@ -90,6 +94,7 @@ public eliminarpro(proteccion: Proteccion): void {
         () => {
           this.lista2();
           Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
+          this.lista2();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -118,6 +123,7 @@ public eliminarmarca(marca: Marca): void {
         () => {
           this.listar();
           Swal.fire('Marca eliminado', 'Marca eliminado con éxito', 'success');
+          this.listar();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -130,8 +136,79 @@ public eliminarmarca(marca: Marca): void {
   });
 }
 
+public eliminarmodelo(modelo: Modelo): void {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true, 
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.modeloService.eliminar(modelo.id_modelo).subscribe(
+        () => {
+          this.lista3();
+          Swal.fire('Modelo eliminado', 'Modelo eliminado con éxito', 'success');
+          this.lista3();
+        },
+        (error) => {
+          // If there is an error, it logs the error in the console
+          // and shows an error message
+          console.error(`Error al eliminar modelo con ID ${modelo.id_modelo}:`, error);
+          Swal.fire('Error', 'Hubo un error al eliminar este modelo, esta en uso', 'error');
+        }
+      );
+    }
+  });
+}
 
-  
+public eliminarcategoria(categoria: Categoria): void {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true, 
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.categoriaService.eliminar(categoria.id_categoria).subscribe(
+        () => {
+          this.lista3();
+          Swal.fire('Cateoria eliminado', 'Categoria eliminado con éxito', 'success');
+          this.lista4();
+        },
+        (error) => {
+          // If there is an error, it logs the error in the console
+          // and shows an error message
+          console.error(`Error al eliminar categoria con ID ${categoria.id_categoria}:`, error);
+          Swal.fire('Error', 'Hubo un error al eliminar este categoria, esta en uso', 'error');
+        }
+      );
+    }
+  });
+}
+
+toggleContenido() {
+  this.mostrarMarca = !this.mostrarMarca;
+ }
+
+ toggleContenido2() {
+  this.mostrarModelo = !this.mostrarModelo;
+ }
+
+ toggleContenido3() {
+  this.mostrarCategoria = !this.mostrarCategoria;
+ }
+
+ toggleContenido4() {
+  this.mostrarProteccion = !this.mostrarProteccion;
+ }
+
+
 
 }
 

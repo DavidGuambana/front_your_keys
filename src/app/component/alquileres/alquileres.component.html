@@ -53,18 +53,47 @@
                 <th>Fecha Fin</th>
                 <th>Tiempo Restante</th>
                 <th>Total</th>
-                <th>Tipo de Pago</th>
+                <th>Estado</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let alquiler of alquileresFiltrados">
-                <td class="fs-4">{{alquiler.cliente.persona.nombre1}} {{alquiler.cliente.persona.apellido1}}</td>
-                <td class="fs-4">{{alquiler.auto.modelo.marca.nombre}} {{alquiler.auto.modelo.nombre}}</td>
-                <td class="fs-4">{{ alquiler.fecha_ini }}</td>
-                <td class="fs-4">{{ alquiler.fecha_fin}}</td>
-                <td class="fs-4">Tiempo</td>
-                <td class="fs-4">{{ alquiler.total}} $</td>
-                <td class="fs-4">{{ alquiler.tipo_pago }}</td>
+                <td class="fs-4">
+                  {{ alquiler.cliente.persona.nombre1 }}
+                  {{ alquiler.cliente.persona.apellido1 }}
+                </td>
+                <td class="fs-4">
+                  {{ alquiler.auto.modelo.marca.nombre }}
+                  {{ alquiler.auto.modelo.nombre }}
+                </td>
+                <td class="fs-4">
+                  {{ alquiler.fecha_ini | date : "yyyy-MM-dd" }}
+                </td>
+                <td class="fs-4">
+                  {{ alquiler.fecha_fin | date : "yyyy-MM-dd" }}
+                </td>
+                <td class="fs-4" style="color: blue">
+                  <ng-container
+                    *ngIf="
+                      calcularTiempoRestante(alquiler)
+                        | async as tiempoRestante;
+                      else finalizado
+                    "
+                  >
+                    {{ tiempoRestante }}
+                  </ng-container>
+                  <ng-template #finalizado>Alquiler finalizado</ng-template>
+                </td>
+                <td class="fs-4">{{ alquiler.total }} $</td>
+                <td
+                  class="fs-4"
+                  [ngClass]="{
+                    'text-success': alquiler.pagado,
+                    'text-danger': !alquiler.pagado
+                  }"
+                >
+                  {{ alquiler.pagado ? "Pagado" : "Pendiente" }}
+                </td>
               </tr>
             </tbody>
           </table>

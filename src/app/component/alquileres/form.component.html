@@ -1,224 +1,326 @@
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">{{ titulo }}</h4>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="card-title">{{ titulo }}</h4>
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              [routerLink]="['/component/reservas']"
+            >
+              VER RESERVAS
+            </button>
+          </div>
 
-        <!-- Nuevo Componente -->
-        <div class="row mb-3">
-          <!-- Columna izquierda -->
-          <div class="col-md-5">
-            <div class="form-group local-forms mb-3">
-              <label for="alquiler" class="mr-2">Agregar Cliente:</label>
-              <button
-                class="btn btn-primary"
-                type="button"
-                style="margin-left: 20px"
-                (click)="newCliente()"
-              >
-                Agregar
-              </button>
-            </div>
+          <!-- Nuevo Componente -->
+          <div class="row mb-3">
+            <!-- Columna izquierda -->
+            <div class="col-md-5">
+              <div class="form-group local-forms mb-3">
+                <label for="alquiler" class="mr-2">Agregar Cliente:</label>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  style="margin-left: 20px"
+                  (click)="newCliente()"
+                >
+                  Agregar
+                </button>
+              </div>
 
-            <div class="form-row mb-3">
-              <div class="col-12">
-                <div class="d-flex">
-                  <div class="col mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo1"
-                      name="campo1"
-                      placeholder="Licencia..."
-                      [value]="alquilerForm.get('licencia')?.value"
-                      readonly
-                    />
+              <div class="form-row mb-3">
+                <div class="col-12">
+                  <div class="d-flex">
+                    <div class="col mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo1"
+                        name="campo1"
+                        placeholder="Cédula..."
+                        [value]="alquilerForm.get('cedula')?.value"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <div class="col mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo2"
+                        name="campo2"
+                        placeholder="Nombre & Apellido..."
+                        [value]="alquilerForm.get('nombre')?.value"
+                        readonly
+                      />
+                    </div>
                   </div>
                 </div>
-                <div class="d-flex">
-                  <div class="col mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo2"
-                      name="campo2"
-                      placeholder="Nombre & Apellido..."
-                      [value]="
-                        alquilerForm.get('nombre')?.value "
-                      readonly
-                    />
-                  </div>
-                </div>
               </div>
-            </div>
 
-            <div class="col-12">
               <div class="form-group local-forms mb-3">
-                <label for="alquiler" class="mr-2">Tipo de protección:</label>
-              </div>
-
-              <div class="d-flex">
-                <div class="col mx-1 mb-4">
-                  <div *ngFor="let proteccion of proteccionList">
-                    <input type="radio"
-                           name="proteccion"
-                           [value]="proteccion.id_proteccion"
-                           (change)="seleccionarProteccion(proteccion.id_proteccion)"
-                           [checked]="proteccion.id_proteccion === proteccionSeleccionada">
-                    {{ proteccion.nombre }} -> Precio: $({{ proteccion.precio | number:'2.2'}}) <br>
-                  </div>
-                </div>
-              </div>                                         
-              
-            </div>
-
-            <div class="col-12">
-              <div class="form-group local-forms mb-3">
-                <label for="alquiler" class="mr-2">Tipo de pago:</label>
-              </div>
-              <div class="d-flex">
-                <div class="col mx-1 mb-4">
-                  <select class="form-control w-100" name="tipo_pago" required>
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="1">Tarjeta</option>
-                    <option value="2">Efectivo</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="form-group local-forms mb-3">
-                <label>TOTAL: </label>
+                <label style="margin-bottom: 10px">Fecha de inicio del Alquiler:</label>
                 <input
-                  class="form-control w-100"
-                  type="text"
-                  name="total"
-                  placeholder="TOTAL..."
-                  readonly
+                  class="form-control"
+                  type="date"
+                  name="fecha_inicio"
+                  [(ngModel)]="fechaInicio"
+                  (change)="actualizarDiasEntreFechas()"
+                  [min]="fechaActual"
+                  required
                 />
               </div>
-            </div>
-          </div>
+              
+              <div class="form-group local-forms mb-3">
+                <label style="margin-bottom: 10px">Fecha en que finalizará el Alquiler:</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  name="fecha_fin"
+                  [(ngModel)]="fechaFin"
+                  (change)="actualizarDiasEntreFechas()"
+                  [min]="fechaActual"
+                  required
+                />
+              </div>
 
-          <!-- Columna derecha -->
-          <div class="col-md-7">
-            <div class="form-group local-forms mb-3">
-              <label for="alquiler" class="mr-2">Agregar Auto:</label>
-              <button
-                class="btn btn-primary"
-                type="button"
-                style="margin-left: 20px"
-                (click)="newAuto()"
-              >
-                Agregar
-              </button>
-            </div>
+              <div *ngIf="diasEntreFechas > 0">
+                <p style="color: blue">
+                  El alquiler será de {{ diasEntreFechas }} días.
+                </p>
+              </div>
 
-            <div class="form-row mb-3">
-              <div class="col-12">
-                <div class="d-flex">
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo1"
-                      name="campo1"
-                      placeholder="Matrícula..."
-                      [value]="alquilerForm2.get('matricula')?.value"
-                      readonly
-                    />
-                  </div>
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo2"
-                      name="campo2"
-                      placeholder="Color..."
-                      [value]="alquilerForm2.get('color')?.value"
-                      readonly
-                    />
-                  </div>
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo3"
-                      name="campo3"
-                      placeholder="Potencia..."
-                      [value]="alquilerForm2.get('potencia')?.value"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo4"
-                      name="campo4"
-                      placeholder="Capacidad..."
-                      [value]="alquilerForm2.get('capacidad')?.value"
-                      readonly
-                    />
-                  </div>
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo5"
-                      name="campo5"
-                      placeholder="Precio..."
-                      [value]="alquilerForm2.get('precio')?.value"
-                      readonly
-                    />
-                  </div>
-                  <div class="col mx-1 mb-2">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="campo6"
-                      name="campo6"
-                      placeholder="Estado..."
-                      [value]="alquilerForm2.get('estado')?.value"
-                      readonly
-                    />
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group local-forms mb-3">
+                    <label for="tipo_pago" class="mr-2">Tipo de pago:</label>
+                    <select class="form-control w-100" name="tipo_pago" required>
+                      <option value="" selected disabled>Seleccionar</option>
+                      <option value="1">Tarjeta</option>
+                      <option value="2">Efectivo</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="form-group local-forms mb-3">
-              <label>Fecha de inicio del Alquiler: </label>
-              <input
-                class="form-control"
-                type="date"
-                name="fecha_nac"
-                required
-              />
-            </div>
+            <!-- Columna derecha -->
+            <div class="col-md-7">
+              <div class="form-group local-forms mb-3">
+                <label for="alquiler" class="mr-2">Agregar Auto:</label>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  style="margin-left: 20px"
+                  (click)="newAuto()"
+                >
+                  Agregar
+                </button>
+              </div>
 
-            <div class="form-group local-forms mb-3">
-              <label>Fecha en que finalizará el Alquiler: </label>
-              <input
-                class="form-control"
-                type="date"
-                name="fecha_nac"
-                required
-              />
+              <div class="form-row mb-3">
+                <div class="col-12">
+                  <div class="d-flex">
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo1"
+                        name="campo1"
+                        placeholder="Matrícula..."
+                        [value]="alquilerForm.get('matricula')?.value"
+                        readonly
+                      />
+                    </div>
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo2"
+                        name="campo2"
+                        placeholder="Color..."
+                        [value]="alquilerForm.get('color')?.value"
+                        readonly
+                      />
+                    </div>
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo3"
+                        name="campo3"
+                        placeholder="Potencia..."
+                        [value]="alquilerForm.get('potencia')?.value"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo4"
+                        name="campo4"
+                        placeholder="Capacidad..."
+                        [value]="alquilerForm.get('capacidad')?.value"
+                        readonly
+                      />
+                    </div>
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo5"
+                        name="campo5"
+                        placeholder="Precio..."
+                        [value]="alquilerForm.get('precio')?.value"
+                        readonly
+                      />
+                    </div>
+                    <div class="col mx-1 mb-2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="campo6"
+                        name="campo6"
+                        placeholder="Estado..."
+                        [value]="alquilerForm.get('estado')?.value"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group local-forms mb-3">
+                  <label for="alquiler" class="mr-2">Tipo de protección:</label>
+                </div>
+
+                <div class="d-flex">
+                  <div class="col mx-1 mb-4">
+                    <div
+                      *ngFor="let proteccion of proteccionList"
+                      class="proteccion-option"
+                    >
+                      <input
+                        type="radio"
+                        name="proteccion"
+                        [value]="proteccion.id_proteccion"
+                        (change)="seleccionarProteccion(proteccion.id_proteccion)"
+                        [checked]="
+                          proteccion.id_proteccion === proteccionSeleccionada
+                        "
+                      />
+
+                      <label
+                        >{{ proteccion.nombre }} -> Precio: ${{
+                          proteccion.precio | number : ".2"
+                        }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table
+                    class="table table-hover align-middle text-nowrap table-sm"
+                  >
+                    <thead class="bg-dark text-light">
+                      <tr>
+                        <th style="text-align: center">Precio Protección</th>
+                        <th style="text-align: center">Precio Auto</th>
+                        <th style="text-align: center">Número de días</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="descripcion1"
+                            placeholder="Precio protección..."
+                            readonly
+                            [value]="
+                              precioProteccionSeleccionado !== null
+                                ? precioProteccionSeleccionado
+                                : ''
+                            "
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="cantidad1"
+                            placeholder="Precio auto..."
+                            [value]="alquilerForm.get('precio2')?.value"
+                            readonly
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="precio1"
+                            [placeholder]="
+                              numeroDiasAlquiler === 0 ? 'Número de días' : ''
+                            "
+                            readonly
+                            [value]="
+                              numeroDiasAlquiler !== 0 ? numeroDiasAlquiler : ''
+                            "
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div
+                    class="d-flex justify-content-between align-items-center mt-3"
+                  >
+                    <div class="custom-column"></div>
+                    <div class="d-flex flex-column">
+                      <p class="parrafo2" style="margin-right: 5px">SUBTOTAL:</p>
+
+                      <p class="parrafo2" style="margin-right: 5px">IVA:</p>
+
+                      <p class="parrafo2" style="margin-right: 5px">TOTAL:</p>
+                    </div>
+
+                    <div class="contenedor">
+                      <p *ngIf="calcularSubtotal() !== null" class="parrafo">
+                        {{ calcularSubtotal() | number : ".2" }}
+                      </p>
+
+                      <p class="parrafo">12%</p>
+
+                      <p
+                        *ngIf="calcularTotal() !== null"
+                        class="parrafo ultimo-parrafo"
+                      >
+                        {{ calcularTotal() | number : ".2" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Boton Guardar centrado -->
-        <div
-          class="col-12 d-flex justify-content-center align-items-center mt-3"
-        >
-          <button class="btn btn-outline-success">Guardar</button>
+          <div
+            class="col-12 d-flex justify-content-center align-items-center mt-3"
+          >
+            <button class="btn btn-outline-success">Guardar</button>
+          </div>
+          
         </div>
       </div>
     </div>
   </div>
-</div>

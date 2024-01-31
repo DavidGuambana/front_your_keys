@@ -23,7 +23,14 @@ import { ReservasComponent } from './reservas/reservas.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormComponent as formAdmin } from './admin/form.component';
 import { AdminComponent } from './admin/admin.component';
-import { FormproteComponent as formproteccion} from './admin/formprote.component';
+import { FormproteComponent } from './admin/formprote.component';
+import { FormproteComponent as formproteccion } from './admin/formprote.component';
+import { FormmarcaComponent  as formmarca} from './admin/formmarca.component';
+import { FormmodeloComponent as formmodelo} from './admin/formmodelo.component';
+import { ForcateComponent as formcategoria } from './admin/forcate.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -45,6 +52,9 @@ import { FormproteComponent as formproteccion} from './admin/formprote.component
     formAdmin,
     formAlquiler,
     formproteccion,
+    formmarca,
+    formmodelo,
+    formcategoria,
     ClientesComponent,
     EmpleadosComponent,
     AutosComponent,
@@ -55,6 +65,7 @@ import { FormproteComponent as formproteccion} from './admin/formprote.component
     PerfilComponent,
     AdminComponent,
     AlquileresComponent,
+    FormproteComponent,
   ],
 })
 export class ComponentsModule {}
