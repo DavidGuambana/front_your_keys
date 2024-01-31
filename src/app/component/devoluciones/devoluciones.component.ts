@@ -203,10 +203,10 @@ doc.text('Correo: '+devolucion?.alquiler.cliente.persona.correo, box3X + 5, box3
     const tableY = customerInfoY + 100;  // Ajusta la posición en Y según sea necesario
   
     autoTable(doc, {
-      head: [['Cod.\nprincipal', 'Descripción', 'Detalle adicional', 'Precio Unitario', 'Descuento', 'Precio Total']],
+      head: [['Cod.\nprincipal','Cantidad', 'Descripción', 'Detalle adicional', 'Precio Unitario', 'Descuento', 'Precio Total']],
       body: [
-        [ '1','Servicio uso de vehiculo', 'Precio:'+devolucion?.alquiler.auto.precio_diario+'$'+' Dias:'+ dias, ''+total,'0',+total],
-        [ '2','Seguro: '+devolucion?.alquiler.proteccion.nombre,'Precio: '+devolucion?.alquiler.precio_proteccion+'$'+' Dias:'+ dias,''+total2, '0',''+total2],
+        [ '1','1.00','Servicio uso de vehiculo', '$'+devolucion?.alquiler.precio_auto+' x '+dias+' Dias', ''+total,'0',+total],
+        [ '2','1.00','Seguro: '+devolucion?.alquiler.proteccion.nombre,'$'+devolucion?.alquiler.precio_proteccion+' x '+dias+' Dias',''+total2, '0',''+total2],
       ],
       theme: 'striped',
       headStyles: {
@@ -224,15 +224,15 @@ autoTable(doc, {
     body: [
         [
             { content: 'SUBTOTAL 12%', styles: { halign: 'left' } },
-            { content: sumatotales, styles: { halign: 'center' } },
+            { content: sumatotales, styles: { halign: 'left' } },
         ],
         [
             { content: 'IVA 12%', styles: { halign: 'left' } },
-            { content: ivacalculado, styles: { halign: 'center' } },
+            { content: ivacalculado, styles: { halign: 'left' } },
         ],
         [
             { content: 'VALOR TOTAL', styles: { halign: 'left' } },
-            { content: totalgeneral, styles: { halign: 'center' } },
+            { content: totalgeneral, styles: { halign: 'left' } },
         ],
     ],
     theme: 'striped',
@@ -276,5 +276,5 @@ function calcularDiferenciaEnDias(fechaInicio: Date, fechaFin: Date): number {
   const diferenciaEnMilisegundos = tiempoFin - tiempoInicio;
   // Convertir la diferencia a días
   const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-  return diferenciaEnDias;
+  return diferenciaEnDias+1;
 }

@@ -33,4 +33,5 @@ export class ClienteService {
   eliminar(id_cliente: number): Observable<Cliente>{
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id_cliente}`)
   }
+
 }

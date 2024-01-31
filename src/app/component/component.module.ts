@@ -31,6 +31,7 @@ import { ForcateComponent as formcategoria } from './admin/forcate.component';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
