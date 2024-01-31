@@ -13,6 +13,8 @@ import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
+import { FormComponent } from './login/form.component';
+import { RegisterComponent} from './component/register/register.component';
 
 
   
@@ -21,8 +23,9 @@ import { LoginComponent } from './login/login.component';
   declarations: [
     AppComponent,
     SpinnerComponent,
-    LoginComponent
-  
+    LoginComponent,
+    FormComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
