@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .container {
+        .mostrarModelo {
             max-width: 800px;
             margin: auto;
             padding: 20px;
@@ -27,57 +27,87 @@
             background-color: #e2eff3;
             color: #0f0f0f;
         }
+
+        th {
+            background-color: #e2eff3;
+            color: #0f0f0f;
+        }
     </style>
 </head>
 
 
 <body>
-    <button type="button" class="btn btn-outline-info bi bi-plus-circle"
-    [routerLink]="['/component/admin/form']"> Registrar</button>
-    <div class="container">
+    <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/admin/form']">
+        Registrar</button>
+
+        <div style="text-align: left;">
+            <button type="button" (click)="toggleContenido()" class="btn btn-primary">{{mostrarMarca ? 'Ocultar' : 'Marca'}}</button>
+            <button type="button" (click)="toggleContenido2()" class="btn btn-primary">{{mostrarModelo ? 'Ocultar' : 'Modelo'}}</button>
+            <button type="button" (click)="toggleContenido4()" class="btn btn-primary">{{mostrarProteccion ? 'Ocultar' : 'Proteccion'}}</button>
+            <button type="button" (click)="toggleContenido3()" class="btn btn-primary">{{mostrarCategoria ? 'Ocultar' : 'Categoria'}}</button>
+          </div>
+
+    <div *ngIf="mostrarMarca">
         <table>
             <thead>
                 <tr>
                     <th>Id marca</th>
                     <th>Nombre</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
 
             <tr *ngFor="let marca of marcas">
                 <td>{{marca.id_marca}}</td>
                 <td>{{ marca.nombre }}</td>
-                <button (click)="eliminarmarca(marca)" class="btn p-0 ml-2">
-                    <i class="bi bi-trash-fill fs-4 text-danger"></i>
-                  </button>
+                <td><button type="button" [routerLink]="['/component/admin/formmarca', marca.id_marca]"
+                        class="btn btn-primary">Editar</button></td>
+
+                <td> <button (click)="eliminarmarca(marca)" class="btn p-0 ml-2">
+                        <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                    </button></td>
             </tr>
         </table>
+    </div>
 
 
 
-        <div class="modelo">
+        <div *ngIf="mostrarModelo">
             <table>
                 <thead>
                     <tr>
                         <th>Id modelo</th>
                         <th>Nombre</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tr *ngFor="let modelo of modelo">
                     <td>{{modelo.id_modelo}}</td>
                     <td> {{modelo.nombre}}</td>
+                    <td><button type="button" [routerLink]="['/component/admin/formmodelo', modelo.id_modelo]"
+                            class="btn btn-primary">Editar</button></td>
+                    <td><button (click)="eliminarmodelo(modelo)" class="btn p-0 ml-2">
+                            <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                        </button></td>
+
 
                 </tr>
             </table>
         </div>
+   
 
 
-        <div class="info">
+        <div *ngIf="mostrarProteccion">
             <table>
                 <thead>
                     <tr>
                         <th>Id Proteccion</th>
                         <th>Proteccion</th>
                         <th>Precio</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,32 +115,43 @@
                         <td>{{proteccion.id_proteccion}}</td>
                         <td>{{ proteccion.nombre }}</td>
                         <td>{{ proteccion.precio }}</td>
-                        <button (click)="eliminarpro(proteccion)" class="btn p-0 ml-2">
-                            <i class="bi bi-trash-fill fs-4 text-danger"></i>
-                          </button>
+                        <td> <button type="button"
+                                [routerLink]="['/component/admin/formprote', proteccion.id_proteccion]"
+                                class="btn btn-primary">Editar</button></td>
+
+                        <td> <button (click)="eliminarpro(proteccion)" class="btn p-0 ml-2">
+                                <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                            </button></td>
+
                     </tr>
                 </tbody>
-               
+
             </table>
         </div>
 
-        <div class="info">
+        <div *ngIf="mostrarCategoria">
             <table>
                 <thead>
                     <tr>
                         <th>Id Categoria</th>
                         <th>Categoria</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let categoria of categoria">
                         <td>{{categoria.id_categoria}}</td>
                         <td>{{ categoria.nombre }}</td>
+                        <td> <button type="button" [routerLink]="['/component/admin/forcate', categoria.id_categoria]"
+                                class="btn btn-primary">Editar</button></td>
+                        <td> <button (click)="eliminarcategoria(categoria)" class="btn p-0 ml-2">
+                                <i class="bi bi-trash-fill fs-4 text-danger"></i>
+                            </button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
 </body>
 
 </html>
