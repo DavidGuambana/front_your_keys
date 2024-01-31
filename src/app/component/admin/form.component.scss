@@ -1,0 +1,69 @@
+/* Estilos para la fuente */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  
+  
+  /* Estilos para los títulos */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Estilos para las etiquetas de los campos */
+  label {
+    font-weight: bold;
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  
+  /* Estilos para los campos de entrada */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+/* Estilos para el formulario */
+form {
+    max-width: 500px;
+    margin: 20px auto 70px; /* Aumentamos el margen inferior */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Alineación de los botones al centro */
+  .btn-container {
+    text-align: center;
+  }
+  
+  /* Estilos para el botón */
+  .btn-primary {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    margin: 0 10px; /* Ajustamos el margen entre los botones */
+    border: none;
+    border-radius: 25px;
+    background-color: #7ab1ef;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  }
+  
+  
+  
+  /* Estilos al pasar el cursor */
+  .btn-primary:hover {
+    background-color: #0d47a1; /* Cambio de color */
+    transform: translateY(-2px); /* Efecto de elevación */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  }
+  
