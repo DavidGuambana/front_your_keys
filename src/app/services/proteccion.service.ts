@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Proteccion } from '../models/proteccion';
 import { Observable } from "rxjs";
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +34,17 @@ export class ProteccionService {
 
   eliminar2(id_proteccion: number): Observable<Proteccion> {
     return this.http.delete<Proteccion>(`${this.urlEndPoint}/${id_proteccion}`);
+  }
+
+
+  getProteccion(id_proteccion: number): Observable<Proteccion> {
+    const url = `${this.urlEndPoint}/${id_proteccion}`;
+    return this.http.get<Proteccion>(url).pipe(
+      tap((proteccion) => console.log('Proteccion obtenido:', proteccion)),
+      catchError((error) => {
+        console.error('Error en la solicitud HTTP:', error);
+        return throwError('Error al obtener el cliente');
+      })
+    );
   }
 }

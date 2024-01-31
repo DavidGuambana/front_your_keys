@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ProteccionService } from 'src/app/services/proteccion.service';
 import { Proteccion } from 'src/app/models/proteccion';
+import { Categoria } from 'src/app/models/categoria';
+import { CategoriaService } from 'src/app/services/categoria.service';
 
 
 
@@ -23,8 +25,10 @@ export class FormComponent  {
   mostrarContenido: boolean = false;
   mostrarContenido2: boolean = false;
   mostrarContenido3: boolean = false;
+  mostrarContenido4: boolean = false;
   nuevaMarca: Marca=new Marca();
   nuevaProteccion:Proteccion=new Proteccion();
+  nuevaCategoria:Categoria=new Categoria();
 
   constructor(
     private modeloService: ModeloService,
@@ -32,6 +36,7 @@ export class FormComponent  {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private ProteccionService: ProteccionService,
+    private CategoriaService:CategoriaService,
 
  
   ) {}
@@ -77,7 +82,11 @@ export class FormComponent  {
    }
 
    toggleContenido3() {
-    this.mostrarContenido3 = !this.mostrarContenido2;
+    this.mostrarContenido3 = !this.mostrarContenido3;
+   }
+
+   toggleContenido4() {
+    this.mostrarContenido4 = !this.mostrarContenido4;
    }
 
 
@@ -89,6 +98,7 @@ export class FormComponent  {
         this.router.navigate(['component/marca']);
         if (this.nuevaMarca.id_marca == 0) {
           Swal.fire('¡Acción exitosa!', 'Guardado');
+          this.router.navigate([ '/component/admin']);
         }
       },
       (error) => {
@@ -108,6 +118,7 @@ export class FormComponent  {
         this.router.navigate(['component/proteccion']);
         if (this.nuevaProteccion.id_proteccion == 0) {
           Swal.fire('¡Acción exitosa!', 'Guardado');
+          this.router.navigate([ '/component/admin']);
         }
       },
       (error) => {
@@ -116,6 +127,27 @@ export class FormComponent  {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
           Swal.fire('¡Error!', 'Hubo un problema al crear la proteccion.', 'error');
+        }
+      }
+    );
+  }
+
+  crearCategoria(): void {
+    this.CategoriaService.crear(this.nuevaCategoria).subscribe(
+      () => {
+        this.router.navigate(['component/categoria']);
+        if (this.nuevaCategoria.id_categoria == 0) {
+          Swal.fire('¡Acción exitosa!', 'Guardado');
+          this.router.navigate([ '/component/admin']);
+         
+        }
+      },
+      (error) => {
+        console.error('Error al crear categoria:', error);
+        if (error.status === 500) {
+          Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
+        } else {
+          Swal.fire('¡Error!', 'Hubo un problema al crear la categoria.', 'error');
         }
       }
     );

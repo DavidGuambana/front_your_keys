@@ -1,4 +1,4 @@
-td, th {
+td, th,tr {
     padding: 10px;
   }
 
@@ -6,7 +6,7 @@ td, th {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.1);
     margin: 20px 0;
   }
   
@@ -27,14 +27,18 @@ td, th {
   }
   
   button{
-    background-color: #4CAF50;
-    color: white;
+    background-color: #6ae064;
+    color: rgb(9, 9, 9);
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
+  button {
+    margin-right: 50px; /* Aumenta este valor para más espacio */
+}
+
 
   input{
     width: 100%;
