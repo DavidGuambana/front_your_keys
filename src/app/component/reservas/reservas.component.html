@@ -20,7 +20,7 @@
         <div>$ {{cli?.total}} </div>
         <a class="btn btn-light" id="boton_aceptar" ><i class="bi bi-check-circle-fill"></i>
         </a>
-        <a class="btn btn-light" id="boton_cancelar" (click)="eliminarReserva(cli.id_alquiler)"><i class="bi bi-x-circle-fill"></i>
+        <a class="btn btn-light" id="boton_cancelar" (click)="eliminarReserva(cli.id_alquiler,cli.auto.id_auto)"><i class="bi bi-x-circle-fill"></i>
         </a>
       </div>
     </div>
