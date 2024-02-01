@@ -13,25 +13,21 @@
             </div>
           <div class="card-body border-top">
             <div class="button-group d-flex justify-content-between align-items-center">
-
-                
-
               <button type="button" class="btn btn-outline-info bi bi-plus-circle" [routerLink]="['/component/admin/form']"> Agregar
                 nuevo</button>
               <div class="input-group align-items-center" style="max-width: 500px; height: 60px;">
                 <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
-                  aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrar(1)">
+                  aria-describedby="button-addon2" [(ngModel)]="filtro" (ngModelChange)="filtrar()">
                 <div class="input-group-append">
                   <span class="input-group-text btn-outline-success" type="button"  id="button-addon2" (click)="borrarFiltro()">
                     <i class="bi bi-backspace-fill fs-4a"></i>
                   </span>
                 </div>
               </div>
-
               
             </div>
           </div>
-          <h5 class="card-subtitle text-muted">Resultados: {{ marcasFiltradas.length }}</h5>
+          <h5 class="card-subtitle text-muted">Resultados: {{ resultados}}</h5>
           <div class="table-responsive">
             <table *ngIf="mostrarMarca" class="table table-hover align-middle text-nowrap">
                 <thead style="background-color: #0d47a1;" class="fs-4 text-light">
@@ -43,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let marca of marcas">
+                    <tr *ngFor="let marca of marcasFiltradas">
                         <td class="fs-4">{{marca.id_marca}}</td>
                         <td class="fs-4">{{ marca.nombre }}</td>
                         <td>
@@ -70,7 +66,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let modelo of modelos">
+                        <tr *ngFor="let modelo of modelosFiltrados">
                             <td class="fs-4">{{modelo.id_modelo}}</td>
                             <td class="fs-4"> {{modelo.nombre}}</td>
                             <td>
@@ -98,7 +94,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let proteccion of protecciones">
+                        <tr *ngFor="let proteccion of proteccionesFiltrados">
                             <td class="fs-4">{{proteccion.id_proteccion}}</td>
                             <td class="fs-4">{{ proteccion.nombre }}</td>
                             <td class="fs-4">{{ proteccion.precio }}</td>
@@ -126,7 +122,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let categoria of categorias">
+                        <tr *ngFor="let categoria of categoriasFiltradas">
                             <td class="fs-4">{{categoria.id_categoria}}</td>
                             <td class="fs-4">{{ categoria.nombre }}</td>
                             <td>

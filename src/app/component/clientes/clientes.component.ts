@@ -30,7 +30,6 @@ export class ClientesComponent implements OnInit{
 
   ngOnInit() {
     this.listar();
-    
   }
 
   listar() {
