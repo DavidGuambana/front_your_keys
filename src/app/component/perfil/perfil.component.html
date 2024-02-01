@@ -1,161 +1,65 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Perfil de Usuario</title>
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f0f0f0;
-                color: #333;
-                display: flex;
-                flex-direction: column; /* Ajustar a dirección de columna */
-                align-items: center;
-                min-height: 100vh; /* Usar min-height para asegurarse de que ocupe al menos el 100% de la altura */
-            }
-    
-            .title {
-                font-size: 24px;
-                font-weight: bold;
-                margin-bottom: 20px;
-            }
-    
-            .scroll-container {
-                max-width: 800px;
-                width: 100%;
-                overflow: auto;
-                padding: 20px;
-                box-sizing: border-box;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                background-color: #fff;
-                border: 1px solid #ddd;
-                max-height: 70vh;
-                margin: 0 auto;
-                margin-top: 20px; /* Ajustar el margen superior */
-            }
-    
-            .profile-container {
-                background-color: #fff;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                overflow: hidden;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                padding: 20px;
-                box-sizing: border-box;
-            }
-    
-            .profile-header {
-                background-color: #3498db;
-                color: #fff;
-                text-align: center;
-                padding: 20px;
-                grid-column: span 2;
-                border-radius: 10px;
-                margin-bottom: 20px;
-            }
-    
-            .profile-image {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                overflow: hidden;
-                margin: 0 auto;
-                margin-bottom: 20px;
-            }
-    
-            .profile-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-    
-            .profile-details {
-                padding: 20px;
-                text-align: left;
-                grid-column: span 2;
-            }
-    
-            .user-info {
-                margin-bottom: 15px;
-                text-align: left;
-            }
-    
-            .user-info label {
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-                color: #3498db;
-            }
-    
-            .user-info span {
-                display: block;
-                color: #555;
-            }
-        </style>
-    </head>
-
-<body>
-    <div class="scroll-container">
-
+<!-- app/profile/profile.component.html -->
+<div class="card" >
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-image">
                     <!-- Coloca la URL de la foto del usuario aquí -->
-                    <img src="url_de_la_foto.jpg" alt="Foto de perfil">
+                    <img [src]="persona.url_imagen" (error)="onImageError()" />
                 </div>
                 <!-- Coloca el nombre del usuario aquí -->
-                <h2>Nombre de Usuario</h2>
-                <h2>Rol</h2>
+                <h2 style="font-size: 3.2em;">
+                    <div style="display: inline-block;">{{ usuario }}</div>&nbsp;
+                    <a style="vertical-align: middle;">
+                        <i class="bi bi-pencil-square fs-7 text-info" (click)="encontrarid()"></i>
+                    </a>
+                  </h2>                  
+                <h2 style="font-size: 1.1em;">
+                    <div>
+                      {{ tipousuario }} 
+                    </div>
+                  </h2>
             </div>
-            <div class="profile-details">
-                <div class="user-info">
-                    <label for="cedula">Cédula:</label>
-                    <span><!-- Coloca la cédula del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="nombres">Nombres:</label>
-                    <span><!-- Coloca los nombres del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="apellidos">Apellidos:</label>
-                    <span><!-- Coloca los apellidos del usuario aquí --></span>
-                </div>
-                
-                <div class="user-info">
-                    <label for="telefono">Teléfono:</label>
-                    <span><!-- Coloca el teléfono del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="direccion">Dirección:</label>
-                    <span><!-- Coloca la dirección del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="correo">Correo Electrónico:</label>
-                    <span><!-- Coloca el correo del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="fecha-nacimiento">Fecha Nacimiento:</label>
-                    <span><!-- Coloca la fecha de nacimiento del usuario aquí --></span>
-                </div>
-
-                <div class="user-info">
-                    <label for="fecha-registro">Fecha de registro:</label>
-                    <span><!-- Coloca la fecha de registro del usuario aquí --></span>
-
-                </div>
-            </div>
+           <!-- app/profile/profile.component.html -->
+<div class="profile-details">
+    <div class="user-info-column">
+        <div class="user-info">
+            <label for="cedula">Cédula:</label>
+            <span>{{persona.cedula}}</span>
+        </div>
+        <div class="user-info">
+            <label for="telefono">Teléfono:</label>
+            <span>{{persona.telefono}}</span>
+        </div>
+        <div class="user-info">
+            <label for="nombres">Nombres:</label>
+            <span>{{persona.nombre1}} {{persona.nombre2}}</span>
+        </div>
+        
+        <div class="user-info">
+            <label for="correo">Correo Electrónico:</label>
+            <span>{{persona.correo}}</span>
         </div>
     </div>
-</body>
-</html>
+    <div class="user-info-column">
+        <div class="user-info">
+            <label for="apellidos">Apellidos:</label>
+            <span>{{persona.apellido1}} {{persona.apellido2}}</span>
+        </div>
+        <div class="user-info">
+            <label for="direccion">Dirección:</label>
+            <span>{{persona.direccion}}</span>
+        </div>
+        <div class="user-info">
+            <label for="fecha-nacimiento">Fecha Nacimiento:</label>
+            <span>{{persona.fecha_nac}}</span>
+        </div>
+        <div class="user-info">
+            <label for="fecha-registro">Fecha de registro:</label>
+            <span>{{persona.fecha_reg}}</span>
+        </div>
+    </div>
+</div>
+
+        </div>
+    
+</div>
