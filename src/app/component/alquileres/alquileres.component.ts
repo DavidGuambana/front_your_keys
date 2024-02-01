@@ -18,6 +18,7 @@ import { map, startWith, takeWhile } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { DevolucionService } from 'src/app/services/devolucion.service';
 import { Devolucion } from 'src/app/models/devolucion';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alquileres',
@@ -26,6 +27,7 @@ import { Devolucion } from 'src/app/models/devolucion';
 export class AlquileresComponent implements OnInit {
   alquileres: Alquiler[] = [];
   clientes: Cliente[] = [];
+
   personas: Persona[] = [];
   formComponent: FormComponent[] = [];
   autos: Auto[] = [];
@@ -58,21 +60,26 @@ export class AlquileresComponent implements OnInit {
       autos: this.ser_aut.listar(),
       modelos: this.ser_mod.listar(),
       marcas: this.ser_mar.listar(),
+      devolucionesTerminadas: this.ser_devoluciones.listar()
     }).subscribe(
-      ({ alquileres, clientes, personas, autos, modelos, marcas }) => {
+      ({ alquileres, clientes, personas, autos, modelos, marcas,devolucionesTerminadas }) => {
         // Filtrar alquileres con pagado igual a 1
         alquileres = alquileres.filter(alquiler => alquiler.pagado === true);
-  
-        alquileres.forEach((alquiler) => {
-          const cliente = clientes.find(
-            (cliente) => cliente.id_cliente === alquiler.id_cliente
-          );
+        alquileres = alquileres.filter(alquiler => {
+          return !devolucionesTerminadas.some(devolu => alquiler.id_alquiler === devolu.id_alquiler);
+      });
+      console.log(alquileres.length);
+        alquileres.forEach((alquiler,index) => {
+          //devolucionesTerminadas.forEach((devolu)=>{
+          //  if(alquiler.id_alquiler === devolu.id_alquiler){
+          //    alquileres.
+          //  }
+          //})
+          //const alquilerTerminado = 
+          const cliente = clientes.find((cliente) => cliente.id_cliente === alquiler.id_cliente );
           if (cliente) {
             alquiler.cliente = cliente;
-  
-            const personaCliente = personas.find(
-              (persona) => persona.id_persona === cliente.id_persona
-            );
+            const personaCliente = personas.find((persona) => persona.id_persona === cliente.id_persona);
             if (personaCliente) {
               cliente.persona = personaCliente;
             }
@@ -81,21 +88,17 @@ export class AlquileresComponent implements OnInit {
           const auto = autos.find((auto) => auto.id_auto === alquiler.id_auto);
           if (auto) {
             alquiler.auto = auto;
-  
-            const modelo = modelos.find(
-              (modelo) => modelo.id_modelo === auto.id_modelo
-            );
+            const modelo = modelos.find((modelo) => modelo.id_modelo === auto.id_modelo );
             if (modelo) {
               auto.modelo = modelo;
-  
-              const marca = marcas.find(
-                (marca) => marca.id_marca === modelo.id_marca
-              );
+              const marca = marcas.find((marca) => marca.id_marca === modelo.id_marca);
               if (marca) {
                 modelo.marca = marca;
               }
             }
           }
+
+          //Filtrar los alquileres que ya estan finalizados 
 
 
           alquiler.pagadoString = "Pagado";
@@ -152,13 +155,35 @@ export class AlquileresComponent implements OnInit {
   }
 
 eliminar(alquiler:Alquiler){
-  //his.devolucion.id_alquiler = alquiler.id_alquiler;
-
-  //this.ser_devoluciones.crear().subscribe(
-    //(devolucion)=>{
-
-    //}
- // )
+  const fechaHoy: Date = new Date();
+  Swal.fire({
+    title: '¿Estás seguro de finalizar el alquiler?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true, 
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const fechfin : Date = new Date(alquiler.fecha_fin);
+      if(fechfin <= fechaHoy ){
+        this.devolucion.id_alquiler = alquiler.id_alquiler;
+        this.devolucion.fecha = fechaHoy;
+        this.ser_devoluciones.crear(this.devolucion).subscribe(
+      (devolucion)=>{
+        Swal.fire('Alquiler finalizado', 'con éxito', 'success');
+        console.log(devolucion);
+        this.alquileresFiltrados = [];
+        this.listar();
+    }
+  )
+    }else{
+      Swal.fire('El alquiler no se puede finalizar','el alquiler aun no termina');
+    }
+    }
+  });
+  
 }
 
 }

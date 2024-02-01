@@ -11,21 +11,14 @@ import { Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
-
-
-
-
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls:['./admin.component.css']
-
-
 })
 export class AdminComponent implements OnInit {
 
-
+  public num :number = 0;
   public marcas: Marca[] = [];
   public protecciones: Proteccion[] = [];
   public modelos: Modelo[] = [];
@@ -41,40 +34,40 @@ export class AdminComponent implements OnInit {
     private proteccionService: ProteccionService,
     private modeloService: ModeloService,
     private categoriaService: CategoriaService,
-  
-
   ) { }
 
   ngOnInit(): void {
-    this.listar();
-    this.lista2();
-    this.lista3();
-    this.lista4();
-
   }
 
-  listar() {
+  getMarcas() {
     this.marcaService.listar().subscribe(marcas => {
       this.marcas = marcas;
-
+      this.marcasFiltradas = this.marcas;
+      this.resultados = this.marcasFiltradas.length;
     });
   }
 
-  lista2() {
+  getProtecciones() {
     this.proteccionService.listar().subscribe(protecciones => {
       this.protecciones = protecciones;
+      this.proteccionesFiltrados = this.protecciones;
+      this.resultados = this.proteccionesFiltrados.length;
     })
   }
 
-  lista3() {
+  getModelos() {
     this.modeloService.listar().subscribe(modelos => {
       this.modelos = modelos;
+      this.modelosFiltrados = this.modelos;
+      this.resultados = this.modelosFiltrados.length;
     })
   }
 
-  lista4() {
+  getCategorias() {
     this.categoriaService.listar().subscribe(categorias => {
       this.categorias = categorias;
+      this.categoriasFiltradas = this.categorias;
+      this.resultados = this.categoriasFiltradas.length;
     })
   }
 
@@ -92,9 +85,8 @@ public eliminarpro(proteccion: Proteccion): void {
     if (result.isConfirmed) {
       this.proteccionService.eliminar2(proteccion.id_proteccion).subscribe(
         () => {
-          this.lista2();
+          this.getProtecciones();
           Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
-          this.lista2();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -120,9 +112,8 @@ public eliminarmarca(marca: Marca): void {
     if (result.isConfirmed) {
       this.marcaService.eliminar(marca.id_marca).subscribe(
         () => {
-          this.listar();
+          this.getMarcas();
           Swal.fire('Marca eliminado', 'Marca eliminado con éxito', 'success');
-          this.listar();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -148,9 +139,8 @@ public eliminarmodelo(modelo: Modelo): void {
     if (result.isConfirmed) {
       this.modeloService.eliminar(modelo.id_modelo).subscribe(
         () => {
-          this.lista3();
+          this.getModelos();
           Swal.fire('Modelo eliminado', 'Modelo eliminado con éxito', 'success');
-          this.lista3();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -176,9 +166,8 @@ public eliminarcategoria(categoria: Categoria): void {
     if (result.isConfirmed) {
       this.categoriaService.eliminar(categoria.id_categoria).subscribe(
         () => {
-          this.lista3();
+          this.getCategorias();
           Swal.fire('Cateoria eliminado', 'Categoria eliminado con éxito', 'success');
-          this.lista4();
         },
         (error) => {
           // If there is an error, it logs the error in the console
@@ -192,6 +181,9 @@ public eliminarcategoria(categoria: Categoria): void {
 }
 
 abrirMarcas() {
+  this.getMarcas();
+  this.num = 1;
+  this.resultados = this.marcasFiltradas.length;
   this.mostrarMarca = true;
   this.mostrarModelo = false;
   this.mostrarProteccion = false;
@@ -199,6 +191,8 @@ abrirMarcas() {
  }
 
  abrirModelos() {
+  this.num = 2;
+  this.getModelos();
   this.mostrarMarca = false;
   this.mostrarModelo = true;
   this.mostrarProteccion = false;
@@ -206,6 +200,8 @@ abrirMarcas() {
  }
 
  abrirProtecciones() {
+  this.num = 3;
+  this.getProtecciones();
   this.mostrarMarca = false;
   this.mostrarModelo = false;
   this.mostrarProteccion = true;
@@ -213,6 +209,8 @@ abrirMarcas() {
  }
 
  abrirCategorias() {
+  this.num = 4;
+  this.getCategorias();
   this.mostrarMarca = false;
   this.mostrarModelo = false;
   this.mostrarProteccion = false;
@@ -221,6 +219,7 @@ abrirMarcas() {
 
 //Filtros:
 
+resultados: number = 0;
 filtro: string = '';
 marcasFiltradas: Marca[] = [];
 modelosFiltrados: Modelo[] = [];
@@ -228,29 +227,25 @@ proteccionesFiltrados: Proteccion[] = [];
 categoriasFiltradas: Categoria[] = [];
 
 
-filtrar(num: number) {
-  switch (num) {
+filtrar() {
+  switch (this.num) {
     case 1:
       this.filtrarMarcas();
+      this.resultados = this.marcasFiltradas.length;
       break;
     case 2:
       this.filtrarModelos();
+      this.resultados = this.modelosFiltrados.length;
       break;
     case 3:
       this.filtrarProtecciones();
+      this.resultados = this.proteccionesFiltrados.length;
       break;
     case 4:
       this.filtrarCategorias();
+      this.resultados = this.categoriasFiltradas.length;
       break;
   }
-}
-
-borrarFiltros(): void {
-  this.filtro = '';
-  this.filtrarMarcas();
-  this.filtrarModelos();
-  this.filtrarProtecciones();
-  this.filtrarCategorias();
 }
 
 filtrarMarcas() {
@@ -287,13 +282,9 @@ filtrarCategorias() {
 
 borrarFiltro(): void {
   this.filtro = '';
-  this.filtrarMarcas();
-  this.filtrarModelos();
-  this.filtrarProtecciones();
-  this.filtrarCategorias();
+  this.resultados = 0;
+  this.filtrar();
 }
-
-
 }
 
 

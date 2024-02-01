@@ -163,7 +163,7 @@ export class ReservasComponent implements OnInit{
         this.ser_alqui.eliminar(id).subscribe(
           (alqui) => {
             this.cambiarEstado(id_auto);
-            Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
+            Swal.fire('Reserva eliminada', 'Acción finalizada con éxito', 'success');
             this.listar();
           },
           (error) => {
