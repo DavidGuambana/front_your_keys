@@ -180,7 +180,8 @@ constructor(private ser_usuario:UsuarioService, private router: Router ,private 
     this.detectarRol()
    // console.log('se supone que se detecto a este usuario que se supone que va a  ingresar',this.Usuarioencontrado);
    }else{
-    Swal.fire('¡Acción fallida!', `Usuario no encontrado.`, 'info');
+    Swal.fire('¡Acción fallida!', 'Usuario no encontrado.', 'info');
    } 
   }
+
 }
