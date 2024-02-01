@@ -11,6 +11,9 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { DatePipe } from '@angular/common';
+import { AlquilerService } from 'src/app/services/alquiler.service';
+import { Persona } from 'src/app/models/persona';
+import { Empleado } from 'src/app/models/empleado';
 
 @Component({
   selector: 'app-form',
@@ -29,6 +32,10 @@ export class FormComponent implements OnInit {
   clienteSeleccionado: Cliente | null = null;
   proteccionSeleccionada: number | null = null;
   precioProteccionSeleccionado: number | null = null;
+  precioProDesdeReservas: number | null = null;
+  totalDesdeReservas: number | null = null;
+  tipoPagoDesdeReservas: number | null = null;
+  clienteAgregadoId: number | null = null;
   fechaActual!: string;
   fechaInicio: string;
   fechaFin: string;
@@ -44,6 +51,7 @@ export class FormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private clienteService: ClienteService,
+    private alquilerService: AlquilerService,
     private datePipe: DatePipe
   ) {
     this.alquilerForm = this.fb.group({
@@ -100,8 +108,11 @@ export class FormComponent implements OnInit {
       const fechaFin = params['fechaFin'];
       const nombrePro = params['nombrePro'];
       const precioPro = params['precioPro'];
-      const tipoPago = params['tipoPago'];
-      const total = params['total'];
+      const tipoPagoDesdeReservas = params['tipoPago'];
+      this.tipoPagoDesdeReservas = tipoPagoDesdeReservas;
+
+      const totalDesdeReservas = params['total'];
+      this.totalDesdeReservas = totalDesdeReservas;
 
       this.alquiler.id_cliente = id_cliente;
       this.alquiler.id_auto = idAuto;
@@ -109,6 +120,13 @@ export class FormComponent implements OnInit {
         // Seleccionar automáticamente la protección según el id obtenido desde reservas
         this.seleccionarProteccion(Number(idProteccionDesdeReservas));
       }
+      if (tipoPagoDesdeReservas !== null) {
+        // Establecer el valor del tipo de pago en el formulario
+        this.alquilerForm.patchValue({
+          tipo_pago: tipoPagoDesdeReservas,
+        });
+      }
+      this.precioProDesdeReservas = precioPro ? parseFloat(precioPro) : null;
       this.alquiler.cliente.persona.cedula = cedula;
       this.alquiler.cliente.persona.nombre1 = nombre ? nombre : '';
       this.alquiler.cliente.persona.apellido1 = apellido ? apellido : '';
@@ -122,8 +140,7 @@ export class FormComponent implements OnInit {
       this.alquiler.fecha_fin = fechaFin;
       this.alquiler.proteccion.nombre = nombrePro;
       this.alquiler.proteccion.precio = precioPro;
-      this.alquiler.tipo_pago = tipoPago;
-      this.alquiler.total = total;
+      this.totalDesdeReservas = totalDesdeReservas;
       if (idProteccionDesdeReservas) {
         const idProteccion = Number(idProteccionDesdeReservas);
         const proteccionEncontrada = this.proteccionList.find(proteccion => proteccion.id_proteccion === idProteccion);
@@ -163,10 +180,12 @@ export class FormComponent implements OnInit {
       this.cargarInformacionCliente(this.alquiler.id_cliente);
       this.actualizarCamposConAuto(this.alquiler.auto);
       this.actualizarDiasEntreFechas();
+      this.seleccionarProteccion;
+      this.calcularSubtotal();
+      this.calcularTotal();
 
     } else {
-      // Si no se proporciona la cédula desde la sección de reservas,
-      // intentar cargar la cédula seleccionada desde la sección de clientes
+
     }
   }
 
@@ -364,4 +383,59 @@ export class FormComponent implements OnInit {
     );
   }
 
-}
+  // crearAlquiler(
+  //   idCliente: number,
+  //   idAuto: number,
+  //   precioAuto: number,
+  //   idProteccion: number,
+  //   precioProteccion: number,
+  //   idEmpleado: number = 1,
+  //   fechaInicio: string,
+  //   fechaFin: string,
+  //   tipoPago: string,
+  //   calcularTotal: number
+  // ): Observable<Alquiler> {
+  //   // Forma el objeto alquiler con los parámetros recibidos
+  //   const alquiler: Alquiler = {
+  //     id_alquiler: 0,
+  //     id_cliente: idCliente,
+  //     id_auto: idAuto,
+  //     id_empleado: idEmpleado,
+  //     id_proteccion: idProteccion,
+  //     fecha_ini: fechaInicio,
+  //     fecha_fin: fechaFin,
+  //     precio_auto: precioAuto,
+  //     precio_proteccion: precioProteccion,
+  //     total: calcularTotal,
+  //     tipo_pago: tipoPago,
+  //     pagado: true,
+  //     reservado: false,
+  //     fecha_reg: this.obtenerFechaActual(), // Método para obtener la fecha actual
+  //     auto: new Auto(),
+  //     cliente: new Cliente(),
+  //     proteccion: new Proteccion(),
+  //     persona: new Persona(),
+  //     empleado: new Empleado(),
+  //     pagadoString: ''
+  //   };
+  
+  //   // Realiza la llamada al backend para crear el alquiler
+  //   return this.http.post<Alquiler>(this.urlEndPoint, alquiler, { headers: this.httpHeaders });
+  // }
+  
+  // private obtenerFechaActual(): string {
+  //   const today = new Date();
+  //   const formattedDate = `${today.getFullYear()}-${this.padZero(today.getMonth() + 1)}-${this.padZero(today.getDate())} ${this.padZero(today.getHours())}:${this.padZero(today.getMinutes())}:${this.padZero(today.getSeconds())}`;
+  //   return formattedDate;
+  // }
+  
+  // private padZero(num: number): string {
+  //   return num < 10 ? `0${num}` : `${num}`;
+  // }
+
+  imprimirDatosFormulario(){
+    console.log(this.alquilerForm.value);
+  }
+  
+  
+} 

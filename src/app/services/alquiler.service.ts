@@ -32,4 +32,6 @@ export class AlquilerService {
   eliminar(id_alquiler: number): Observable<Alquiler>{
     return this.http.delete<Alquiler>(`${this.urlEndPoint}/${id_alquiler}`)
   }
+
+  
 }

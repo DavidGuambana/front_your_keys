@@ -51,10 +51,10 @@
                 <th>Auto</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha Fin</th>
-                <th>Tiempo Restante</th>
+                <th>Restante</th>
                 <th>Total</th>
                 <th>Estado</th>
-                <th>Finalizar Alquiler</th>
+                <th>Finalizar</th>
               </tr>
             </thead>
             <tbody>
@@ -83,11 +83,11 @@
                   >
                     {{ tiempoRestante }}
                   </ng-container>
-                  <ng-template #finalizado>Alquiler finalizado</ng-template>
+                  <ng-template #finalizado>Finalizado</ng-template>
                 </td>
                 <td class="fs-4">{{ alquiler.total }} $</td>
                 <td class="fs-4" style="color: lime;">{{ alquiler.pagadoString }}</td>
-                <td>  <button type="button" class="btn btn-outline-success btn-block mb-2" (click)="eliminar(alquiler)">FINALIZAR</button></td>
+                <td>  <button type="button" class="btn btn-outline-success btn-block mb-2" (click)="eliminar(alquiler)">Finalizar</button></td>
               </tr>
             </tbody>
           </table>

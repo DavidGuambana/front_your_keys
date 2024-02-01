@@ -13,7 +13,6 @@
           </button>
         </div>
 
-        <!-- Nuevo Componente -->
         <div class="row mb-3">
           <!-- Columna izquierda -->
           <div class="col-md-5">
@@ -100,10 +99,10 @@
               <div class="col-12">
                 <div class="form-group local-forms mb-3">
                   <label for="tipo_pago" class="mr-2">Tipo de pago:</label>
-                  <select class="form-control w-100" name="tipo_pago" required>
+                  <select class="form-control w-100" name="tipo_pago" required [(ngModel)]="alquiler.tipo_pago">
                     <option value="" selected disabled>Seleccionar</option>
-                    <option value="1">Tarjeta</option>
-                    <option value="2">Efectivo</option>
+                    <option value="1" [value]="1" [selected]="alquiler.tipo_pago === '1'">Tarjeta</option>
+                <option value="2" [value]="2" [selected]="alquiler.tipo_pago === '2'">Efectivo</option>
                   </select>
                 </div>
               </div>
@@ -250,9 +249,9 @@
                           placeholder="Precio protección..."
                           readonly
                           [value]="
-                            precioProteccionSeleccionado !== null
+                            (precioProteccionSeleccionado !== null
                               ? precioProteccionSeleccionado
-                              : ''
+                              : 0) + (precioProDesdeReservas !== null ? precioProDesdeReservas : 0)
                           "
                         />
                       </td>
@@ -288,27 +287,19 @@
                   class="d-flex justify-content-between align-items-center mt-3"
                 >
                   <div class="custom-column"></div>
-                  <div class="d-flex flex-column">
-                    <p class="parrafo2" style="margin-right: 5px">SUBTOTAL:</p>
-
-                    <p class="parrafo2" style="margin-right: 5px">IVA:</p>
-
-                    <p class="parrafo2" style="margin-right: 5px">TOTAL:</p>
-                  </div>
 
                   <div class="contenedor">
+                    
                     <p *ngIf="calcularSubtotal() !== null" class="parrafo">
-                      {{ calcularSubtotal() | number : ".2" }}
+                      Subtotal: {{ calcularSubtotal() | number : ".2" }}
                     </p>
 
-                    <p class="parrafo">12%</p>
+                    <p class="parrafo"> IVA: 12%</p>
 
-                    <p
-                      *ngIf="calcularTotal() !== null"
-                      class="parrafo ultimo-parrafo"
-                    >
-                      {{ calcularTotal() | number : "1.2-2" }}
+                    <p class="parrafo ultimo-parrafo">
+                      TOTAL: {{ (calcularTotal() !== null ? calcularTotal() : totalDesdeReservas) | number : "1.2-2" }}
                     </p>
+      
                   </div>
                 </div>
               </div>
@@ -319,7 +310,7 @@
         <div
           class="col-12 d-flex justify-content-center align-items-center mt-3"
         >
-          <button class="btn btn-outline-success">Guardar</button>
+          <button class="btn btn-outline-success" (click)="imprimirDatosFormulario()">Guardar</button>
         </div>
       </div>
     </div>
