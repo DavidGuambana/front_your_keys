@@ -142,7 +142,7 @@ export class DevolucionesComponent implements OnInit {
     // Encabezado
     const imageWidth = 60;  
     const imageHeight = 40;  
-    const imageURL = './assets/images/logos/logo.jpg';  // Ruta de tu imagen
+    const imageURL = './assets/images/logos/logo1.png';  // Ruta de tu imagen
     doc.addImage(imageURL, 'JPEG', 20, 20, imageWidth, imageHeight);
 // Información del cliente (debajo de la imagen)
 const customerInfoY = 70; // Ajusta la posición en Y según sea necesario

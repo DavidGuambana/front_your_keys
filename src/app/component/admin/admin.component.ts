@@ -27,9 +27,9 @@ export class AdminComponent implements OnInit {
 
 
   public marcas: Marca[] = [];
-  public proteccion: Proteccion[] = [];
-  public modelo: Modelo[] = [];
-  public categoria: Categoria[] = [];
+  public protecciones: Proteccion[] = [];
+  public modelos: Modelo[] = [];
+  public categorias: Categoria[] = [];
   mostrarMarca: boolean = false;
   mostrarModelo: boolean = false;
   mostrarProteccion: boolean = false;
@@ -61,20 +61,20 @@ export class AdminComponent implements OnInit {
   }
 
   lista2() {
-    this.proteccionService.listar().subscribe(proteccion => {
-      this.proteccion = proteccion;
+    this.proteccionService.listar().subscribe(protecciones => {
+      this.protecciones = protecciones;
     })
   }
 
   lista3() {
-    this.modeloService.listar().subscribe(modelo => {
-      this.modelo = modelo;
+    this.modeloService.listar().subscribe(modelos => {
+      this.modelos = modelos;
     })
   }
 
   lista4() {
-    this.categoriaService.listar().subscribe(categoria => {
-      this.categoria = categoria;
+    this.categoriaService.listar().subscribe(categorias => {
+      this.categorias = categorias;
     })
   }
 
@@ -106,7 +106,6 @@ public eliminarpro(proteccion: Proteccion): void {
     }
   });
 }
-
 
 public eliminarmarca(marca: Marca): void {
   Swal.fire({
@@ -192,22 +191,107 @@ public eliminarcategoria(categoria: Categoria): void {
   });
 }
 
-toggleContenido() {
-  this.mostrarMarca = !this.mostrarMarca;
+abrirMarcas() {
+  this.mostrarMarca = true;
+  this.mostrarModelo = false;
+  this.mostrarProteccion = false;
+  this.mostrarCategoria = false;
  }
 
- toggleContenido2() {
-  this.mostrarModelo = !this.mostrarModelo;
+ abrirModelos() {
+  this.mostrarMarca = false;
+  this.mostrarModelo = true;
+  this.mostrarProteccion = false;
+  this.mostrarCategoria = false;
  }
 
- toggleContenido3() {
-  this.mostrarCategoria = !this.mostrarCategoria;
+ abrirProtecciones() {
+  this.mostrarMarca = false;
+  this.mostrarModelo = false;
+  this.mostrarProteccion = true;
+  this.mostrarCategoria = false;
  }
 
- toggleContenido4() {
-  this.mostrarProteccion = !this.mostrarProteccion;
+ abrirCategorias() {
+  this.mostrarMarca = false;
+  this.mostrarModelo = false;
+  this.mostrarProteccion = false;
+  this.mostrarCategoria = true;
  }
 
+//Filtros:
+
+filtro: string = '';
+marcasFiltradas: Marca[] = [];
+modelosFiltrados: Modelo[] = [];
+proteccionesFiltrados: Proteccion[] = [];
+categoriasFiltradas: Categoria[] = [];
+
+
+filtrar(num: number) {
+  switch (num) {
+    case 1:
+      this.filtrarMarcas();
+      break;
+    case 2:
+      this.filtrarModelos();
+      break;
+    case 3:
+      this.filtrarProtecciones();
+      break;
+    case 4:
+      this.filtrarCategorias();
+      break;
+  }
+}
+
+borrarFiltros(): void {
+  this.filtro = '';
+  this.filtrarMarcas();
+  this.filtrarModelos();
+  this.filtrarProtecciones();
+  this.filtrarCategorias();
+}
+
+filtrarMarcas() {
+  this.marcasFiltradas = this.marcas.filter((marca) => {
+    const textoBusqueda = `${marca.id_marca} ${marca.nombre}`
+      .toLowerCase();
+    return textoBusqueda.includes(this.filtro.toLowerCase());
+  });
+}
+
+filtrarModelos() {
+  this.modelosFiltrados = this.modelos.filter((modelo) => {
+    const textoBusqueda = `${modelo.id_modelo} ${modelo.nombre}`
+      .toLowerCase();
+    return textoBusqueda.includes(this.filtro.toLowerCase());
+  });
+}
+
+filtrarProtecciones() {
+  this.proteccionesFiltrados = this.protecciones.filter((proteccion) => {
+    const textoBusqueda = `${proteccion.id_proteccion} ${proteccion.nombre} ${proteccion.precio}`
+      .toLowerCase();
+    return textoBusqueda.includes(this.filtro.toLowerCase());
+  });
+}
+
+filtrarCategorias() {
+  this.categoriasFiltradas = this.categorias.filter((categoria) => {
+    const textoBusqueda = `${categoria.id_categoria} ${categoria.nombre}`
+      .toLowerCase();
+    return textoBusqueda.includes(this.filtro.toLowerCase());
+  });
+}
+
+borrarFiltro(): void {
+  this.filtro = '';
+  this.filtrarMarcas();
+  this.filtrarModelos();
+  this.filtrarProtecciones();
+  this.filtrarCategorias();
+}
 
 
 }

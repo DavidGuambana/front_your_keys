@@ -112,7 +112,7 @@ export class ReservasComponent implements OnInit{
       queryParams: { idCliente, idAuto },
     });
   }
-  eliminarReserva(id:number) {
+  eliminarReserva(id:number,id_auto:number) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Esta acción no se puede deshacer',
@@ -124,7 +124,8 @@ export class ReservasComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         this.ser_alqui.eliminar(id).subscribe(
-          () => {
+          (alqui) => {
+            this.cambiarEstado(id_auto);
             Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
             this.listar();
           },
@@ -137,6 +138,20 @@ export class ReservasComponent implements OnInit{
         );
       }
     });
+    }
+
+    cambiarEstado(id_auto:number):void{
+      this.ser_auto.buscar(id_auto).subscribe(
+        (auto)=>{
+          auto.id_estado = 1;
+          this.ser_auto.editar(auto).subscribe(
+            (auto)=>{
+              console.log(auto);
+            }
+          );
+          
+        }
+      )
     }
 
 }
