@@ -16,6 +16,8 @@ import { FormComponent } from './form.component';
 import { Observable, interval } from 'rxjs';
 import { map, startWith, takeWhile } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
+import { DevolucionService } from 'src/app/services/devolucion.service';
+import { Devolucion } from 'src/app/models/devolucion';
 
 @Component({
   selector: 'app-alquileres',
@@ -32,6 +34,7 @@ export class AlquileresComponent implements OnInit {
   alquileresFiltrados: Alquiler[] = [];
   filtro: string = '';
   providers!: [AsyncPipe];
+  devolucion:Devolucion =new Devolucion;
 
   constructor(
     private ser_alqui: AlquilerService,
@@ -40,6 +43,7 @@ export class AlquileresComponent implements OnInit {
     private ser_aut: AutoService,
     private ser_mod: ModeloService,
     private ser_mar: MarcaService,
+    private ser_devoluciones:DevolucionService
   ) {}
 
   ngOnInit() {
@@ -56,13 +60,16 @@ export class AlquileresComponent implements OnInit {
       marcas: this.ser_mar.listar(),
     }).subscribe(
       ({ alquileres, clientes, personas, autos, modelos, marcas }) => {
+        // Filtrar alquileres con pagado igual a 1
+        alquileres = alquileres.filter(alquiler => alquiler.pagado === true);
+  
         alquileres.forEach((alquiler) => {
           const cliente = clientes.find(
             (cliente) => cliente.id_cliente === alquiler.id_cliente
           );
           if (cliente) {
             alquiler.cliente = cliente;
-
+  
             const personaCliente = personas.find(
               (persona) => persona.id_persona === cliente.id_persona
             );
@@ -70,17 +77,17 @@ export class AlquileresComponent implements OnInit {
               cliente.persona = personaCliente;
             }
           }
-
+          
           const auto = autos.find((auto) => auto.id_auto === alquiler.id_auto);
           if (auto) {
             alquiler.auto = auto;
-
+  
             const modelo = modelos.find(
               (modelo) => modelo.id_modelo === auto.id_modelo
             );
             if (modelo) {
               auto.modelo = modelo;
-
+  
               const marca = marcas.find(
                 (marca) => marca.id_marca === modelo.id_marca
               );
@@ -89,8 +96,11 @@ export class AlquileresComponent implements OnInit {
               }
             }
           }
-        });
 
+
+          alquiler.pagadoString = "Pagado";
+        });
+  
         this.alquileres = alquileres;
         this.alquileresFiltrados = alquileres;
       }
@@ -99,7 +109,7 @@ export class AlquileresComponent implements OnInit {
 
   filtrarAlquileres() {
     this.alquileresFiltrados = this.alquileres.filter((alquiler) => {
-      const estado = alquiler.pagado ? 'pagado' : 'pendiente';
+      const estado = alquiler.pagado ? 'Pagado' : 'Pendiente';
       const textoBusqueda =
         `${alquiler.cliente.persona.nombre1} ${alquiler.cliente.persona.apellido1} ${alquiler.auto.modelo.marca.nombre} ${alquiler.auto.modelo.nombre}
          ${alquiler.fecha_ini} ${alquiler.fecha_fin} ${alquiler.total} ${estado}`.toLowerCase();
@@ -140,4 +150,15 @@ export class AlquileresComponent implements OnInit {
       takeWhile((tiempoRestante) => tiempoRestante !== 'Alquiler finalizado')
     );
   }
+
+eliminar(alquiler:Alquiler){
+  //his.devolucion.id_alquiler = alquiler.id_alquiler;
+
+  //this.ser_devoluciones.crear().subscribe(
+    //(devolucion)=>{
+
+    //}
+ // )
+}
+
 }

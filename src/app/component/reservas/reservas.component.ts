@@ -60,59 +60,96 @@ export class ReservasComponent implements OnInit{
       modelo: this.model_service.listar(),
       marca: this.marca_service.listar()
     })
-    .subscribe(({ alquileres, autos, clientes, personas,modelo,marca }) => {
+    .subscribe(({ alquileres, autos, protecciones, clientes, personas, modelo, marca }) => {
       alquileres.forEach((alquilerss) => {
         if (!alquilerss.pagado) {
-          // Declara la variable cliente en este ámbito
           let cliente: Cliente | undefined;
-          
+          let proteccion: Proteccion | undefined; // Agregamos una variable para la protección
+  
           // Relacionar alquiler con auto
           const auto = autos.find((auto) => auto.id_auto === alquilerss.id_auto);
           if (auto) {
             alquilerss.auto = auto;
           }
+  
           // Relacionar alquiler con cliente
-          //console.log(alquilerss.id_cliente);
           cliente = clientes.find((c) => c.id_cliente === alquilerss.id_cliente);
           if (cliente) {
             alquilerss.cliente = cliente;
-            //console.log(alquilerss.cliente.licencia);
+  
             // Relacionar cliente con persona
             const personaCliente = personas.find((p) => p.id_persona === alquilerss.cliente.id_persona);
             if (personaCliente) {
               alquilerss.cliente.persona = personaCliente;
-              //console.log(alquilerss.cliente.persona);
             }
           }
+  
+          // Relacionar alquiler con protección
+          proteccion = protecciones.find((p) => p.id_proteccion === alquilerss.id_proteccion);
+          if (proteccion) {
+            alquilerss.proteccion = proteccion;
+          }
+  
           // Relacionar modelo con auto
           const ModeloIngre = modelo.find((m) => m.id_modelo === alquilerss.auto.id_modelo);
-          if(ModeloIngre){
+          if (ModeloIngre) {
             alquilerss.auto.modelo = ModeloIngre;
           }
-          //Relacionar Modelo con marca
-          const Marcaauto = marca.find((mar => mar.id_marca === alquilerss.auto.modelo.id_marca));
-          if(Marcaauto){
-            alquilerss.auto.modelo.marca = Marcaauto; 
+  
+          // Relacionar Modelo con marca
+          const Marcaauto = marca.find((mar) => mar.id_marca === alquilerss.auto.modelo.id_marca);
+          if (Marcaauto) {
+            alquilerss.auto.modelo.marca = Marcaauto;
           }
+  
           this.alquileresreservados.push(alquilerss);
         }
       });
-
-      //console.log(this.alquileresreservados.length);
     });
-    
   }
+  
 
   alquilar(reserva: Alquiler): void {
     const idCliente = reserva.cliente.id_cliente;
     const idAuto = reserva.auto.id_auto;
-
-    // Navegar a la ruta del formulario y pasar los parámetros
-    this.router.navigate(['/component/alquileres/form'], {
-      queryParams: { idCliente, idAuto },
+    const idProteccion = reserva.proteccion.id_proteccion;
+    const cedula = reserva.cliente.persona.cedula;
+    const nombre = reserva.cliente.persona.nombre1;
+    const apellido = reserva.cliente.persona.apellido1;
+    const matricula = reserva.auto.matricula;
+    const color = reserva.auto.color;
+    const potencia = reserva.auto.potencia;
+    const capacidad = reserva.auto.capacidad;
+    const precio = reserva.auto.precio_diario;
+    const estado = 'Reservado';
+    const nombrePro = reserva.proteccion.nombre;
+    const precioPro = reserva.proteccion.precio;
+    const fechaIni = reserva.fecha_ini;
+    const fechaFin = reserva.fecha_fin;
+    const tipoPago = reserva.tipo_pago;
+    const total = reserva.total;
+    
+  
+    Swal.fire({
+      title: '¿Desea realizar un nuevo alquiler?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, realizar alquiler',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, realiza la navegación
+        this.router.navigate(['/component/alquileres/form'], {
+          queryParams: { idCliente, idAuto,idProteccion, cedula, nombre, apellido, matricula, color, 
+            potencia,  capacidad, precio, estado, fechaIni, fechaFin, tipoPago, total, nombrePro, precioPro  },
+        });
+      }
     });
   }
-  eliminarReserva(id:number) {
+
+  eliminarReserva(id:number,id_auto:number) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Esta acción no se puede deshacer',
@@ -124,19 +161,35 @@ export class ReservasComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         this.ser_alqui.eliminar(id).subscribe(
-          () => {
+          (alqui) => {
+            this.cambiarEstado(id_auto);
             Swal.fire('Proteccion eliminado', 'Proteccion eliminado con éxito', 'success');
             this.listar();
           },
           (error) => {
             // If there is an error, it logs the error in the console
             // and shows an error message
-            console.error(`Error al eliminar el elquiler con ID ${id}:`, error);
+            // console.error(Error al eliminar el elquiler con ID ${id}:, error);
             Swal.fire('Error', 'Hubo un error al eliminar este alquiler, esta en uso', 'error');
           }
         );
       }
     });
     }
+
+    cambiarEstado(id_auto:number):void{
+      this.ser_auto.buscar(id_auto).subscribe(
+        (auto)=>{
+          auto.id_estado = 1;
+          this.ser_auto.editar(auto).subscribe(
+            (auto)=>{
+              console.log(auto);
+            }
+          );
+          
+        }
+      )
+    }
+
 
 }

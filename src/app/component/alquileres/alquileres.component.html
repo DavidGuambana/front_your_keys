@@ -54,6 +54,7 @@
                 <th>Tiempo Restante</th>
                 <th>Total</th>
                 <th>Estado</th>
+                <th>Finalizar Alquiler</th>
               </tr>
             </thead>
             <tbody>
@@ -85,15 +86,8 @@
                   <ng-template #finalizado>Alquiler finalizado</ng-template>
                 </td>
                 <td class="fs-4">{{ alquiler.total }} $</td>
-                <td
-                  class="fs-4"
-                  [ngClass]="{
-                    'text-success': alquiler.pagado,
-                    'text-danger': !alquiler.pagado
-                  }"
-                >
-                  {{ alquiler.pagado ? "Pagado" : "Pendiente" }}
-                </td>
+                <td class="fs-4" style="color: lime;">{{ alquiler.pagadoString }}</td>
+                <td>  <button type="button" class="btn btn-outline-success btn-block mb-2" (click)="eliminar(alquiler)">FINALIZAR</button></td>
               </tr>
             </tbody>
           </table>
