@@ -23,6 +23,7 @@ import { FormproteComponent as formproteccion } from './admin/formprote.componen
 import { FormmarcaComponent  as formmarca} from './admin/formmarca.component';
 import { FormmodeloComponent as formmodelo} from './admin/formmodelo.component';
 import { ForcateComponent as formcategoria } from './admin/forcate.component';
+import { Component } from '@angular/core';
 
 export const ComponentsRoutes: Routes = [
 	{
@@ -140,6 +141,10 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'admin/forcate/:id',
 				component: formcategoria
+			},
+			{
+				path: 'registero',
+				component: Component
 			}
 			
 		]

@@ -15,13 +15,12 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls:['./admin.component.css']
+  styleUrls: ['./form.component.scss']
 
 })
 export class FormComponent  {
   marcasList: Marca[] = [];
   nuevoModelo: Modelo = new Modelo();
-  public modelo: Modelo = new Modelo();
   mostrarContenido: boolean = false;
   mostrarContenido2: boolean = false;
   mostrarContenido3: boolean = false;
@@ -29,6 +28,11 @@ export class FormComponent  {
   nuevaMarca: Marca=new Marca();
   nuevaProteccion:Proteccion=new Proteccion();
   nuevaCategoria:Categoria=new Categoria();
+  
+  public marcas: Marca[] = [];
+  public proteccion: Proteccion[] = [];
+  public categoria: Categoria[] = [];
+  public modelo: Modelo[] = [];
 
   constructor(
     private modeloService: ModeloService,
@@ -41,29 +45,26 @@ export class FormComponent  {
  
   ) {}
   ngOnInit(): void {
-   this.cargarMarcas();
-  }
-
-  cargarMarcas(): void {
-    this.marcaService.listar().subscribe(
-      marcas => this.marcasList = marcas
-    );
+ 
   }
 
   crearModelo(): void {
-    // Realizar lógica para crear el modelo utilizando this.nuevoModelo
+    if (this.nuevoModelo.nombre.trim() === '') {
+      Swal.fire('¡Error!', 'El nombre del modelo no puede estar vacío.', 'error');
+      return; 
+    } else if (this.nuevoModelo.id_marca === -1) {
+      Swal.fire('¡Error!', 'Debe seleccionar una marca.', 'error');
+      return; 
+    }
     this.modeloService.crear(this.nuevoModelo).subscribe(
-      // Manejar la respuesta o realizar acciones adicionales si es necesario
       () => {
         this.router.navigate(['component/modelo']);
-        if(this.nuevoModelo.id_modelo==0){
+        if (this.nuevoModelo.id_modelo == 0) {
           Swal.fire('¡Acción exitosa!', 'Guardado');
         }
       },
       (error) => {
         console.error('Error al crear el modelo:', error);
-
-        // Verificar si el error es específico para datos duplicados
         if (error.status === 500) {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
@@ -72,6 +73,8 @@ export class FormComponent  {
       }
     );
   }
+  
+  
 
   toggleContenido() {
     this.mostrarContenido = !this.mostrarContenido;
@@ -93,6 +96,10 @@ export class FormComponent  {
    
 
    crearMarca(): void {
+    if (this.nuevaMarca.nombre.trim() === '') {
+      Swal.fire('¡Error!', 'El nombre de la marca no puede estar vacío.', 'error');
+      return; 
+    } 
     this.marcaService.crear(this.nuevaMarca).subscribe(
       () => {
         this.router.navigate(['component/marca']);
@@ -102,17 +109,20 @@ export class FormComponent  {
         }
       },
       (error) => {
-        console.error('Error al crear la marca:', error);
-        if (error.status === 500) {
-          Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
-        } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear la marca.', 'error');
-        }
+        console.error('Error al crear marcas:', error);
+        Swal.fire('¡Error!', 'Hubo un problema al crear la categoria.', 'error');
       }
     );
   }
 
   crearProteccion(): void {
+    if (this.nuevaProteccion.nombre.trim() === '') {
+      Swal.fire('¡Error!', 'El nombre de la proteccion no puede estar vacío.', 'error');
+      return; 
+    } else if (this.nuevaProteccion.precio === 0) {
+      Swal.fire('¡Error!', 'Debe ingresar el precio.', 'error');
+      return; 
+    }
     this.ProteccionService.crear(this.nuevaProteccion).subscribe(
       () => {
         this.router.navigate(['component/proteccion']);
@@ -133,6 +143,15 @@ export class FormComponent  {
   }
 
   crearCategoria(): void {
+    if (this.nuevaCategoria.nombre.trim() === '') {
+      Swal.fire('¡Error!', 'El nombre de la categoria no puede estar vacío.', 'error');
+      return; 
+    } // Obtener la lista de categorías
+    const nombreCategoria = this.nuevaCategoria.nombre.trim();
+    if (this.categoria.some((categoria: Categoria) => categoria.nombre === nombreCategoria)) { // Se especifica el tipo de dato de 'categoria' como 'Categoria'
+      Swal.fire('¡Error!', 'El nombre de la categoría ya está registrado. Intente con otro nombre.', 'error');
+      return;
+    }
     this.CategoriaService.crear(this.nuevaCategoria).subscribe(
       () => {
         this.router.navigate(['component/categoria']);
@@ -147,7 +166,7 @@ export class FormComponent  {
         if (error.status === 500) {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear la categoria.', 'error');
+          Swal.fire('¡Error!', 'Hubo un problema al crear la proteccion.', 'error');
         }
       }
     );

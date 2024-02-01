@@ -35,23 +35,7 @@
 
   <!-- Register buttons -->
   <div class="text-center">
-    <p>Not a member? <a href="#!">Register</a></p>
-    <p>or sign up with:</p>
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-facebook-f"></i> Facebook
-    </button>
-  
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-google"></i> Google
-    </button>
-  
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-twitter"></i> Twitter
-    </button>
-  
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-github"></i> GitHub
-    </button>
+    <p>Not a member? <a [routerLink]="['/register']">Register</a></p>
   </div>
 </form>
 </div>
