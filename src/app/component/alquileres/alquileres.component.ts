@@ -155,8 +155,9 @@ export class AlquileresComponent implements OnInit {
   }
 
 eliminar(alquiler:Alquiler){
+  const fechaHoy: Date = new Date();
   Swal.fire({
-    title: '¿Estás seguro?',
+    title: '¿Estás seguro de finalizar el alquiler?',
     text: 'Esta acción no se puede deshacer',
     icon: 'warning',
     showCancelButton: true, 
@@ -165,17 +166,21 @@ eliminar(alquiler:Alquiler){
     confirmButtonText: 'Sí, eliminar',
   }).then((result) => {
     if (result.isConfirmed) {
-      const fechaHoy: Date = new Date();
-      this.devolucion.id_alquiler = alquiler.id_alquiler;
-      this.devolucion.fecha = fechaHoy;
-      this.ser_devoluciones.crear(this.devolucion).subscribe(
-    (devolucion)=>{
-      Swal.fire('Alquiler finalizado', 'con éxito', 'success');
-      console.log(devolucion);
-      this.alquileresFiltrados = [];
-      this.listar();
+      const fechfin : Date = new Date(alquiler.fecha_fin);
+      if(fechfin <= fechaHoy ){
+        this.devolucion.id_alquiler = alquiler.id_alquiler;
+        this.devolucion.fecha = fechaHoy;
+        this.ser_devoluciones.crear(this.devolucion).subscribe(
+      (devolucion)=>{
+        Swal.fire('Alquiler finalizado', 'con éxito', 'success');
+        console.log(devolucion);
+        this.alquileresFiltrados = [];
+        this.listar();
     }
   )
+    }else{
+      Swal.fire('El alquiler no se puede finalizar','el alquiler aun no termina');
+    }
     }
   });
   
