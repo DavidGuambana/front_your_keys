@@ -1,75 +1,62 @@
-td, th,tr {
-    padding: 10px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(1, 1, 1, 0.1);
-    margin: 20px 0;
-  }
-  
-  select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #c5c1c1;
-    border-radius: 5px;
-    width: 200px;
-  }
-
-  form {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-  }
-  
-  button{
-    background-color: #81baeb;
-    color: rgb(9, 9, 9);
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button {
-    margin-right: 50px; /* Aumenta este valor para más espacio */
+.menu_botones{
+  display: flex;
+  gap: 10px;
 }
 
 
-  input{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-  }
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #c5c1c1;
+  border-radius: 5px;
+  width: 200px;
+}
 
-    /* Estilos para el botón */
-    .btn-primary {
-      display: inline-block;
-      width: auto;
-      padding: 10px 20px;
-      margin: 0 10px; /* Ajustamos el margen entre los botones */
-      border: none;
-      border-radius: 25px;
-      background-color: #7ab1ef;
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-    }
-    
-    
-    
-    /* Estilos al pasar el cursor */
-    .btn-primary:hover {
-      background-color: #0d47a1; /* Cambio de color */
-      transform: translateY(-2px); /* Efecto de elevación */
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-    }
+form {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
 
+
+
+/* Estilos para el botón */
+.btn-primary {
+  display: inline-block;
+  width: auto;
+  padding: 10px 20px;
+  margin: 0 10px;
+  /* Ajustamos el margen entre los botones */
+  border: none;
+  border-radius: 25px;
+  background-color: #7ab1ef;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+
+
+/* Estilos al pasar el cursor */
+.btn-primary:hover {
+  background-color: #0d47a1;
+  /* Cambio de color */
+  transform: translateY(-2px);
+  /* Efecto de elevación */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  /* Sombra más pronunciada */
+}
+
+.mostrarModelo {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
