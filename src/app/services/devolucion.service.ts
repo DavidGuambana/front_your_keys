@@ -15,4 +15,8 @@ export class DevolucionService {
   listar(): Observable<Devolucion[]>{
     return this.http.get<Devolucion[]>(this.urlEndPoint);
   }
+
+  crear(devolucion: Devolucion): Observable<Devolucion>{
+    return this.http.post<Devolucion>(this.urlEndPoint, devolucion,{headers: this.httpHeaders})
+  }
 }

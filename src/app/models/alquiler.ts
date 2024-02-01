@@ -25,4 +25,5 @@ cliente:Cliente=new Cliente;
 proteccion:Proteccion=new Proteccion;
 persona:Persona = new Persona;
 empleado:Empleado=new Empleado;
+pagadoString: string = '';
 }
