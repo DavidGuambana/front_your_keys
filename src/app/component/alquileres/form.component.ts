@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 import { AlquilerService } from 'src/app/services/alquiler.service';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
-import { Persona } from 'src/app/models/persona';
+import { AutoService } from 'src/app/services/auto.service';
 
 @Component({
   selector: 'app-form',
@@ -56,6 +56,7 @@ export class FormComponent implements OnInit {
     private clienteService: ClienteService,
     private service: AlquilerService,
     private ser_empleado: EmpleadoService,
+    private autoService: AutoService,
     private datePipe: DatePipe
   ) {
     this.alquilerForm = this.fb.group({
@@ -198,7 +199,6 @@ export class FormComponent implements OnInit {
     if (SharedService.reserva) {
       this.alquiler = SharedService.reserva;
     }
-
     this.newAlquiler.id_alquiler = this.alquiler.id_alquiler;
     this.newAlquiler.id_cliente = this.alquiler.cliente.id_cliente
     this.newAlquiler.id_auto = this.alquiler.auto.id_auto
@@ -218,27 +218,31 @@ export class FormComponent implements OnInit {
       this.newAlquiler.reservado = false;
     }
 
-    Swal.fire('Datos:', `
-    id_cliente: ${this.newAlquiler.id_cliente}
-    id_auto: ${this.newAlquiler.id_auto}
-    id_proteccion: ${this.newAlquiler.id_proteccion}
-    id_empleado: ${this.newAlquiler.id_empleado}
-    fecha_ini: ${this.newAlquiler.fecha_ini}
-    fecha_fin: ${this.newAlquiler.fecha_fin}
-    precio_auto: ${this.newAlquiler.precio_auto}
-    precio_proteccion: ${this.newAlquiler.precio_proteccion}
-    total: ${this.newAlquiler.total}
-    tipo_pago: ${this.newAlquiler.tipo_pago}
-    pagado: ${this.newAlquiler.pagado}
-    reservado: ${this.newAlquiler.reservado}
-    fecha_res: ${this.newAlquiler.fecha_res}
-`, 'warning');
+//     Swal.fire('Datos:', `
+//     id_cliente: ${this.newAlquiler.id_cliente}
+//     id_auto: ${this.newAlquiler.id_auto}
+//     id_proteccion: ${this.newAlquiler.id_proteccion}
+//     id_empleado: ${this.newAlquiler.id_empleado}
+//     fecha_ini: ${this.newAlquiler.fecha_ini}
+//     fecha_fin: ${this.newAlquiler.fecha_fin}
+//     precio_auto: ${this.newAlquiler.precio_auto}
+//     precio_proteccion: ${this.newAlquiler.precio_proteccion}
+//     total: ${this.newAlquiler.total}
+//     tipo_pago: ${this.newAlquiler.tipo_pago}
+//     pagado: ${this.newAlquiler.pagado}
+//     reservado: ${this.newAlquiler.reservado}
+//     fecha_res: ${this.newAlquiler.fecha_res}
+// `, 'warning');
 
     if (this.validado()) {
       this.service.crear(this.newAlquiler).subscribe(
         (alquiler) => {
-          //llamar metodos para actualizar estados
-          Swal.fire('¡Registro exitoso!', "El alquiler fue creado exitosamente!", 'success');
+          this.alquiler.auto.id_estado = 2;
+          this.autoService.editar(this.alquiler.auto).subscribe(
+            () => {
+              Swal.fire('¡Registro exitoso!', "El alquiler fue creado exitosamente!", 'success');
+            }
+          );
         },
         (error) => {
           Swal.fire('Error!', "El alquiler no pudo ser registrado!", 'success');
