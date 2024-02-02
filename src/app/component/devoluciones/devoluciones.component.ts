@@ -126,16 +126,16 @@ export class DevolucionesComponent implements OnInit {
     let ivacalculado :number =0;
     let totalgeneral :number =0;
     if (dias !== undefined && devolucion?.alquiler.precio_auto !== undefined) {
-        const resultadoMultiplicacion = (dias * devolucion.alquiler.precio_auto)/1.12;
-        const resultadoseguro = (dias * devolucion.alquiler.precio_proteccion)/1.12;
+        const resultadoMultiplicacion = ((dias * devolucion.alquiler.precio_auto)*1.12);
+        const resultadoseguro = ((dias * devolucion.alquiler.precio_proteccion)*1.12);
         total = Number(resultadoMultiplicacion.toFixed(2));
         total2 = Number(resultadoseguro.toFixed(2));
 
 // Suma de totales
- sumatotales = Number((total + total2).toFixed(2));
+ sumatotales = Number(((devolucion.alquiler.total)-(devolucion.alquiler.total*0.12)).toFixed(2));
 
 // Calcula el IVA correctamente, asumiendo que total2 ya tiene IVA incluido.
- ivacalculado = Number((sumatotales * 0.12).toFixed(2));
+ ivacalculado = Number((devolucion.alquiler.total * 0.12).toFixed(2));
 
 // Suma total general (total + total2 + 12% IVA de total2)
  totalgeneral = Number((sumatotales + ivacalculado).toFixed(2));
@@ -212,8 +212,8 @@ doc.text('Correo: '+devolucion?.alquiler.cliente.persona.correo, box3X + 5, box3
     autoTable(doc, {
       head: [['Cod.\nprincipal','Cantidad', 'Descripción', 'Detalle adicional', 'Precio Unitario', 'Descuento', 'Precio Total']],
       body: [
-        [ '1','1.00','Servicio uso de vehiculo', '$'+devolucion?.alquiler.precio_auto+' x '+dias+' Dias', ''+total,'0',+total],
-        [ '2','1.00','Seguro: '+devolucion?.alquiler.proteccion.nombre,'$'+devolucion?.alquiler.precio_proteccion+' x '+dias+' Dias',''+total2, '0',''+total2],
+        [ '1','1.00','Servicio uso de vehiculo', dias+' Dias', ''+total,'0',+total],
+        [ '2','1.00','Seguro: '+devolucion?.alquiler.proteccion.nombre,dias+' Dias',''+total2, '0',''+total2],
       ],
       theme: 'striped',
       headStyles: {
@@ -239,7 +239,7 @@ autoTable(doc, {
         ],
         [
             { content: 'VALOR TOTAL', styles: { halign: 'left' } },
-            { content: totalgeneral, styles: { halign: 'left' } },
+            { content: devolucion?.alquiler.total, styles: { halign: 'left' } },
         ],
     ],
     theme: 'striped',
@@ -249,7 +249,7 @@ autoTable(doc, {
   body: [
       [
           { content: 'Forma de Pago', styles: { halign: 'left' } },
-          { content: devolucion?.alquiler.tipo_pago, styles: { halign: 'left' } },
+          { content: sumatotales, styles: { halign: 'left' } },
       ],
       [
           { content: 'Valor', styles: { halign: 'left' } },
