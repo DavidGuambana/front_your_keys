@@ -27,7 +27,7 @@
       aria-expanded="false"
     >
       <img
-        src="assets/images/users/user1.jpg"
+      [src]="persona.url_imagen" (error)="onImageError()"
         alt="user"
         class="rounded-circle"
         width="31"

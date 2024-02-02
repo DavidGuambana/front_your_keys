@@ -130,9 +130,16 @@ export class DevolucionesComponent implements OnInit {
         const resultadoseguro = (dias * devolucion.alquiler.precio_proteccion)/1.12;
         total = Number(resultadoMultiplicacion.toFixed(2));
         total2 = Number(resultadoseguro.toFixed(2));
-        sumatotales= Number ((total+total2).toFixed(2));
-        ivacalculado = Number(((total + total2 * 1.12) * 0.12).toFixed(2));
-        totalgeneral = Number((sumatotales + ivacalculado).toFixed(2));
+
+// Suma de totales
+ sumatotales = Number((total + total2).toFixed(2));
+
+// Calcula el IVA correctamente, asumiendo que total2 ya tiene IVA incluido.
+ ivacalculado = Number((sumatotales * 0.12).toFixed(2));
+
+// Suma total general (total + total2 + 12% IVA de total2)
+ totalgeneral = Number((sumatotales + ivacalculado).toFixed(2));
+
 
 
     } else {
