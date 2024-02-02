@@ -102,7 +102,7 @@
                   <select class="form-control w-100" name="tipo_pago" required [(ngModel)]="alquiler.tipo_pago">
                     <option value="" selected disabled>Seleccionar</option>
                     <option value="1" [value]="1" [selected]="alquiler.tipo_pago === '1'">Tarjeta</option>
-                <option value="2" [value]="2" [selected]="alquiler.tipo_pago === '2'">Efectivo</option>
+                    <option value="2" [value]="2" [selected]="alquiler.tipo_pago === '2'">Efectivo</option>
                   </select>
                 </div>
               </div>
@@ -310,7 +310,7 @@
         <div
           class="col-12 d-flex justify-content-center align-items-center mt-3"
         >
-          <button class="btn btn-outline-success" (click)="imprimirDatosFormulario()">Guardar</button>
+          <button class="btn btn-outline-success">Guardar</button>
         </div>
       </div>
     </div>

@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { DatePipe } from '@angular/common';
 import { AlquilerService } from 'src/app/services/alquiler.service';
-import { Persona } from 'src/app/models/persona';
-import { Empleado } from 'src/app/models/empleado';
 
 @Component({
   selector: 'app-form',
@@ -79,6 +77,7 @@ export class FormComponent implements OnInit {
           (control: any) => this.validarFecha(control.value, this.esReserva),
         ],
       ],
+      tipo_pago: ['', Validators.required]
     });
 
     this.fechaActual = new Date().toISOString().split('T')[0];
@@ -299,6 +298,7 @@ export class FormComponent implements OnInit {
           icon: 'warning',
           title: 'Advertencia',
           text: 'El máximo de días permitidos para alquilar un vehículo es de 30 días',
+          
         });
 
         this.alquilerForm.patchValue({
@@ -317,6 +317,7 @@ export class FormComponent implements OnInit {
       this.diasEntreFechas = 0;
       this.numeroDiasAlquiler = 0;
     }
+    
   }
 
   calcularSubtotal(): number | null {
@@ -382,60 +383,5 @@ export class FormComponent implements OnInit {
       }
     );
   }
-
-  // crearAlquiler(
-  //   idCliente: number,
-  //   idAuto: number,
-  //   precioAuto: number,
-  //   idProteccion: number,
-  //   precioProteccion: number,
-  //   idEmpleado: number = 1,
-  //   fechaInicio: string,
-  //   fechaFin: string,
-  //   tipoPago: string,
-  //   calcularTotal: number
-  // ): Observable<Alquiler> {
-  //   // Forma el objeto alquiler con los parámetros recibidos
-  //   const alquiler: Alquiler = {
-  //     id_alquiler: 0,
-  //     id_cliente: idCliente,
-  //     id_auto: idAuto,
-  //     id_empleado: idEmpleado,
-  //     id_proteccion: idProteccion,
-  //     fecha_ini: fechaInicio,
-  //     fecha_fin: fechaFin,
-  //     precio_auto: precioAuto,
-  //     precio_proteccion: precioProteccion,
-  //     total: calcularTotal,
-  //     tipo_pago: tipoPago,
-  //     pagado: true,
-  //     reservado: false,
-  //     fecha_reg: this.obtenerFechaActual(), // Método para obtener la fecha actual
-  //     auto: new Auto(),
-  //     cliente: new Cliente(),
-  //     proteccion: new Proteccion(),
-  //     persona: new Persona(),
-  //     empleado: new Empleado(),
-  //     pagadoString: ''
-  //   };
-  
-  //   // Realiza la llamada al backend para crear el alquiler
-  //   return this.http.post<Alquiler>(this.urlEndPoint, alquiler, { headers: this.httpHeaders });
-  // }
-  
-  // private obtenerFechaActual(): string {
-  //   const today = new Date();
-  //   const formattedDate = `${today.getFullYear()}-${this.padZero(today.getMonth() + 1)}-${this.padZero(today.getDate())} ${this.padZero(today.getHours())}:${this.padZero(today.getMinutes())}:${this.padZero(today.getSeconds())}`;
-  //   return formattedDate;
-  // }
-  
-  // private padZero(num: number): string {
-  //   return num < 10 ? `0${num}` : `${num}`;
-  // }
-
-  imprimirDatosFormulario(){
-    console.log(this.alquilerForm.value);
-  }
-  
   
 } 
