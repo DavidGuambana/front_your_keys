@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-formprote',
   templateUrl: './formprote.component.html',
+  styleUrls: ['./formmodelo.component.scss']
+
 })
 export class FormproteComponent {
 

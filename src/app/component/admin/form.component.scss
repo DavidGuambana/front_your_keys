@@ -66,4 +66,23 @@ form {
     transform: translateY(-2px); /* Efecto de elevación */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
   }
+
+  .boton {
+    background-color: #a4f1f4; /* Color de fondo */
+    border: none; /* Sin bordes */
+    color: rgb(0, 0, 0); /* Color del texto */
+    padding: 6px 25px; /* Espaciado */
+    text-align: center; /* Alineación del texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px; /* Bordes redondeados */
+    transition-duration: 0.4s; /* Duración de la transición */
+  }
+  
+  .boton:hover {
+    background-color: #45a049; /* Color de fondo al pasar el ratón */
+  }
   
