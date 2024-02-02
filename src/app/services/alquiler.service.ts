@@ -21,17 +21,17 @@ export class AlquilerService {
   }
 
   crear(alquiler: Alquiler): Observable<Alquiler>{
-    return this.http.post<Alquiler>(this.urlEndPoint, Alquiler,{headers: this.httpHeaders})
+    return this.http.post<Alquiler>(this.urlEndPoint, alquiler,{headers: this.httpHeaders})
   }
 
   editar(alquiler: Alquiler): Observable<Alquiler> {
     const id_alquiler = `${this.urlEndPoint}/${alquiler.id_alquiler}`;
-    return this.http.put<Alquiler>(id_alquiler, Alquiler, { headers: this.httpHeaders});
+    return this.http.put<Alquiler>(id_alquiler, alquiler, { headers: this.httpHeaders});
   }
 
   eliminar(id_alquiler: number): Observable<Alquiler>{
     return this.http.delete<Alquiler>(`${this.urlEndPoint}/${id_alquiler}`)
-  }
+  }
 
   
 }

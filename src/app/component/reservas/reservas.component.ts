@@ -15,6 +15,7 @@ import { ProteccionService } from 'src/app/services/proteccion.service';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-reservas',
@@ -61,6 +62,7 @@ export class ReservasComponent implements OnInit{
       marca: this.marca_service.listar()
     })
     .subscribe(({ alquileres, autos, protecciones, clientes, personas, modelo, marca }) => {
+      //alquileres = alquileres.filter(alquiler => alquiler.pagado === false && alquiler.reservado === true);
       alquileres.forEach((alquilerss) => {
         if (!alquilerss.pagado) {
           let cliente: Cliente | undefined;
@@ -101,7 +103,6 @@ export class ReservasComponent implements OnInit{
           if (Marcaauto) {
             alquilerss.auto.modelo.marca = Marcaauto;
           }
-  
           this.alquileresreservados.push(alquilerss);
         }
       });
@@ -110,6 +111,10 @@ export class ReservasComponent implements OnInit{
   
 
   alquilar(reserva: Alquiler): void {
+  if(reserva != null){
+    SharedService.reserva = reserva;
+  }
+
     const idCliente = reserva.cliente.id_cliente;
     const idAuto = reserva.auto.id_auto;
     const idProteccion = reserva.proteccion.id_proteccion;

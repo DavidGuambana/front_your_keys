@@ -115,8 +115,7 @@ export class ClientesComponent implements OnInit{
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        
-        this.sharedService.setClienteSeleccionado(cliente);
+        SharedService.clienteSeleccionado = cliente;
         this.router.navigate(['/component/alquileres/form']); 
       }
     });

@@ -209,13 +209,13 @@
                     *ngFor="let proteccion of proteccionList"
                     class="proteccion-option"
                   >
-                    <input
-                      type="radio"
-                      name="proteccion"
-                      [value]="proteccion.id_proteccion"
-                      (change)="seleccionarProteccion(proteccion.id_proteccion)"
-                      [(ngModel)]="proteccionSeleccionada"
-                    />
+                  <input
+                  type="radio"
+                  name="proteccion"
+                  [value]="proteccion.id_proteccion"
+                  (change)="seleccionarProteccion(proteccion.id_proteccion)"
+                  [(ngModel)]="proteccionSeleccionada"
+                />
 
                     <label
                       >{{ proteccion.nombre }} -> Precio: ${{
@@ -310,7 +310,7 @@
         <div
           class="col-12 d-flex justify-content-center align-items-center mt-3"
         >
-          <button class="btn btn-outline-success" (click)="imprimirDatosFormulario()">Guardar</button>
+          <button class="btn btn-outline-success" (click)="crear()">Guardar</button>
         </div>
       </div>
     </div>
