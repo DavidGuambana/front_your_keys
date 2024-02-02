@@ -1,0 +1,18 @@
+.card-body {
+    font-family: sans-serif; 
+}
+
+.card-title {
+    font-size: 35px;
+}
+
+.card-subtitle {
+    font-size: 18px;
+}
+
+details,
+summary,
+p {
+    font-family: sans-serif; 
+    font-size: 18px;
+}
