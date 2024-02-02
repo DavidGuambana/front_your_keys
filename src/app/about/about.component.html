@@ -14,32 +14,30 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f8f9fa;
+      background-color: #f0f0f0; /* Cambiado a un tono más claro */
     }
 
     .card {
       border: none;
       border-radius: 15px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background: linear-gradient(135deg, #f8f9fa, #ced4da);
+      background: linear-gradient(135deg, #ffffff, #f0f8ff); /* Cambiado a un gradiente más suave */
     }
 
     .card-title {
-  color: #090909; /* Cambia el color a tu preferencia */
-  font-family: 'Garamond', serif; /* Cambia el tipo de letra a tu preferencia */
-  font-size: 35px; /* Cambia el tamaño de la letra a tu preferencia */
-}
-
+      color: #333; /* Cambiado a un color más oscuro para mayor contraste */
+      font-family: 'Arial Black', sans-serif; /* Cambiado a una fuente más audaz */
+      font-size: 40px; /* Aumentado el tamaño de la fuente */
+    }
 
     .card-subtitle {
-      color: #6c757d;
-      font-size: 18px;
-      font-family: 'Garamond', serif; 
+      color: #555; /* Cambiado a un color más oscuro para mayor contraste */
+      font-size: 20px; /* Aumentado el tamaño de la fuente */
     }
 
     details {
       margin-bottom: 20px;
-      border: 1px solid #e9ecef;
+      border: 1px solid #ddd; /* Cambiado a un color más claro */
       border-radius: 10px;
       overflow: hidden;
     }
@@ -50,31 +48,49 @@
       padding: 15px;
       background-color: #007bff;
       color: #fff;
-      border-bottom: 1px solid #e9ecef;
+      border-bottom: 1px solid #ddd; /* Cambiado a un color más claro */
       border-radius: 10px;
       transition: background-color 0.3s ease;
     }
 
     details summary:hover {
       background-color: #0056b3;
-      font-family: 'Garamond', serif;
     }
 
     details p {
       margin: 0;
       padding: 15px;
-      border-top: 1px solid #e9ecef;
-      font-family: 'Garamond', serif;
-    }
-    /* Estilo adicional para hacer más pequeño el carrusel */
-    #imageCarousel img {
-      height: 200px; /* Ajusta la altura según tu preferencia */
-      object-fit: cover;
+      border-top: 1px solid #ddd; /* Cambiado a un color más claro */
     }
 
-    #imageCarousel {
-      max-width: 400px; /* Ajusta el ancho según tu preferencia */
-      margin: auto;
+    details {
+      margin-bottom: 20px;
+      border: 1px solid #ddd; /* Cambiado a un color más claro */
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #f9f9f9; /* Cambiado el color de fondo de los detalles */
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 15px;
+      background-color: #007bff;
+      color: #fff;
+      border-bottom: 1px solid #ddd; /* Cambiado a un color más claro */
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    details summary:hover {
+      background-color: #b5cfeb;
+    }
+
+    details p {
+      margin: 0;
+      padding: 15px;
+      border-top: 1px solid #ddd; /* Cambiado a un color más claro */
+      font-size: 18px; /* Aumentado el tamaño del texto */
     }
   </style>
 
@@ -87,31 +103,9 @@
       <div class="card-body">
         <h2 class="card-title text-center mb-4">Bienvenido a "Your Keys": Descubre la libertad de Viajar</h2>
         <h5 class="card-subtitle text-muted mb-5">En "Your Keys", nos enorgullece ofrecerte más que un simple servicio de alquiler de vehículos; te proporcionamos la llave para experiencias inolvidables y viajes sin complicaciones. Aquí está lo que nos hace únicos:</h5>
-    
-        <details>
-          <summary>Tu Viaje, Tus Reglas</summary>
-          <p>En "Your Keys", creemos en empoderarte para que disfrutes tu viaje a tu manera. Nuestros vehículos están listos para llevar a cabo tus aventuras, ya sea un viaje en solitario, un fin de semana en familia o una escapada con amigos.</p>
-        </details>
 
-        <details>
-          <summary>Flota Diversa y de Calidad</summary>
-          <p>Desde elegantes automóviles hasta espaciosas SUV y vehículos especializados, nuestra flota se adapta a tus necesidades. Cada vehículo en "Your Keys" es cuidadosamente mantenido para garantizar seguridad y comodidad en cada kilómetro.</p>
-        </details>
+  
 
-        <details>
-          <summary>Transparencia y Sin Sorpresas</summary>
-          <p>Olvídate de tarifas ocultas y complicaciones. En "Your Keys", creemos en la transparencia total. Nuestras tarifas son claras y justas, para que puedas planificar tu viaje con confianza.</p>
-        </details>
-
-        <details>
-          <summary>Tecnología para Facilitar tu Viaje</summary>
-          <p>Con "Your Keys", el proceso de alquiler es tan simple como pulsar un botón. Utilizamos tecnología de vanguardia para hacer que la reserva y la recogida del vehículo sean rápidas y eficientes.</p>
-        </details>
-
-        <details>
-          <summary>Comprometidos con la Sostenibilidad</summary>
-          <p>En "Your Keys", también nos preocupamos por el medio ambiente. Integramos prácticas sostenibles en nuestra operación, desde vehículos eficientes en combustible hasta opciones ecológicas.</p>
-        </details>
 
       </div>
     </div>
@@ -124,4 +118,135 @@
 
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6Q/dY1BrGL6ZxZLo5+xkJqIRv0dEx3VI" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-fvY5S+pWpL3ZOStX2mKduN/L5z1HM+JdQdiRWIDJODeXmt2yc2V7B4eVJmuf4+bm" crossorigin="anonymous">
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0; /* Cambiado a un tono más claro */
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      height: 200px; /* Ajusta la altura según tu preferencia */
+      object-fit: cover;
+    }
+
+    .card-body {
+      background-color: #fff;
+    }
+
+    .card-title {
+      color: #333; /* Cambiado a un color más oscuro para mayor contraste */
+      font-family: 'Arial Black', sans-serif; /* Cambiado a una fuente más audaz */
+      font-size: 24px; /* Aumentado el tamaño de la fuente */
+    }
+
+    .card-subtitle {
+      color: #555; /* Cambiado a un color más oscuro para mayor contraste */
+      font-size: 16px; /* Aumentado el tamaño de la fuente */
+    }
+
+    .details-content {
+      padding: 20px;
+    }
+  </style>
+
+  <title>"Your Keys" - Descubre la Libertad de Viajar</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="https://www.oneclickdrive.com/uploads/mobcars/Jaguar_F-Pace-First-Edition_2020_15414_15414_102114963-2_small.jpg" alt="Tu Viaje, Tus Reglas">
+          <div class="card-body">
+            <h5 class="card-title">Tu Viaje, Tus Reglas</h5>
+            <p class="card-subtitle mb-2 text-muted">Desde elegantes automóviles hasta espaciosas SUV y vehículos especializados, nuestra flota se adapta a tus necesidades. </p>
+            <p class="card-text details-content">Cada vehículo en "Your Keys" es cuidadosamente mantenido para garantizar seguridad y comodidad en cada kilómetro.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="https://media.ambito.com/p/b106f0905c27cd044fac91f56636f602/adjuntos/239/imagenes/040/340/0040340925/375x211/smart/autosjpg.jpg" alt="Tu Viaje, Tus Reglas">
+          <div class="card-body">
+            <h5 class="card-title">Flota Diversa y de Calidad</h5>
+            <p class="card-subtitle mb-2 text-muted">En "Your Keys", creemos en empoderarte para que disfrutes tu viaje a tu manera.</p>
+            <p class="card-text details-content">Nuestros vehículos están listos para llevar a cabo tus aventuras, ya sea un viaje en solitario, un fin de semana en familia o una escapada con amigos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="https://www.carburando.ec/files/article_main/uploads/2019/08/05/5d48654de592f.jpeg" alt="Tu Viaje, Tus Reglas">
+          <div class="card-body">
+            <h5 class="card-title">Transparencia y Sin Sorpresas</h5>
+            <p class="card-subtitle mb-2 text-muted">Olvídate de tarifas ocultas y complicaciones.</p>
+            <p class="card-text details-content">Creemos en la transparencia total. Nuestras tarifas son claras y justas, para que puedas planificar tu viaje con confianza.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="https://venaventours.com/resources/images/clientes/contenidos/32544867.jpg" alt="Tu Viaje, Tus Reglas">
+          <div class="card-body">
+            <h5 class="card-title">Tecnología para Facilitar tu Viaje</h5>
+            <p class="card-subtitle mb-2 text-muted">El proceso de alquiler es tan simple como pulsar un botón.</p>
+            <p class="card-text details-content">Utilizamos tecnología de vanguardia para hacer que la reserva y la recogida del vehículo sean rápidas y eficientes.</p>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="https://estaticos.elcolombiano.com/binrepository/847x565/34c0/780d565/none/11101/DEJU/shutterstock-1887424846_41378609_20230106185811.jpg" alt="Tu Viaje, Tus Reglas">
+          <div class="card-body">
+            <h5 class="card-title">Comprometidos con la Sostenibilidad</h5>
+            <p class="card-subtitle mb-2 text-muted"> También nos preocupamos por el medio ambiente.</p>
+            <p class="card-text details-content">Integramos prácticas sostenibles en nuestra operación, desde vehículos eficientes en combustible hasta opciones ecológicas</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Repite este bloque para cada detalle con su respectiva imagen -->
+    </div>
+  </div>
+
+  <!-- Bootstrap JS y Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6Q/dY1BrGL6ZxZLo5+xkJqIRv0dEx3VI" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
 
