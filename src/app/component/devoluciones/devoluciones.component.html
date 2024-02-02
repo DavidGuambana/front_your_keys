@@ -39,7 +39,7 @@
                 <td class="fs-4">{{devolucion.alquiler.auto.matricula}}</td>
                 <td class="fs-4">{{devolucion.alquiler.fecha_ini | date : "yyyy-MM-dd"}}</td>
                 <td class="fs-4">{{devolucion.fecha}}</td>
-                <td class="fs-4">{{devolucion.alquiler.total}} $</td>
+                <td class="fs-4">${{devolucion.alquiler.total}}</td>
                 <td class="text-center">
                   <button class="btn p-0" (click)="generatePdf(devolucion.id_devolucion)">                      
                     <i class="bi bi-printer-fill fs-4 text-primary align-middle"></i>

@@ -1,5 +1,7 @@
 import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Persona } from 'src/app/models/persona';
+import { PersonaService } from 'src/app/services/persona.service';
 declare var $: any;
 
 @Component({
@@ -13,11 +15,36 @@ export class NavigationComponent implements AfterViewInit {
    
 
   public showSearch = false;
+  public persona: Persona = new Persona();
   public usuario: string | null = localStorage.getItem('nombreUsuario');
   public idpersona: string | null = localStorage.getItem('idPersona');
   public tipousuario: string | null = localStorage.getItem('TipoUsuario');
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,private ser_per: PersonaService) {
+  }
+
+  mostrar() {
+    if (this.idpersona !== null) {
+      const idPersonaNumber = parseInt(this.idpersona, 10);
+      if (!isNaN(idPersonaNumber)) {
+        this.ser_per.buscar(idPersonaNumber).subscribe(
+          (result: Persona) => {
+            this.persona = result;
+            console.log(this.persona);
+          },
+          (error) => {
+            console.error("Error al buscar la persona:", error);
+          }
+        );
+      } else {
+        console.error("No se pudo convertir a número");
+      }
+    } else {
+      console.error("this.idpersona es nulo");
+    }
+  }
+  onImageError() {
+    this.persona.url_imagen = 'assets/images/users/incognito.webp';
   }
 
   // This is for Notifications
@@ -113,5 +140,7 @@ export class NavigationComponent implements AfterViewInit {
     icon: 'de'
   }]
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.mostrar()
+   }
 }

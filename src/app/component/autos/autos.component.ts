@@ -137,7 +137,7 @@ export class AutosComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.sharedService.setAutoSeleccionado(auto);
+          SharedService.autoSeleccionado = auto;
           this.router.navigate(['/component/alquileres/form']); 
         }
       });

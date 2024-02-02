@@ -10,7 +10,6 @@
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <a href="/component/alquileres/form" ngbDropdownItem>Alquiler</a>
         <a href="/component/clientes/form" ngbDropdownItem>Cliente</a>
-        <a href="/component/empleados/form" ngbDropdownItem>Empleado</a>
         <a href="/component/autos/form" ngbDropdownItem>Auto</a>
     </div>
 </li>
@@ -27,7 +26,7 @@
       aria-expanded="false"
     >
       <img
-        src="assets/images/users/user1.jpg"
+      [src]="persona.url_imagen" (error)="onImageError()"
         alt="user"
         class="rounded-circle"
         width="31"

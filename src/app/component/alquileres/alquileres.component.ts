@@ -154,7 +154,7 @@ export class AlquileresComponent implements OnInit {
     );
   }
 
-eliminar(alquiler:Alquiler){
+finalizar(alquiler:Alquiler){
   const fechaHoy: Date = new Date();
   Swal.fire({
     title: '¿Estás seguro de finalizar el alquiler?',
@@ -163,7 +163,7 @@ eliminar(alquiler:Alquiler){
     showCancelButton: true, 
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí, eliminar',
+    confirmButtonText: 'Sí, finalizar',
   }).then((result) => {
     if (result.isConfirmed) {
       const fechfin : Date = new Date(alquiler.fecha_fin);

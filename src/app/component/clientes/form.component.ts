@@ -183,6 +183,9 @@ crearCliente2(): void {
   }
 }
 
+  setAlquiler(){
+
+  }
 
 
   private crearCliente(): void {
