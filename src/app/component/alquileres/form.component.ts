@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 import { AlquilerService } from 'src/app/services/alquiler.service';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
-import { Persona } from 'src/app/models/persona';
+import { AutoService } from 'src/app/services/auto.service';
 
 @Component({
   selector: 'app-form',
@@ -56,6 +56,7 @@ export class FormComponent implements OnInit {
     private clienteService: ClienteService,
     private service: AlquilerService,
     private ser_empleado: EmpleadoService,
+    private autoService: AutoService,
     private datePipe: DatePipe
   ) {
     this.alquilerForm = this.fb.group({
@@ -83,6 +84,7 @@ export class FormComponent implements OnInit {
           (control: any) => this.validarFecha(control.value, this.esReserva),
         ],
       ],
+      tipo_pago: ['', Validators.required]
     });
 
     this.fechaActual = new Date().toISOString().split('T')[0];
@@ -91,31 +93,31 @@ export class FormComponent implements OnInit {
     this.diasEntreFechas = 0;
   }
 
-empleados: Empleado[] = [];
-empleado: Empleado | null = null; // Inicializa empleado como null
+  empleados: Empleado[] = [];
+  empleado: Empleado | null = null; // Inicializa empleado como null
 
-listarEmpleados(): void {
-  this.ser_empleado.listar().subscribe(
-    (empleados: Empleado[]) => {
-      this.empleados = empleados;
-      this.getIDempleado();
-    },
-    error => {
-      console.error("Error al obtener la lista de empleados:", error);
-    }
-  );
-}
+  listarEmpleados(): void {
+    this.ser_empleado.listar().subscribe(
+      (empleados: Empleado[]) => {
+        this.empleados = empleados;
+        this.getIDempleado();
+      },
+      error => {
+        console.error("Error al obtener la lista de empleados:", error);
+      }
+    );
+  }
 
-getIDempleado(): void {
-  if (this.idpersona !== null) {
-    const id_persona: number = parseInt(this.idpersona, 10);
-    this.empleado = this.empleados.find(empleado => empleado.id_persona === id_persona) || null;
-    
-    if (this.empleado !== null) {
-      this.alquiler.id_empleado = this.empleado.id_empleado;
+  getIDempleado(): void {
+    if (this.idpersona !== null) {
+      const id_persona: number = parseInt(this.idpersona, 10);
+      this.empleado = this.empleados.find(empleado => empleado.id_persona === id_persona) || null;
+
+      if (this.empleado !== null) {
+        this.alquiler.id_empleado = this.empleado.id_empleado;
+      }
     }
   }
-}
 
   actualizarDiasEntreFechas(): void {
     if (
@@ -168,90 +170,102 @@ getIDempleado(): void {
       } else {
         this.numeroDiasAlquiler = this.diasEntreFechas;
       }
-      
+
     } else {
       this.fechaFin = '';
       this.diasEntreFechas = 0;
       this.numeroDiasAlquiler = 0;
     }
-    
+
   }
 
   newAlquiler = new Alquiler();
-  
-  crear(){
-    if(SharedService.clienteSeleccionado != null){
+
+  crear() {
+    if (SharedService.clienteSeleccionado != null) {
       this.alquiler.cliente = SharedService.clienteSeleccionado;
     }
 
-    if(SharedService.autoSeleccionado != null){
+    if (SharedService.autoSeleccionado != null) {
       this.alquiler.auto = SharedService.autoSeleccionado;
     }
-    
-    if(this.alquiler.tipo_pago == '1'){
+
+    if (this.alquiler.tipo_pago == '1') {
       this.alquiler.tipo_pago = 'Tarjeta';
-    } else if (this.alquiler.tipo_pago == '2'){
+    } else if (this.alquiler.tipo_pago == '2') {
       this.alquiler.tipo_pago = 'Efectivo';
     }
 
-    if(SharedService.reserva){
+    if (SharedService.reserva) {
       this.alquiler = SharedService.reserva;
-    } 
-    
+    }
     this.newAlquiler.id_alquiler = this.alquiler.id_alquiler;
     this.newAlquiler.id_cliente = this.alquiler.cliente.id_cliente
     this.newAlquiler.id_auto = this.alquiler.auto.id_auto
     this.newAlquiler.id_proteccion = this.alquiler.id_proteccion
     this.newAlquiler.id_empleado = this.alquiler.id_empleado
     this.newAlquiler.fecha_ini = this.alquiler.fecha_ini
-    this.newAlquiler.fecha_fin= this.alquiler.fecha_fin
-    this.newAlquiler.precio_auto=this.alquiler.auto.precio_diario
-    this.newAlquiler.precio_proteccion= this.alquiler.precio_proteccion
+    this.newAlquiler.fecha_fin = this.alquiler.fecha_fin
+    this.newAlquiler.precio_auto = this.alquiler.auto.precio_diario
+    this.newAlquiler.precio_proteccion = this.alquiler.precio_proteccion
     this.newAlquiler.total = parseFloat(this.alquiler.total.toFixed(2));
-    this.newAlquiler.tipo_pago= this.alquiler.tipo_pago
-    this.newAlquiler.pagado= true;
-    if(SharedService.reserva){
-      this.newAlquiler.reservado= true;
-      this.newAlquiler.fecha_res= this.alquiler.fecha_res
-    } else{
-      this.newAlquiler.reservado= false;
+    this.newAlquiler.tipo_pago = this.alquiler.tipo_pago
+    this.newAlquiler.pagado = true;
+    if (SharedService.reserva) {
+      this.newAlquiler.reservado = true;
+      this.newAlquiler.fecha_res = this.alquiler.fecha_res
+    } else {
+      this.newAlquiler.reservado = false;
     }
 
-    Swal.fire('Datos:', `
-    id_cliente: ${this.newAlquiler.id_cliente}
-    id_auto: ${this.newAlquiler.id_auto}
-    id_proteccion: ${this.newAlquiler.id_proteccion}
-    id_empleado: ${this.newAlquiler.id_empleado}
-    fecha_ini: ${this.newAlquiler.fecha_ini}
-    fecha_fin: ${this.newAlquiler.fecha_fin}
-    precio_auto: ${this.newAlquiler.precio_auto}
-    precio_proteccion: ${this.newAlquiler.precio_proteccion}
-    total: ${this.newAlquiler.total}
-    tipo_pago: ${this.newAlquiler.tipo_pago}
-    pagado: ${this.newAlquiler.pagado}
-    reservado: ${this.newAlquiler.reservado}
-    fecha_res: ${this.newAlquiler.fecha_res}
-`, 'warning');
-    
-    if(this.validado()){
-       this.service.crear(this.newAlquiler).subscribe(
+//     Swal.fire('Datos:', `
+//     id_cliente: ${this.newAlquiler.id_cliente}
+//     id_auto: ${this.newAlquiler.id_auto}
+//     id_proteccion: ${this.newAlquiler.id_proteccion}
+//     id_empleado: ${this.newAlquiler.id_empleado}
+//     fecha_ini: ${this.newAlquiler.fecha_ini}
+//     fecha_fin: ${this.newAlquiler.fecha_fin}
+//     precio_auto: ${this.newAlquiler.precio_auto}
+//     precio_proteccion: ${this.newAlquiler.precio_proteccion}
+//     total: ${this.newAlquiler.total}
+//     tipo_pago: ${this.newAlquiler.tipo_pago}
+//     pagado: ${this.newAlquiler.pagado}
+//     reservado: ${this.newAlquiler.reservado}
+//     fecha_res: ${this.newAlquiler.fecha_res}
+// `, 'warning');
+
+    if (this.validado()) {
+      this.service.crear(this.newAlquiler).subscribe(
         (alquiler) => {
-          //llamar metodos para actualizar estados
-          Swal.fire('¡Registro exitoso!', "El alquiler fue creado exitosamente!", 'success');
+          this.alquiler.auto.id_estado = 2;
+          this.autoService.editar(this.alquiler.auto).subscribe(
+            () => {
+              Swal.fire('¡Registro exitoso!', "El alquiler fue creado exitosamente!", 'success');
+            }
+          );
         },
         (error) => {
           Swal.fire('Error!', "El alquiler no pudo ser registrado!", 'success');
         }
       );
-    } else{
-      Swal.fire('¡Datos incompletos!', "Datos incompletos", 'warning');
+    } else {
+      Swal.fire('¡Campos vacíos!', 'No se admiten campos vacíos.', 'warning');
     }
-    
-    
+
   }
 
-  validado(): boolean{
-    return true;
+  validado(): boolean {
+    const xalquiler = this.newAlquiler;
+    return !!(
+      xalquiler.id_proteccion &&
+      xalquiler.tipo_pago &&
+      xalquiler.id_cliente &&
+      xalquiler.id_empleado &&
+      xalquiler.id_auto &&
+      xalquiler.fecha_ini &&
+      xalquiler.fecha_fin &&
+      xalquiler.total
+    );
   }
 
 
@@ -303,8 +317,8 @@ getIDempleado(): void {
       this.alquiler.auto.color = color;
       this.alquiler.auto.potencia = potencia;
       this.alquiler.auto.capacidad = capacidad;
-    
-      if(precio){
+
+      if (precio) {
         this.alquiler.auto.precio_diario = precio;
       }
       this.alquiler.auto.estado = estado;
@@ -316,7 +330,7 @@ getIDempleado(): void {
       if (idProteccionDesdeReservas) {
         const idProteccion = Number(idProteccionDesdeReservas);
         const proteccionEncontrada = this.proteccionList.find(proteccion => proteccion.id_proteccion === idProteccion);
-      
+
         if (proteccionEncontrada) {
           // Seleccionar automáticamente la protección según el id obtenido desde reservas
           this.seleccionarProteccion(idProteccion);
@@ -326,7 +340,7 @@ getIDempleado(): void {
         }
       }
     });
-    
+
     if (this.alquiler.cliente.persona.cedula) {
       // Utilizar la cédula desde la sección de reservas para inicializar el formulario
       this.alquilerForm.patchValue({
@@ -361,7 +375,7 @@ getIDempleado(): void {
     }
   }
 
-  
+
   findProteccionByNombreYPrecio(nombre: string, precio: number): Proteccion | undefined {
     return this.proteccionList.find(proteccion => proteccion.nombre === nombre && proteccion.precio === precio);
   }
@@ -393,7 +407,7 @@ getIDempleado(): void {
     });
   }
 
-  
+
 
   newAuto(): void {
     this.router.navigate(['/component/autos']);
@@ -426,7 +440,7 @@ getIDempleado(): void {
       (proteccion) => proteccion.id_proteccion === id
     );
 
-    if(proteccionSeleccionada != null){
+    if (proteccionSeleccionada != null) {
       this.alquiler.id_proteccion = proteccionSeleccionada.id_proteccion;
       this.alquiler.precio_proteccion = proteccionSeleccionada.precio;
     }
@@ -434,9 +448,9 @@ getIDempleado(): void {
     // Asignar el precio a la propiedad
     this.precioProteccionSeleccionado = proteccionSeleccionada
       ? proteccionSeleccionada.precio
-      : null;
-  }
-  
+      : null;
+  }
+
 
   validarFecha(fecha: string, esReserva: boolean = false): boolean {
     if (esReserva) {
@@ -509,5 +523,4 @@ getIDempleado(): void {
     );
 
   }
-  
 } 

@@ -31,8 +31,11 @@ export class SidebarComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  // End open close
   ngOnInit() {
-    this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
+    if(localStorage.getItem('TipoUsuario') === 'empleado'){
+      this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem.rol === 'empleado');
+    } else{
+      this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
+    }
   }
 }
