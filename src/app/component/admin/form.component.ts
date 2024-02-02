@@ -45,7 +45,13 @@ export class FormComponent  {
  
   ) {}
   ngOnInit(): void {
- 
+ this.cargarMarcas();
+  }
+
+  cargarMarcas(): void {
+    this.marcaService.listar().subscribe(
+      marcas => this.marcasList = marcas
+    );
   }
 
   crearModelo(): void {
@@ -58,7 +64,7 @@ export class FormComponent  {
     }
     this.modeloService.crear(this.nuevoModelo).subscribe(
       () => {
-        this.router.navigate(['component/modelo']);
+        this.router.navigate(['component/admin']);
         if (this.nuevoModelo.id_modelo == 0) {
           Swal.fire('¡Acción exitosa!', 'Guardado');
         }
@@ -92,8 +98,6 @@ export class FormComponent  {
     this.mostrarContenido4 = !this.mostrarContenido4;
    }
 
-
-   
 
    crearMarca(): void {
     if (this.nuevaMarca.nombre.trim() === '') {

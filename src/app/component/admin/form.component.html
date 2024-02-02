@@ -6,13 +6,20 @@
   <!-- Agrega cualquier otra configuración del head que necesites -->
 </head>
 <body>
-
+  <a href="/component/admin" class="boton">
+    <i class="fa fa-arrow-left"></i> Volver
+  </a>
+  <div class="card-title d-flex justify-content-between">
+  <h4>Registros</h4>
   <div style="text-align: left;">
+    <div class="btn-group" id="menu_botones">
     <button type="button" (click)="toggleContenido()" class="btn btn-primary">{{mostrarContenido ? 'Ocultar' : 'Registrar'}} Modelo</button>
     <button type="button" (click)="toggleContenido2()" class="btn btn-primary">{{mostrarContenido2 ? 'Ocultar' : 'Registrar'}} Marca</button>
     <button type="button" (click)="toggleContenido3()" class="btn btn-primary">{{mostrarContenido3 ? 'Ocultar' : 'Registrar'}} Proteccion</button>
     <button type="button" (click)="toggleContenido4()" class="btn btn-primary">{{mostrarContenido4 ? 'Ocultar' : 'Registrar'}} Categoria</button>
+    </div>
   </div>
+</div>
 
   <div *ngIf="mostrarContenido">
     <form>
