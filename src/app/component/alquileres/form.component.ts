@@ -84,7 +84,7 @@ export class FormComponent implements OnInit {
           (control: any) => this.validarFecha(control.value, this.esReserva),
         ],
       ],
-      tipo_pago: ['', Validators.required]
+      tipo_pago: ['', Validators.required],
     });
 
     this.fechaActual = new Date().toISOString().split('T')[0];
@@ -102,8 +102,8 @@ export class FormComponent implements OnInit {
         this.empleados = empleados;
         this.getIDempleado();
       },
-      error => {
-        console.error("Error al obtener la lista de empleados:", error);
+      (error) => {
+        console.error('Error al obtener la lista de empleados:', error);
       }
     );
   }
@@ -111,7 +111,9 @@ export class FormComponent implements OnInit {
   getIDempleado(): void {
     if (this.idpersona !== null) {
       const id_persona: number = parseInt(this.idpersona, 10);
-      this.empleado = this.empleados.find(empleado => empleado.id_persona === id_persona) || null;
+      this.empleado =
+        this.empleados.find((empleado) => empleado.id_persona === id_persona) ||
+        null;
 
       if (this.empleado !== null) {
         this.alquiler.id_empleado = this.empleado.id_empleado;
@@ -137,7 +139,7 @@ export class FormComponent implements OnInit {
         });
 
         this.alquilerForm.patchValue({
-          fecha_fin: null
+          fecha_fin: null,
         });
 
         this.fechaFin = '';
@@ -160,7 +162,7 @@ export class FormComponent implements OnInit {
         });
 
         this.alquilerForm.patchValue({
-          fecha_fin: null
+          fecha_fin: null,
         });
 
         this.fechaFin = '';
@@ -170,13 +172,11 @@ export class FormComponent implements OnInit {
       } else {
         this.numeroDiasAlquiler = this.diasEntreFechas;
       }
-
     } else {
       this.fechaFin = '';
       this.diasEntreFechas = 0;
       this.numeroDiasAlquiler = 0;
     }
-
   }
 
   newAlquiler = new Alquiler();
@@ -200,59 +200,83 @@ export class FormComponent implements OnInit {
       this.alquiler = SharedService.reserva;
     }
     this.newAlquiler.id_alquiler = this.alquiler.id_alquiler;
-    this.newAlquiler.id_cliente = this.alquiler.cliente.id_cliente
-    this.newAlquiler.id_auto = this.alquiler.auto.id_auto
-    this.newAlquiler.id_proteccion = this.alquiler.id_proteccion
-    this.newAlquiler.id_empleado = this.alquiler.id_empleado
-    this.newAlquiler.fecha_ini = this.alquiler.fecha_ini
-    this.newAlquiler.fecha_fin = this.alquiler.fecha_fin
-    this.newAlquiler.precio_auto = this.alquiler.auto.precio_diario
-    this.newAlquiler.precio_proteccion = this.alquiler.precio_proteccion
+    this.newAlquiler.id_cliente = this.alquiler.cliente.id_cliente;
+    this.newAlquiler.id_auto = this.alquiler.auto.id_auto;
+    this.newAlquiler.id_proteccion = this.alquiler.id_proteccion;
+    this.newAlquiler.id_empleado = this.alquiler.id_empleado;
+    this.newAlquiler.fecha_ini = this.alquiler.fecha_ini;
+    this.newAlquiler.fecha_fin = this.alquiler.fecha_fin;
+    this.newAlquiler.precio_auto = this.alquiler.auto.precio_diario;
+    this.newAlquiler.precio_proteccion = this.alquiler.precio_proteccion;
     this.newAlquiler.total = parseFloat(this.alquiler.total.toFixed(2));
-    this.newAlquiler.tipo_pago = this.alquiler.tipo_pago
+    this.newAlquiler.tipo_pago = this.alquiler.tipo_pago;
     this.newAlquiler.pagado = true;
     if (SharedService.reserva) {
       this.newAlquiler.reservado = true;
-      this.newAlquiler.fecha_res = this.alquiler.fecha_res
+      this.newAlquiler.fecha_res = this.alquiler.fecha_res;
     } else {
       this.newAlquiler.reservado = false;
     }
 
-//     Swal.fire('Datos:', `
-//     id_cliente: ${this.newAlquiler.id_cliente}
-//     id_auto: ${this.newAlquiler.id_auto}
-//     id_proteccion: ${this.newAlquiler.id_proteccion}
-//     id_empleado: ${this.newAlquiler.id_empleado}
-//     fecha_ini: ${this.newAlquiler.fecha_ini}
-//     fecha_fin: ${this.newAlquiler.fecha_fin}
-//     precio_auto: ${this.newAlquiler.precio_auto}
-//     precio_proteccion: ${this.newAlquiler.precio_proteccion}
-//     total: ${this.newAlquiler.total}
-//     tipo_pago: ${this.newAlquiler.tipo_pago}
-//     pagado: ${this.newAlquiler.pagado}
-//     reservado: ${this.newAlquiler.reservado}
-//     fecha_res: ${this.newAlquiler.fecha_res}
-// `, 'warning');
+    //     Swal.fire('Datos:', `
+    //     id_cliente: ${this.newAlquiler.id_cliente}
+    //     id_auto: ${this.newAlquiler.id_auto}
+    //     id_proteccion: ${this.newAlquiler.id_proteccion}
+    //     id_empleado: ${this.newAlquiler.id_empleado}
+    //     fecha_ini: ${this.newAlquiler.fecha_ini}
+    //     fecha_fin: ${this.newAlquiler.fecha_fin}
+    //     precio_auto: ${this.newAlquiler.precio_auto}
+    //     precio_proteccion: ${this.newAlquiler.precio_proteccion}
+    //     total: ${this.newAlquiler.total}
+    //     tipo_pago: ${this.newAlquiler.tipo_pago}
+    //     pagado: ${this.newAlquiler.pagado}
+    //     reservado: ${this.newAlquiler.reservado}
+    //     fecha_res: ${this.newAlquiler.fecha_res}
+    // `, 'warning');
 
     if (this.validado()) {
       this.service.crear(this.newAlquiler).subscribe(
         (alquiler) => {
           this.alquiler.auto.id_estado = 2;
-          this.autoService.editar(this.alquiler.auto).subscribe(
-            () => {
-              Swal.fire('¡Registro exitoso!', "El alquiler fue creado exitosamente!", 'success');
-            }
-          );
+          this.autoService.editar(this.alquiler.auto).subscribe(() => {
+            Swal.fire(
+              '¡Registro exitoso!',
+              'El alquiler fue creado exitosamente!',
+              'success'
+            );
+            this.limpiarCampos();
+
+            this.router.navigate(['/component/alquileres']);
+          });
         },
         (error) => {
-          Swal.fire('Error!', "El alquiler no pudo ser registrado!", 'success');
+          Swal.fire('Error!', 'El alquiler no pudo ser registrado!', 'success');
         }
       );
     } else {
       Swal.fire('¡Campos vacíos!', 'No se admiten campos vacíos.', 'warning');
     }
-
   }
+
+  limpiarCampos() {
+    // Restablecer el formulario
+    this.alquilerForm.reset();
+
+    this.proteccionSeleccionada = null;
+    this.precioProteccionSeleccionado = null;
+    this.precioProDesdeReservas = null;
+    this.totalDesdeReservas = null;
+    this.tipoPagoDesdeReservas = null;
+    this.clienteAgregadoId = null;
+  
+    this.alquilerForm.get('tipo_pago')?.setValue(null); 
+
+    SharedService.clienteSeleccionado = null;
+    SharedService.autoSeleccionado = null;
+
+    this.newAlquiler = new Alquiler();
+  }
+  
 
   validado(): boolean {
     const xalquiler = this.newAlquiler;
@@ -267,7 +291,6 @@ export class FormComponent implements OnInit {
       xalquiler.total
     );
   }
-
 
   ngOnInit(): void {
     this.listarEmpleados();
@@ -329,13 +352,17 @@ export class FormComponent implements OnInit {
       this.totalDesdeReservas = totalDesdeReservas;
       if (idProteccionDesdeReservas) {
         const idProteccion = Number(idProteccionDesdeReservas);
-        const proteccionEncontrada = this.proteccionList.find(proteccion => proteccion.id_proteccion === idProteccion);
+        const proteccionEncontrada = this.proteccionList.find(
+          (proteccion) => proteccion.id_proteccion === idProteccion
+        );
 
         if (proteccionEncontrada) {
           // Seleccionar automáticamente la protección según el id obtenido desde reservas
           this.seleccionarProteccion(idProteccion);
         } else {
-          console.warn(`No se encontró la protección con el ID ${idProteccion}.`);
+          console.warn(
+            `No se encontró la protección con el ID ${idProteccion}.`
+          );
           // Puedes manejar la falta de coincidencia según tu lógica (por ejemplo, mostrar un mensaje de error).
         }
       }
@@ -369,15 +396,18 @@ export class FormComponent implements OnInit {
       this.seleccionarProteccion;
       this.calcularSubtotal();
       this.calcularTotal();
-
     } else {
-
     }
   }
 
-
-  findProteccionByNombreYPrecio(nombre: string, precio: number): Proteccion | undefined {
-    return this.proteccionList.find(proteccion => proteccion.nombre === nombre && proteccion.precio === precio);
+  findProteccionByNombreYPrecio(
+    nombre: string,
+    precio: number
+  ): Proteccion | undefined {
+    return this.proteccionList.find(
+      (proteccion) =>
+        proteccion.nombre === nombre && proteccion.precio === precio
+    );
   }
 
   agregarCliente(): void {
@@ -406,8 +436,6 @@ export class FormComponent implements OnInit {
       nombre2: `${cliente.persona.nombre1} ${cliente.persona.apellido1}`,
     });
   }
-
-
 
   newAuto(): void {
     this.router.navigate(['/component/autos']);
@@ -450,7 +478,6 @@ export class FormComponent implements OnInit {
       ? proteccionSeleccionada.precio
       : null;
   }
-
 
   validarFecha(fecha: string, esReserva: boolean = false): boolean {
     if (esReserva) {
@@ -521,6 +548,5 @@ export class FormComponent implements OnInit {
         // Maneja el error según tu lógica
       }
     );
-
   }
-} 
+}
