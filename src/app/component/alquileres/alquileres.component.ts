@@ -172,7 +172,12 @@ finalizar(alquiler:Alquiler){
         this.devolucion.fecha = fechaHoy;
         this.ser_devoluciones.crear(this.devolucion).subscribe(
       (devolucion)=>{
-        Swal.fire('Alquiler finalizado', 'con éxito', 'success');
+        alquiler.auto.id_estado = 1;
+          this.ser_aut.editar(alquiler.auto).subscribe(
+            () => {
+              Swal.fire('Alquiler finalizado', 'con éxito', 'success');
+            }
+          );
         console.log(devolucion);
         this.alquileresFiltrados = [];
         this.listar();

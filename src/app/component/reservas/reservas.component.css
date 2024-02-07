@@ -8,7 +8,7 @@ body {
   .card {
     max-width: 100%;
     flex-direction: row;
-    background-color: #6a6a6ae5;
+    background-color: #5bc7ece5;
     border: 0;
     box-shadow: 0 7px 7px rgba(0, 0, 0, 0.18);
     margin: 1em auto;

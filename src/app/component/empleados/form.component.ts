@@ -193,7 +193,7 @@ constructor(
             console.log(persona.id_persona);
             this.relacionarUsuario(persona.id_persona);
             Swal.fire('¡Acción exitosa!', `Empleado ${this.empleado.persona.nombre1 + ' ' + this.empleado.persona.apellido1} creado.`, 'success');
-            this.router.navigate(['/login']);
+            this.router.navigate(['/component/empleados']);
           },
           (error) => {
             console.error('Error al crear el cliente:', error);

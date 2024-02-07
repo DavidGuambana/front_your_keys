@@ -14,7 +14,7 @@
       <div class=seccion_auto>
         <h5 class="card-title">{{cli?.auto?.modelo?.marca?.nombre}} {{cli?.auto?.modelo?.nombre}}</h5>
         <p class="card-text">Caballos.P:{{cli?.auto?.potencia}}</p>
-        <p class="card-text">Fecha de reserva: {{cli?.fecha_ini | date : "yyyy-MM-dd"}}</p>
+        <p class="card-text">Fecha de reserva: {{cli?.fecha_res| date : "yyyy-MM-dd"}}</p>
       </div>
       <div class="cta-section">
         <div>$ {{cli?.total}} </div>

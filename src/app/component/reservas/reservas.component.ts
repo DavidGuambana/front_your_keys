@@ -195,6 +195,4 @@ export class ReservasComponent implements OnInit{
         }
       )
     }
-
-
 }
