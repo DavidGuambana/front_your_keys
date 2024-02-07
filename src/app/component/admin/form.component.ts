@@ -58,7 +58,7 @@ export class FormComponent  {
     if (this.nuevoModelo.nombre.trim() === '') {
       Swal.fire('¡Error!', 'El nombre del modelo no puede estar vacío.', 'error');
       return; 
-    } else if (this.nuevoModelo.id_marca === -1) {
+    } else if (this.nuevoModelo.id_marca === 0) {
       Swal.fire('¡Error!', 'Debe seleccionar una marca.', 'error');
       return; 
     }
@@ -74,7 +74,7 @@ export class FormComponent  {
         if (error.status === 500) {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear el auto.', 'error');
+          Swal.fire('¡Error!', 'Hubo un problema al crear el Modelo.', 'error');
         }
       }
     );
@@ -114,7 +114,7 @@ export class FormComponent  {
       },
       (error) => {
         console.error('Error al crear marcas:', error);
-        Swal.fire('¡Error!', 'Hubo un problema al crear la categoria.', 'error');
+        Swal.fire('¡Error!', 'Hubo un problema al crear la Marca.', 'error');
       }
     );
   }
@@ -140,7 +140,7 @@ export class FormComponent  {
         if (error.status === 500) {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear la proteccion.', 'error');
+          Swal.fire('¡Error!', 'Hubo un problema al crear la Proteccion.', 'error');
         }
       }
     );
@@ -170,7 +170,7 @@ export class FormComponent  {
         if (error.status === 500) {
           Swal.fire('¡Error!', 'Los datos ingresados ya existen. Intente con valores diferentes.', 'error');
         } else {
-          Swal.fire('¡Error!', 'Hubo un problema al crear la proteccion.', 'error');
+          Swal.fire('¡Error!', 'Hubo un problema al crear la Categoria.', 'error');
         }
       }
     );
