@@ -196,8 +196,10 @@ export class FormComponent implements OnInit {
       this.alquiler.tipo_pago = 'Efectivo';
     }
 
+    let id_emp: number = this.alquiler.id_empleado;
     if (SharedService.reserva) {
       this.alquiler = SharedService.reserva;
+      this.alquiler.id_empleado = id_emp;
     }
     this.newAlquiler.id_alquiler = this.alquiler.id_alquiler;
     this.newAlquiler.id_cliente = this.alquiler.cliente.id_cliente;
