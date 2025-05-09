@@ -5,14 +5,14 @@ import { Observable } from "rxjs";
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProteccionService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/protecciones';
-  private urlEndPoint2:string = 'http://localhost:8080/api/protecciones/{id}';
+  private urlEndPoint:string = `${environment.apiUrl}/protecciones`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

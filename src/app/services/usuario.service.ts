@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/usuarios';
+  private urlEndPoint:string = `${environment.apiUrl}/usuarios`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

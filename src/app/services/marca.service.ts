@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { catchError } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { throwError } from "rxjs";
+import { environment } from "src/environments/environment";
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { throwError } from "rxjs";
   })
   export class MarcaService {
   
-    private urlEndPoint:string = 'http://localhost:8080/api/marcas';
+    private urlEndPoint:string = `${environment.apiUrl}/marcas`;
 
     private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
   

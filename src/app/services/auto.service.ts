@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auto } from '../models/auto';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutoService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/autos';
+  private urlEndPoint:string = `${environment.apiUrl}/autos`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

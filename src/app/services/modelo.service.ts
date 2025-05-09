@@ -5,14 +5,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { switchMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModeloService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/modelos';
-  private urlEndpoint2: string = 'http://localhost:8080/api/modelos/{id}'
+  private urlEndPoint: string = `${environment.apiUrl}/modelos`;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }

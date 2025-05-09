@@ -3,13 +3,14 @@ import { Cliente } from '../models/cliente';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Estado } from '../models/estado';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstadoService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/estados';
+  private urlEndPoint:string = `${environment.apiUrl}/estados`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

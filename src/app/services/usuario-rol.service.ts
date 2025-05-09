@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { UsuarioRol } from '../models/usuario_rol';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioRolService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/usuarios_roles';
+  private urlEndPoint:string = `${environment.apiUrl}/usuarios_roles`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

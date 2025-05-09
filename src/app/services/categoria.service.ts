@@ -5,6 +5,7 @@ import { Categoria } from '../models/categoria';
 import { catchError } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { throwError } from "rxjs";
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { throwError } from "rxjs";
 })
 export class CategoriaService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/categorias';
+  private urlEndPoint:string = `${environment.apiUrl}/categorias`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }

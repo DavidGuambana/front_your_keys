@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Rol } from '../models/rol';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/roles';
+  private urlEndPoint:string = `${environment.apiUrl}/roles`;
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient) { }
